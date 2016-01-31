@@ -110,3 +110,6 @@ body {
 .justify-text {
     text-align: justify;
 }
+.form-horizontal .control-label{
+    text-align:left !important;
+}
