@@ -114,5 +114,23 @@ body {
     text-align:left !important;
 }
 .wrap-white-spacing {
-    white-space: pre;
+    white-space: nowrap;
+}
+
+a{
+    cursor: pointer;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.admin-sort-links {
+    margin-right: 5px;
+    vertical-align: text-top;
+}
+
+.admin-actions-links {
+    text-align: center;
+    font-size: x-large;
 }
