@@ -113,3 +113,6 @@ body {
 .form-horizontal .control-label{
     text-align:left !important;
 }
+.wrap-white-spacing {
+    white-space: pre;
+}
