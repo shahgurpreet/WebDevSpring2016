@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Register</title>
+    <title>Forms</title>
 
     <!-- Bootstrap core CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
@@ -34,8 +34,6 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li class="active"><a href="#">Register</a></li>
-                <li><a href="login.html">Login</a></li>
                 <li><a href="profile.html">Username</a></li>
                 <li><a href="#">Logout</a></li>
             </ul>
@@ -50,42 +48,61 @@
                 <li><a href="home.html">Home <span class="sr-only">(current)</span></a></li>
                 <li><a href="profile.html">Profile</a></li>
                 <li><a href="admin.html">Admin</a></li>
-                <li><a href="forms.html">Forms</a></li>
+                <li class="active"><a href="#">Forms</a></li>
             </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <form class="form-horizontal">
-                <h2>Register</h2>
-                <div class="form-group">
-                    <label for="inputUsername" class="col-sm-2 control-label">Username:</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputUsername" placeholder="Username">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputPassword3" class="col-sm-2 control-label">Password:</label>
-                    <div class="col-sm-10">
-                        <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputPassword2" class="col-sm-2 control-label">Verify Password:</label>
-                    <div class="col-sm-10">
-                        <input type="password" class="form-control" id="inputPassword2" placeholder="Password">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Email:</label>
-                    <div class="col-sm-10">
-                        <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-primary btn-lg btn-block">Register</button>
-                    </div>
-                </div>
-            </form>
+            <h2>Forms</h2>
+            <ul class="nav nav-tabs">
+                <li role="presentation" class="active"><a href="#">Forms</a></li>
+                <li role="presentation"><a href="#">Fields</a></li>
+            </ul>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th><a class="glyphicon glyphicon-triangle-bottom admin-sort-links"></a>Form Name</th>
+                        <th><a class="glyphicon glyphicon-triangle-bottom admin-sort-links"></a>Action</th>
+                    </tr>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="inputFormName" placeholder="name">
+                                </div>
+                            </td>
+                            <td class="form-action-links wrap-white-spacing">
+                                <div>
+                                    <a class="glyphicon glyphicon-plus"></a>
+                                    <a class="glyphicon glyphicon glyphicon-ok"></a>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Registration Form</td>
+                            <td class="form-action-links wrap-white-spacing">
+                                <a class="glyphicon glyphicon-remove"></a>
+                                <a class="glyphicon glyphicon glyphicon-pencil"></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Contact List</td>
+                            <td class="form-action-links wrap-white-spacing">
+                                <a class="glyphicon glyphicon-remove"></a>
+                                <a class="glyphicon glyphicon glyphicon-pencil"></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>To Do List</td>
+                            <td class="form-action-links wrap-white-spacing">
+                                <a class="glyphicon glyphicon-remove"></a>
+                                <a class="glyphicon glyphicon glyphicon-pencil"></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                    </thead>
+                </table>
+            </div>
         </div>
     </div>
 </div>
