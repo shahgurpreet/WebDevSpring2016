@@ -35,6 +35,7 @@
                 var user = currentUsers[i];
                 if(username === user.username && password == user.password) {
                     callback(user);
+                    break;
                 }
                 callback(null);
             }

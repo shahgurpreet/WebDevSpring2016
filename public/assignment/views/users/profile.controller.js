@@ -1,9 +1,6 @@
 /**
  * Created by Gurpreet on 2/23/2016.
  */
-/**
- * Created by Gurpreet on 2/23/2016.
- */
 (function(){
     angular
         .module("FormBuilderApp")
@@ -21,7 +18,6 @@
         }
 
         function processNewUser(user) {
-            console.log(user);
             $rootScope.currentUser = user;
         }
     }

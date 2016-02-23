@@ -13,7 +13,6 @@
 
         // event handler implementation
         function register(newUser) {
-            console.log(newUser);
             UserService.createUser(newUser, processNewUser);
         }
 
