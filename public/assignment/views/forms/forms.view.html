@@ -14,12 +14,12 @@
         <tr>
             <td>
                 <div class="form-group">
-                    <input type="text" class="form-control" id="inputFormName" placeholder="name">
+                    <input ng-model="inputForm" type="text" class="form-control" id="inputFormName" placeholder="name">
                 </div>
             </td>
             <td class="form-action-links wrap-white-spacing">
                 <div>
-                    <a class="glyphicon glyphicon-plus"></a>
+                    <a ng-click="addForm(inputForm)" class="glyphicon glyphicon-plus"></a>
                     <a class="glyphicon glyphicon glyphicon-ok"></a>
                 </div>
             </td>

@@ -64,6 +64,7 @@
                     var user = currentUsers[i];
                     if(user._id === userId) {
                         removeIndex = i;
+                        break;
                     }
                 }
 
