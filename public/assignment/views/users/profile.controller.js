@@ -13,8 +13,10 @@
 
         // event handler implementation
         function update(currentUser) {
-            var userId = $rootScope.currentUser._id;
-            UserService.updateUser(userId, currentUser, processNewUser);
+            if(currentUser) {
+                var userId = $rootScope.currentUser._id;
+                UserService.updateUser(userId, currentUser, processNewUser);
+            }
         }
 
         function processNewUser(user) {

@@ -13,7 +13,9 @@
 
         // event handler implementation
         function register(newUser) {
-            UserService.createUser(newUser, processNewUser);
+            if(newUser) {
+                UserService.createUser(newUser, processNewUser);
+            }
         }
 
         function processNewUser(user) {
