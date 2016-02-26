@@ -44,3 +44,6 @@ a:hover {
     border: 1px solid;
 }
 
+.myOwnClass {
+    background-color: #006699;
+}
