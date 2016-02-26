@@ -3,7 +3,7 @@
     <li role="presentation" class="active"><a href="#">Forms</a></li>
     <li role="presentation"><a href="form-fields.view.html">Fields</a></li>
 </ul>
-<div class="table-responsive">
+<div class="table-responsive" ng-init="getAllFormsForCurrentUser()">
     <table class="table table-striped">
         <thead>
         <tr>
@@ -14,35 +14,21 @@
         <tr>
             <td>
                 <div class="form-group">
-                    <input ng-model="inputForm" type="text" class="form-control" id="inputFormName" placeholder="name">
+                    <input ng-model="inputForm.title" type="text" class="form-control" id="inputFormName" placeholder="name">
                 </div>
             </td>
             <td class="form-action-links wrap-white-spacing">
                 <div>
-                    <a ng-click="addForm(inputForm)" class="glyphicon glyphicon-plus"></a>
-                    <a class="glyphicon glyphicon glyphicon-ok"></a>
+                    <a ng-click="addForm(inputForm.title)" class="glyphicon glyphicon-plus"></a>
+                    <a ng-click="updateForm(inputForm.title)" class="glyphicon glyphicon glyphicon-ok"></a>
                 </div>
             </td>
         </tr>
-        <tr>
-            <td><a href="form-fields.view.html">Registration Form</a></td>
+        <tr ng-repeat="form in allForms" ng-class="{'success' : $index == selectedFormIndex}">
+            <td>{{form.title}}</td>
             <td class="form-action-links wrap-white-spacing">
-                <a class="glyphicon glyphicon-remove"></a>
-                <a class="glyphicon glyphicon glyphicon-pencil"></a>
-            </td>
-        </tr>
-        <tr>
-            <td><a href="form-fields.view.html">Contact List</a></td>
-            <td class="form-action-links wrap-white-spacing">
-                <a class="glyphicon glyphicon-remove"></a>
-                <a class="glyphicon glyphicon glyphicon-pencil"></a>
-            </td>
-        </tr>
-        <tr>
-            <td><a href="form-fields.view.html">To Do List</a></td>
-            <td class="form-action-links wrap-white-spacing">
-                <a class="glyphicon glyphicon-remove"></a>
-                <a class="glyphicon glyphicon glyphicon-pencil"></a>
+                <a class="glyphicon glyphicon-remove" ng-click="deleteForm($index)"></a>
+                <a class="glyphicon glyphicon glyphicon-pencil" ng-click="selectForm($index)"></a>
             </td>
         </tr>
         </tbody>

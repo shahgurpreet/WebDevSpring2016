@@ -13,31 +13,65 @@
         $scope.updateForm = updateForm;
         $scope.deleteForm = deleteForm;
         $scope.selectForm = selectForm;
+        $scope.getAllFormsForCurrentUser = getAllFormsForCurrentUser;
 
+        $scope.inputForm = {};
+        $scope.allForms = {};
+        $scope.selectedFormIndex = -1;
         var currentUserId = $rootScope.currentUser._id;
-        $scope.allForms = FormService.findAllFormsForUser(currentUserId, getAllForms);
 
-        function getAllForms(allForms) {
-            $scope.allForms = allForms;
+
+        function getAllFormsForCurrentUser() {
+            FormService.findAllFormsForUser(currentUserId, getAllForms);
+
+            function getAllForms(allForms) {
+                $scope.allForms = allForms;
+            }
         }
-
         // event handler implementation
-        function addForm(inputForm){
-            FormService.createFormForUser(currentUserId, inputForm, doSomething);
+        function addForm(title){
+            var newForm = {};
+            if(title) {
+                newForm.title = title;
+                FormService.createFormForUser(currentUserId, newForm, doSomething);
 
-
+                function doSomething(addedForm) {
+                    getAllFormsForCurrentUser();
+                    $scope.inputForm = {};
+                }
+            }
         }
 
-        function updateForm(){
+        function updateForm(formTitle){
+            var oldForm = $scope.allForms[$scope.selectedFormIndex];
+            var updatedForm = null;
+            var formId = null;
+            if(formTitle) {
+                oldForm.title = formTitle;
+                FormService.updateFormById(formId, oldForm, doSomething);
 
+                function doSomething(updatedForm) {
+                    $scope.inputForm = {};
+                }
+            }
         }
 
-        function deleteForm() {
+        function deleteForm(index) {
+            if(index > -1) {
+                var formId = $scope.allForms[index]._id;;
+                FormService.deleteFormById(formId, doSomething);
 
+                function doSomething(forms) {
+                    getAllFormsForCurrentUser();
+                }
+            }
         }
 
-        function selectForm() {
-
+        function selectForm(index) {
+            var allForms = $scope.allForms;
+            var form = allForms[index];
+            $scope.inputForm.title = form.title;
+            $scope.selectedFormIndex = index;
         }
     }
 

@@ -27,7 +27,6 @@
             form._id = _id;
             form.userId = userId;
             allForms.push(form);
-
             callback(form);
         }
 
