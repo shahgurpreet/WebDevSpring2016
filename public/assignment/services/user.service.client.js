@@ -1,6 +1,9 @@
 /**
  * Created by Gurpreet on 2/23/2016.
  */
+
+"use strict";
+
 (function(){
     angular
         .module("FormBuilderApp")
@@ -49,7 +52,7 @@
 
         function createUser(user, callback) {
             findAllUsers(getUsers);
-            function findAllUsers(currentUsers) {
+            function getUsers(currentUsers) {
                 user._id = new Date().getTime();
                 currentUsers.push(user);
                 callback(user);

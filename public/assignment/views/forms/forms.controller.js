@@ -33,9 +33,9 @@
             var newForm = {};
             if(title) {
                 newForm.title = title;
-                FormService.createFormForUser(currentUserId, newForm, doSomething);
+                FormService.createFormForUser(currentUserId, newForm, callback);
 
-                function doSomething(addedForm) {
+                function callback(addedForm) {
                     getAllFormsForCurrentUser();
                     $scope.inputForm = {};
                 }
