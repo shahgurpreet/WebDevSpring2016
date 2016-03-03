@@ -1,0 +1,51 @@
+/* customized styles */
+
+.justify-text {
+    text-align: justify;
+}
+.form-horizontal .control-label{
+    text-align:left !important;
+}
+.wrap-white-spacing {
+    white-space: nowrap;
+}
+
+a{
+    cursor: pointer;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.admin-sort-links {
+    margin-right: 5px;
+    vertical-align: text-top;
+}
+
+.admin-actions-links {
+    text-align: center;
+    font-size: x-large;
+}
+
+.form-action-links {
+    font-size: x-large;
+}
+
+.form-fields-action-links {
+    margin-top: 22px;
+}
+
+.table-borderless tbody tr td, .table-borderless tbody tr th, .table-borderless thead tr th {
+    border: none;
+}
+
+.form-divider {
+    border: 1px solid;
+}
+
+.myOwnClass {
+    background-color: #006699;
+}
+
+

@@ -1,0 +1,34 @@
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" ng-controller="HeaderController">
+    <div class="container">
+
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapsible">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">WanderMust</a>
+        </div>
+
+        <div class="navbar-collapse collapse" id="navbar-collapsible">
+            <ul class="nav navbar-nav navbar-right">
+                <li ng-if = "!currentUser" ng-class="{'active': $location.url() == '/register'}"><a href="#/register">Register</a></li>
+                <li ng-if = "!currentUser" ng-class="{'active': $location.url() == '/login'}"><a href="#/login">Login</a></li>
+                <li ng-if = "currentUser" ng-class="{'active': $location.url() == '/profile'}"><a href="#profile">{{currentUser.username}}</a></li>
+                <li class="visible-xs" ng-if = "currentUser" ng-class="{'active': $location.url() == '/forms'}"><a href="#forms">Forms</a></li>
+                <li class="visible-xs" ng-if = "currentUser && currentUser.roles.indexOf('admin') >= 0" ng-class="{'active': $location.url() == '/admin'}"><a href="#/admin">Admin</a></li>
+                <li ng-if = "currentUser"><a href="#/home" ng-click="logout()">Logout</a></li>
+            </ul>
+
+            <form class="navbar-form" role="search">
+                <div class="input-group add-on">
+                    <input type="text" class="form-control" placeholder="Search" ng-model="searchQuery">
+                    <div class="input-group-btn">
+                        <button ng-click="processQuery(searchQuery)" class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</nav>
