@@ -20,7 +20,7 @@
         }
 
         function render(response) {
-            console.log(response);
+
         }
     }
 })();

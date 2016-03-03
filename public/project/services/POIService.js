@@ -19,7 +19,17 @@
         return api;
 
         function findPOIPerCity(city, callback) {
-            $http.get(endpoint).success(callback);
+
+            $http({
+                method: 'JSONP',
+                url: endpoint
+            }).
+            success(function(status) {
+                //your code when success
+            }).
+            error(function(status) {
+                //your code when fails
+            });
         }
     }
 })();
