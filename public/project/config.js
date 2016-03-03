@@ -6,7 +6,10 @@
         .module("FormBuilderApp")
         .config(configuration);
 
-    function configuration($routeProvider) {
+    function configuration($routeProvider, $httpProvider) {
+
+        delete $httpProvider.defaults.headers.common['X-Requested-With'];
+
         $routeProvider
             .when("/home",{
                 templateUrl: "./views/home/home.view.html"
@@ -32,6 +35,9 @@
             })
             .when("/form-fields", {
                 templateUrl: "./views/forms/form-fields.view.html"
+            })
+            .when("/search/:city", {
+                templateUrl: "./views/search/search.view.html"
             })
             .otherwise({
                 redirectTo: "/home"

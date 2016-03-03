@@ -48,4 +48,8 @@ a:hover {
     background-color: #006699;
 }
 
-
+.search-page-img {
+    height: 300px;
+    width: 500px;
+    border: none;
+}

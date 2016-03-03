@@ -1,0 +1,13 @@
+<div class="container" ng-controller="SearchController" ng-init="getPOIForCity()">
+    <h2>Search results for {{city}}</h2>
+    <div class="row">
+
+    <div ng-repeat="poi in POIresults" class="col-md-4">
+        <a class="" href="#">
+            <div>
+                <img class="search-page-img" ng-src="{{poi.photo}}" title={{poi.name}} class="img-responsive">
+            </div>
+        </a>
+    </div>
+</div>
+</div>

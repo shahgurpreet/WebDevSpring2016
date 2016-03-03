@@ -16,11 +16,9 @@
         }
 
         function processQuery(searchQuery) {
-            POIService.findPOIPerCity(searchQuery, render);
-        }
-
-        function render(response) {
-
+            if(searchQuery) {
+                $location.url("/search/"+searchQuery);
+            }
         }
     }
 })();
