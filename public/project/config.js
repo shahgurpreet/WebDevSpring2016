@@ -37,7 +37,12 @@
                 templateUrl: "./views/forms/form-fields.view.html"
             })
             .when("/search/:city", {
-                templateUrl: "./views/search/search.view.html"
+                templateUrl: "./views/search/search.view.html",
+                controller: "SearchController"
+            })
+            .when("/details/:name/:vicinity", {
+                templateUrl: "./views/details/details.view.html",
+                controller: "DetailsController"
             })
             .otherwise({
                 redirectTo: "/home"

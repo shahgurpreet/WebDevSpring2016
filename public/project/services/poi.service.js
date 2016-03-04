@@ -35,10 +35,9 @@
                 //your code when fails
             });*/
 
-            console.log(city);
             //for now hardcoding some places of interest for New South Wales, Australia
             var places = [
-                {name: "The Star", place_id: "ChIJq6qq6jauEmsRJAf7FjrKnXI", vicinity: "80 Pyrmont Street, Pyrmont", photo:"https://upload.wikimedia.org/wikipedia/commons/c/c9/The_Star_Casino_-_Vivid_Sydney_2015.jpg"},
+                {name: "The Dunkirk Hotel", place_id: "ChIJ4UEnPTGuEmsRkjpDW7FRSko", vicinity: "205 Harris Street, Pyrmont", photo:"http://www.rnfoster.com/wp-content/uploads/2013/10/dunkirk-edit.png"},
                 {name: "Darling Harbour", place_id: "ChIJt9trB0euEmsR8NbepO14j3M", vicinity: "Sydney", photo: "https://upload.wikimedia.org/wikipedia/commons/4/44/Sydney_sunset_darling_harbour.jpg"},
                 {name: "Australian National Maritime Museum", place_id: "ChIJTze93zmuEmsRhvE6T4Y9DhU", vicinity: "2 Murray Street, Sydney", photo: "https://upload.wikimedia.org/wikipedia/commons/c/c2/Australian_National_Maritime_Museum_and_ships.jpg"},
                 {name: "South Steyne", place_id: "ChIJt9trB0euEmsRHdhhqjr37n4", vicinity: "Harbourside Jetty, Darling Drive, Darling Harbour", photo: "https://upload.wikimedia.org/wikipedia/commons/5/59/South_Steyne_Floating_Restaurant_(8355503958).jpg" },
@@ -48,7 +47,7 @@
                 {name: "Flying Fish Restaurant & Bar", place_id: "ChIJm7Ex8UmuEmsR37p4Hm0D0VI", vicinity: "Lower Deck, Jones Bay Wharf, 21 Pirrama Road, Pyrmont", photo: "https://thebluemacaron.files.wordpress.com/2013/08/20130730_181604_lls.jpg"},
                 {name: "Doltone House", place_id: "ChIJr9ZMJD6uEmsRT5yQWJvTmd0", vicinity: "26-32 Pirrama Road, Pyrmont", photo: "http://www.doltonehouse.com.au/uploads//background-images/bg_slideshows_new_267/diw/darling-island-wharf-04.jpg"},
                 {name: "The Little Snail Restaurant", place_id: "ChIJtwapWjeuEmsRcxV5JARHpSk", vicinity: "50 Murray Street, Pyrmont", photo: "https://s3-ap-southeast-2.amazonaws.com/static.yumtable.com.au/restaurant/the-little-snail1507/gallery_venue9_The+Little+Snail_1200x800.jpg"},
-                {name: "Astral Tower & Residences", place_id: "ChIJq6qq6jauEmsR46KYci7M5Jc", vicinity: "80 Pyrmont Street, Sydney", photo: "http://www.worldhotels.com/usercontent/worldhotels/hotels/australia/australia/sydney/astral-tower-residences-at-the-star-1-suite.jpg?width=1920&quality=50&tint=aeaeae"},
+                {name: "Blue Eye Dragon", place_id: "ChIJuZqIiTauEmsRJF_TK9Vpfmw", vicinity: "37 Pyrmont Street, Pyrmont", photo: "https://bosguydotcom.files.wordpress.com/2014/02/blue-dragon-photo-credit-melissa-ostrow.jpg"},
                 {name: "Criniti's Darling Harbour", place_id: "ChIJL7SCpzCuEmsRTt1uJsaxMBQ", vicinity: "2-10 Darling Drive, Sydney", photo: "http://gp2projects.com/wp-content/uploads/2013/07/project-crinitis-hero.jpg"},
                 {name: "Pancakes On The Rocks", place_id: "ChIJL7SCpzCuEmsRlXKRwNalzww", vicinity: "Harbourside Shopping Centre, 230, Darling Harbour", photo: "http://temp01.1ptstaging.com.au/wp-content/uploads/2014/10/pancakes-on-the-rocks-faq.jpg"},
                 {name: "Cafe XXII", place_id: "ChIJGZ2lxTauEmsRJ1C7wmla-3I", vicinity: "22 Union Street, Pyrmont", photo:"https://gastronomous.files.wordpress.com/2010/03/cafe-xxii.jpg"},
