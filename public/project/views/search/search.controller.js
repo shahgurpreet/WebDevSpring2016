@@ -15,11 +15,15 @@
         $scope.POIresults = [];
 
         function getPOIForCity() {
-            POIService.findPOIPerCity($scope.city, renderPOI);
+            POIService.findPOIPerCity($scope.city, processPOI);
         }
 
-        function renderPOI(response) {
-            $scope.POIresults = response;
+        function processPOI(response) {
+            POIService.findPhotos(response, renderPOI);
+        }
+
+        function renderPOI(poi) {
+            $scope.POIresults = poi;
         }
 
         function selectPOI(poi) {

@@ -5,7 +5,7 @@
         .module("FormBuilderApp")
         .controller("DetailsController", DetailsController);
 
-    function DetailsController($location, $scope, InstagramService, $routeParams) {
+    function DetailsController($location, $scope, InstagramService, TwitterService, $routeParams) {
         $scope.name = $routeParams.name;
         var name = $routeParams.name;
         name = $scope.name.replace(/ +/g, "");
