@@ -6,10 +6,10 @@ module.exports = function(app) {
     var https = require('https');
     var htmlparser = require("htmlparser2");
 
-    app.get('/api/hello/:city', sayHello);
-    app.get('/api/hello1/:photo', sayHello1);
+    app.get('/api/poi/:city', getPOIForCity);
+    app.get('/api/photoPOI/:photo', getPhotoPOI);
 
-    function sayHello(req, res) {
+    function getPOIForCity(req, res) {
         var city = req.params.city;
         var api_key = 'AIzaSyD8M-KBuFrLLvqhQ5eMTpOMXhamomRfwZ4';
         var endpoint = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?radius=500&location=';
@@ -43,12 +43,9 @@ module.exports = function(app) {
 
             });
         });
-
-
-
     }
 
-    function sayHello1(req, res) {
+    function getPhotoPOI(req, res) {
         var api_key = 'AIzaSyD8M-KBuFrLLvqhQ5eMTpOMXhamomRfwZ4';
         var endpoint = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&maxheight=500&photoreference=';
         var photo_reference = req.params.photo;
