@@ -1,13 +1,33 @@
-<div class="container" ng-init="getInstagramPhotos()">
-    <h2>Latest Instagram photos for {{name}}</h2>
-    <div class="row">
-
-        <div ng-repeat="image in instagramImages" class="col-md-3 col-lg-4 col-sm-6 col-xs-12">
-            <a href="">
-                <div>
-                    <img class="search-page-img" ng-src="{{image}}" class="img-responsive">
+<div class="container">
+    <div class = "place-details">
+        <div class="row">
+            <div class="col-md-8">
+                <img class="details-page-img img-responsive" ng-src="{{placeDetails.photo}}" />
+            </div>
+            <div class="col-md-4">
+                <div class="place-text-details">
+                    <i class="fa fa-fort-awesome"></i>&nbsp;<b class="place-heading">{{placeDetails.name}}</b><br><br>
+                    <i class="fa fa-map-marker fa-3"></i>&nbsp;{{placeDetails.address}} <br>
+                    <i class="fa fa-phone-square fa-5"></i>&nbsp;{{placeDetails.phone}} <br>
+                    <i class="fa fa-external-link-square"></i>&nbsp;<a ng-href="{{placeDetails.website}}" target="_blank"> Website</a> <br>
+                    <i class="fa fa-star"></i>&nbsp;{{placeDetails.rating}} <br>
+                    <br>
                 </div>
-            </a>
+            </div>
+            <!--<div ng-repeat="image in instagramImages" class="col-md-3 col-lg-4 col-sm-6 col-xs-12">
+                <a href="">
+                    <div>
+                        <img class="search-page-img" ng-src="{{image}}" class="img-responsive">
+                    </div>
+                </a>
+            </div>-->
+            <!--<div class="reviews">
+                <ul style="list-style-type:none">
+                    <li ng-repeat = "review in placeDetails.reviews">
+                        <p>"{{review.text}}"</p>
+                    </li>
+                </ul>
+            </div>-->
         </div>
     </div>
 </div>

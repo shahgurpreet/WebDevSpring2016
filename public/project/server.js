@@ -7,7 +7,9 @@ module.exports = function(app) {
     var htmlparser = require("htmlparser2");
 
     app.get('/api/poi/:city', getPOIForCity);
+    app.get('/api/place/:place_id', getPlaceDetails);
     app.get('/api/photoPOI/:photo', getPhotoPOI);
+
 
     function getPOIForCity(req, res) {
         var city = req.params.city;
@@ -76,5 +78,22 @@ module.exports = function(app) {
                 res.send(photo_url);
             });
         });
+    }
+
+    function getPlaceDetails(req, res) {
+        var place_id = req.params.place_id;
+        var api_key = 'AIzaSyD8M-KBuFrLLvqhQ5eMTpOMXhamomRfwZ4';
+        var endpoint = 'https://maps.googleapis.com/maps/api/place/details/json?placeid=' + place_id + '&key=' + api_key;
+
+        https.get(endpoint, function(response) {
+            var placeDetails = '';
+            response.on('data', function (chunk) {
+                placeDetails += chunk;
+            });
+            response.on('end', function() {
+                placeDetails = JSON.parse(placeDetails);
+                res.send(placeDetails);
+            });
+        })
     }
 };

@@ -9,14 +9,14 @@
 
     function SearchController($location, $scope, POIService, $routeParams) {
         $scope.city = $routeParams.city;
-        $scope.getPOIForCity = getPOIForCity;
         $scope.selectPOI = selectPOI;
-
         $scope.POIresults = [];
 
-        function getPOIForCity() {
+        var getPOIForCity = function() {
             POIService.findPOIPerCity($scope.city, processPOI);
-        }
+        };
+
+        getPOIForCity();
 
         function processPOI(response) {
             POIService.findPhotos(response, renderPOI);
@@ -27,7 +27,7 @@
         }
 
         function selectPOI(poi) {
-            $location.url("/details/"+poi.name+"/"+poi.vicinity);
+            $location.url("/details/"+poi.name+"/"+poi.vicinity+"/"+poi.place_id);
         }
 
     }

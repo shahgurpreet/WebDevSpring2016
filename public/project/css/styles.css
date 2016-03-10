@@ -1,5 +1,9 @@
 /* customized styles */
 
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+
 .justify-text {
     text-align: justify;
 }
@@ -55,3 +59,30 @@ a:hover {
     border: none;
     padding-bottom: 30px;
 }
+
+.details-page-img {
+    height: 500px;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    padding-bottom: 30px;
+}
+
+.place-text-details {
+    padding: 10px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: large;
+}
+
+.reviews {
+    font-size: x-small;
+}
+
+.place-heading {
+    font-size: x-large;
+}
+
+.place-details {
+    padding-top: 15px;
+}
+

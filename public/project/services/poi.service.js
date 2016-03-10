@@ -12,7 +12,8 @@
 
         var api = {
             findPOIPerCity : findPOIPerCity,
-            findPhotos: findPhotos
+            findPhotos: findPhotos,
+            getPlaceDetails: getPlaceDetails
         };
         return api;
 
@@ -54,6 +55,32 @@
                     }
                 }
                 callback(places_1);
+            });
+        }
+
+        function getPlaceDetails(place_id, callback) {
+            var placeDetails = {};
+            $http.get("/api/place/" + place_id).success(function (response) {
+                var result = response.result;
+                var formattedAddress = result.formatted_address;
+                var phone = result.international_phone_number;
+                var name = result.name;
+                var photoReference = result.photos[0].photo_reference;
+                var reviews = result.reviews;
+                var website = result.website;
+                var rating = result.rating;
+
+                placeDetails = {
+                    name: name,
+                    phone: phone,
+                    address: formattedAddress,
+                    photo: photoReference,
+                    reviews: reviews,
+                    website: website,
+                    rating: rating
+                };
+
+                callback(placeDetails);
             });
         }
     }
