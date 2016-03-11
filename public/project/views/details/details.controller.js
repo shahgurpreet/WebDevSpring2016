@@ -5,12 +5,13 @@
         .module("FormBuilderApp")
         .controller("DetailsController", DetailsController);
 
-    function DetailsController($location, $scope, POIService, InstagramService, TwitterService, $routeParams) {
+    function DetailsController($scope, POIService, InstagramService, $routeParams, TwitterService) {
         $scope.name = $routeParams.name;
         var name = $routeParams.name;
         var place_id = $routeParams.place_id;
         $scope.getInstagramPhotos = getInstagramPhotos;
-        $scope.placeDetails = {};
+
+
 
         var getPlaceDetails = function() {
             POIService.getPlaceDetails(place_id, processPlaceDetails);
@@ -26,20 +27,34 @@
         }
 
         function renderPlaceDetails(placeDetailsArray) {
+            $scope.placeDetails = {};
             $scope.placeDetails = placeDetailsArray[0];
         }
 
         function  getInstagramPhotos() {
+            $scope.instagramImages = [];
+            $scope.name = $routeParams.name;
             name = $scope.name.replace(/ +/g, "");
             name = name.replace(/\W/g, '')
             name = accentsTidy(name);
             InstagramService.getPhotosForHashTag(name, render);
 
             function render(response) {
-                $scope.instagramImages = [];
                 $scope.instagramImages = response;
             }
         }
+
+        getInstagramPhotos();
+
+        function getTwitterPosts() {
+            TwitterService.getTwitterPosts($routeParams.name, render);
+
+            function render(response) {
+                $scope.twitterImages = response;
+            }
+        }
+
+        getTwitterPosts();
 
         function accentsTidy(name) {
             var r = name.toLowerCase();

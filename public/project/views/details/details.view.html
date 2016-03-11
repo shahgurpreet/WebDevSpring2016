@@ -14,20 +14,41 @@
                     <br>
                 </div>
             </div>
-            <!--<div ng-repeat="image in instagramImages" class="col-md-3 col-lg-4 col-sm-6 col-xs-12">
-                <a href="">
-                    <div>
-                        <img class="search-page-img" ng-src="{{image}}" class="img-responsive">
+        </div>
+
+        <div class="row">
+            <uib-tabset justified="true">
+                <uib-tab heading="Reviews">
+                    <div class="table-responsive reviews">
+                        <table class="table table-striped">
+                            <tr ng-repeat = "review in placeDetails.reviews">
+                                <td>"{{review.text}}"</td>
+                            </tr>
+                        </table>
                     </div>
-                </a>
-            </div>-->
-            <!--<div class="reviews">
-                <ul style="list-style-type:none">
-                    <li ng-repeat = "review in placeDetails.reviews">
-                        <p>"{{review.text}}"</p>
-                    </li>
-                </ul>
-            </div>-->
+                </uib-tab>
+                <uib-tab heading="Instagram Posts">
+                    <div ng-repeat="image in instagramImages" class="col-md-3 col-lg-4 col-sm-6 col-xs-12">
+                        <a href="">
+                            <div>
+                                <img class="search-page-img" ng-src="{{image}}" class="img-responsive">
+                            </div>
+                        </a>
+                    </div>
+                </uib-tab>
+                <uib-tab heading="Twitter Posts">
+                    <div ng-repeat="image in twitterImages track by $index" class="col-md-3 col-lg-4 col-sm-6 col-xs-12">
+                        <a href="">
+                            <div>
+                                <img class="search-page-img" ng-src="{{image}}" class="img-responsive">
+                            </div>
+                        </a>
+                    </div>
+                </uib-tab>
+            </uib-tabset>
         </div>
     </div>
 </div>
+
+<!---->
+<!---->

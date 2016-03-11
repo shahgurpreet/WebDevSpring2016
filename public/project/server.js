@@ -5,11 +5,12 @@ module.exports = function(app) {
 
     var https = require('https');
     var htmlparser = require("htmlparser2");
+    var Twitter = require('twitter-node-client').Twitter;
 
     app.get('/api/poi/:city', getPOIForCity);
     app.get('/api/place/:place_id', getPlaceDetails);
     app.get('/api/photoPOI/:photo', getPhotoPOI);
-
+    app.get('/api/twitter/:tag', getTwitterPosts);
 
     function getPOIForCity(req, res) {
         var city = req.params.city;
@@ -95,5 +96,30 @@ module.exports = function(app) {
                 res.send(placeDetails);
             });
         })
+    }
+
+    function getTwitterPosts(req, res) {
+
+        var tag = req.params.tag;
+
+        //Callback functions
+        var error = function (err, response, body) {
+            oconsle.log('ERROR [%s]', JSON.stringify(err));
+        };
+        var success = function (data) {
+            res.send(data);
+        };
+
+        var config = {
+            "consumerKey": "8VlpyEzOzlSRpwXxKNqaQnEzN",
+            "consumerSecret": "sirG58Jh5Lvr3vQIR3PRuBM0KvLJAmsCdGRtKGE54bHmYmwuTc",
+            "accessToken": "138294064-vuF7hXX7yp4C9gGPy1VKNCycDwIhOBFJdvUz9sbh",
+            "accessTokenSecret": "uIWu0gNwBKmC8KK6ptSJ2tcNi6jDQbexMHUgdLNIEiSSo",
+            "callBackUrl": "http://webdev2016-shahgurpreet.rhcloud.com/"
+        };
+
+        var twitter = new Twitter(config);
+        twitter.getSearch({'q':tag,'count': 20, 'include_entities': true, 'filter':'images'}, error, success);
+
     }
 };
