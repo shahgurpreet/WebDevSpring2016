@@ -2,11 +2,18 @@
     <h2>Places of Interest in {{city}}</h2>
     <div class="row">
 
-    <div ng-repeat="poi in POIresults" class="col-md-3 col-lg-4 col-sm-6 col-xs-12">
+    <div ng-repeat="poi in POIresults" class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
         <a ng-click="selectPOI(poi)" href="">
-            <div>
+            <!--<div>
                 <img class="search-page-img" ng-src="{{poi.photo}}" title={{poi.name}} class="img-responsive">
-            </div>
+            </div>-->
+
+            <figure class="cap-bot">
+                <img class="search-page-img" ng-src="{{poi.photo}}" title={{poi.name}} class="img-responsive">
+                <figcaption>
+                    {{poi.name}}
+                </figcaption>
+            </figure>
         </a>
     </div>
 </div>
