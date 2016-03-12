@@ -4,7 +4,7 @@
 "use strict";
 (function(){
     angular
-        .module("FormBuilderApp")
+        .module("WanderMustApp")
         .controller("ProfileController", ProfileController);
 
     function ProfileController($rootScope, $location, $scope, UserService) {

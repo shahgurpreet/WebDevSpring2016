@@ -3,7 +3,7 @@
  */
 (function(){
     angular
-        .module("FormBuilderApp")
+        .module("WanderMustApp")
         .config(configuration);
 
     function configuration($routeProvider, $httpProvider) {

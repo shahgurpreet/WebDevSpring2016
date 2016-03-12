@@ -3,5 +3,5 @@
  */
 (function () {
     angular
-        .module("FormBuilderApp", ["ngRoute", "ngResource", "ui.bootstrap"]);
+        .module("WanderMustApp", ["ngRoute", "ngResource", "ui.bootstrap"]);
 })();

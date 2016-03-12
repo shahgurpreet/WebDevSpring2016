@@ -4,7 +4,7 @@
 "use strict";
 (function () {
     angular
-        .module("FormBuilderApp")
+        .module("WanderMustApp")
         .controller("SearchController", SearchController);
 
     function SearchController($location, $scope, POIService, $routeParams) {

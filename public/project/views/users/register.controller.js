@@ -4,7 +4,7 @@
 "use strict";
 (function(){
     angular
-        .module("FormBuilderApp")
+        .module("WanderMustApp")
         .controller("RegisterController", RegisterController);
 
     function RegisterController($rootScope, $location, $scope, UserService) {

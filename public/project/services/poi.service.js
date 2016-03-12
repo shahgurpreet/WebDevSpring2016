@@ -5,7 +5,7 @@
 
 (function(){
     angular
-        .module("FormBuilderApp")
+        .module("WanderMustApp")
         .factory("POIService", POIService);
 
     function POIService($http,$q) {

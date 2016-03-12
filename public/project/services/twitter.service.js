@@ -4,7 +4,7 @@
 "use strict";
 (function(){
     angular
-        .module("FormBuilderApp")
+        .module("WanderMustApp")
         .factory("TwitterService", TwitterService);
 
     function TwitterService($http) {

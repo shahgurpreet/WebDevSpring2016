@@ -2,7 +2,7 @@
 
 (function () {
     angular
-        .module("FormBuilderApp")
+        .module("WanderMustApp")
         .controller("DetailsController", DetailsController);
 
     function DetailsController($scope, POIService, InstagramService, $routeParams, TwitterService) {

@@ -1,7 +1,7 @@
 "use strict";
 (function () {
     angular
-        .module("FormBuilderApp")
+        .module("WanderMustApp")
         .controller("HeaderController", HeaderController);
 
     function HeaderController($location, $scope, $rootScope, POIService) {

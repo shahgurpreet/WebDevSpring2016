@@ -4,7 +4,7 @@
 "use strict";
 (function () {
     angular
-        .module("FormBuilderApp")
+        .module("WanderMustApp")
         .controller("MainController", MainController);
 
     function MainController($location, $scope) {

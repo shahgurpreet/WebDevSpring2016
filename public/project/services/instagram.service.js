@@ -5,7 +5,7 @@
 
 (function () {
     angular
-        .module("FormBuilderApp")
+        .module("WanderMustApp")
         .factory("InstagramService", InstagramService);
 
     var insta_id = '523871488.1677ed0.9bffbc141261470493c0ad2e655d92ce';

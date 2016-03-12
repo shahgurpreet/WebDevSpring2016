@@ -6,7 +6,7 @@
 
 (function(){
     angular
-        .module("FormBuilderApp")
+        .module("WanderMustApp")
         .factory("FormService", FormService);
 
     var allForms = [
