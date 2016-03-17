@@ -4,6 +4,7 @@
 module.exports = function(app) {
 
     var fs = require('fs');
+    var uuid = require('node-uuid');
     var formJSON = JSON.parse(fs.readFileSync('./form.mock.json'));
 
     var api = {
@@ -11,13 +12,14 @@ module.exports = function(app) {
         findAllFormsForUser: findAllFormsForUser,
         updateFormById:updateFormById,
         deleteFormById:deleteFormById,
-        findFormByTitle: findFormByTitle
+        findFormByTitle: findFormByTitle,
+        findFormById: findFormById
     };
 
     return api;
 
     function createFormForUser(userId, form) {
-        var _id = new Date().getTime();
+        var _id = uuid.v1();
         if(form) {
             form._id = _id;
             form.userId = userId;
@@ -45,6 +47,8 @@ module.exports = function(app) {
                 formJSON[i] = updatedForm;
             }
         }
+
+        return formJSON;
     }
 
     function deleteFormById(formId) {
@@ -60,6 +64,8 @@ module.exports = function(app) {
         if (removeIndex > -1) {
             formJSON.splice(removeIndex, 1);
         }
+
+        return formJSON;
     }
 
     function findFormByTitle(title) {
@@ -73,5 +79,18 @@ module.exports = function(app) {
 
             return null;
         }
+    }
+
+    function findFormById(formId) {
+        if(formId) {
+            for(var i in formJSON) {
+                var form = formJSON[i];
+                if(form._id === formId) {
+                    return form;
+                }
+            }
+        }
+
+        return null;
     }
 };
