@@ -15,13 +15,13 @@
         // event handler implementation
         function register(newUser) {
             if(newUser) {
-                UserService.createUser(newUser, processNewUser);
+                UserService.createUser(newUser).then(
+                    function (response) {
+                        $rootScope.currentUser = newUser;
+                        $location.url("/profile/");
+                    }
+                )
             }
-        }
-
-        function processNewUser(user) {
-            $rootScope.currentUser = user;
-            $location.url("/profile/");
         }
     }
 })();

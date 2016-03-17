@@ -9,86 +9,87 @@
         .module("FormBuilderApp")
         .factory("UserService", UserService);
 
-    function UserService() {
+    function UserService($http, $q) {
 
         var api = {
             findUserByCredentials: findUserByCredentials,
-            findAllUsers: findAllUsers,
             createUser: createUser,
             deleteUserById: deleteUserById,
-            updateUser: updateUser
+            updateUser: updateUser,
+            findUserByUsername: findUserByUsername,
+            findAllUsers: findAllUsers
         };
         return api;
 
-        function findUserByCredentials(username, password, callback) {
-            findAllUsers(getUsers);
-            function getUsers(currentUsers) {
-                for(var i in currentUsers) {
-                    var user = currentUsers[i];
-                    if(username === user.username && password == user.password) {
-                        callback(user);
-                        break;
-                    }
-                    callback(null);
-                }
-            }
+        function findAllUsers() {
+            var deferred = $q.defer();
+            $http.get("/api/assignment/user")
+                .success(function (response) {
+                    deferred.resolve(response);
+                });
+
+            return deferred.promise;
         }
 
-        function findAllUsers(callback) {
-            var currentUsers = [
-                {        "_id":123, "firstName":"Alice",            "lastName":"Wonderland",
-                    "username":"alice",  "password":"alice",   "roles": ["student"]                },
-                {        "_id":234, "firstName":"Bob",              "lastName":"Hope",
-                    "username":"bob",    "password":"bob",     "roles": ["admin"]                },
-                {        "_id":345, "firstName":"Charlie",          "lastName":"Brown",
-                    "username":"charlie","password":"charlie", "roles": ["faculty"]                },
-                {        "_id":456, "firstName":"Dan",              "lastName":"Craig",
-                    "username":"dan",    "password":"dan",     "roles": ["faculty", "admin"]},
-                {        "_id":567, "firstName":"Edward",           "lastName":"Norton",
-                    "username":"ed",     "password":"ed",      "roles": ["student"]                }
-            ];
-            callback(currentUsers);
+        function findUserByUsername(username) {
+            var deferred = $q.defer();
+            $http.get("/api/assignment/user?username=" + username)
+                .success(function (response) {
+                    deferred.resolve(response);
+                });
+
+            return deferred.promise;
         }
 
-        function createUser(user, callback) {
-            findAllUsers(getUsers);
-            function getUsers(currentUsers) {
-                user._id = new Date().getTime();
-                currentUsers.push(user);
-                callback(user);
-            }
+        function findUserByCredentials(username, password) {
+            var deferred = $q.defer();
+            $http.get("/api/assignment/user?username=" + username + "&password=" + password)
+                .success(function (response) {
+                    deferred.resolve(response);
+                })
+                .error(function (error) {
+                    console.log(error);
+                });
+
+            return deferred.promise;
         }
 
-        function deleteUserById(userId, callback) {
-            findAllUsers(getUsers);
-            function getUsers(currentUsers) {
-                var removeIndex = -1;
-                for(var i in currentUsers) {
-                    var user = currentUsers[i];
-                    if(user._id === userId) {
-                        removeIndex = i;
-                        break;
-                    }
+        function createUser(user) {
+            var endpoint = "/api/assignment/user";
+            var req = {
+                method: 'POST',
+                url: endpoint,
+                data: {
+                    user: user
                 }
-
-                if (removeIndex > -1) {
-                    currentUsers.splice(removeIndex, 1);
-                }
-
-                callback(currentUsers);
-            }
+            };
+            return($http(req));
         }
 
-        function updateUser(userId, user, callback) {
-            findAllUsers(getUsers);
-            function getUsers(currentUsers) {
-                for(var i in currentUsers) {
-                    var current = currentUsers[i];
-                    if(current._id === userId) {
-                        currentUsers[i] = user;
-                    }
+        function deleteUserById(userId) {
+            var deferred = $q.defer();
+            $http.get("/api/assignment/user/" + userId)
+                .success(function (response) {
+                    deferred.resolve(response);
+                })
+                .error(function (error) {
+                    console.log(error);
+                });
+
+            return deferred.promise;
+        }
+
+        function updateUser(userId, user) {
+            var endpoint = "/api/assignment/user/" + userId;
+            var req = {
+                method: 'PUT',
+                url: endpoint,
+                data: {
+                    user: user
                 }
-            }
+            };
+
+            return $http(req);
         }
     }
 })();

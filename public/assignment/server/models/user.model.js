@@ -3,8 +3,9 @@
  */
 module.exports = function(app) {
 
+    var uuid = require('node-uuid');
     var fs = require('fs');
-    var userJSON = JSON.parse(fs.readFileSync('./user.mock.json'));
+    var userJSON = JSON.parse(fs.readFileSync("./public/assignment/server/models/user.mock.json"));
 
     var api = {
         createUser: createUser,
@@ -19,10 +20,11 @@ module.exports = function(app) {
     return api;
 
     function createUser(user) {
-        if(user) {
-            userJSON.push(user);
+        var newUser = user;
+        newUser._id = uuid.v1();
+        if(newUser) {
+            userJSON.push(newUser);
         }
-
         return userJSON;
     }
 
@@ -55,7 +57,7 @@ module.exports = function(app) {
             }
         }
 
-        return userJSON;
+        return updatedUser;
     }
 
     function deleteUser(userId) {
@@ -93,7 +95,7 @@ module.exports = function(app) {
     function findUserByCredentials(credentials) {
         for(var i in userJSON) {
             var user = userJSON[i];
-            if(credentials.username === user.username && credentials.password == user.password) {
+            if(credentials.username.toLowerCase() === user.username && credentials.password == user.password) {
                 return user;
             }
         }

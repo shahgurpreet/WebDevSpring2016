@@ -16,16 +16,19 @@
 
         // event handler implementation
         function login(unloggedUser) {
+
+            $rootScope.currentUser = null;
+
             if(unloggedUser) {
                 var username = unloggedUser.username;
                 var password = unloggedUser.password;
-                UserService.findUserByCredentials(username, password, processUser);
+                UserService.findUserByCredentials(username, password). then(
+                    function (response) {
+                        $rootScope.currentUser = response;
+                        $location.url("/profile/");
+                    }
+                )
             }
-        }
-
-        function processUser(user) {
-            $rootScope.currentUser = user;
-            $location.url("/profile/");
         }
     }
 })();

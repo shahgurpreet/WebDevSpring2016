@@ -5,7 +5,7 @@ module.exports = function(app) {
 
     var fs = require('fs');
     var uuid = require('node-uuid');
-    var formJSON = JSON.parse(fs.readFileSync('./form.mock.json'));
+    var userJSON = JSON.parse(fs.readFileSync("./public/assignment/server/models/form.mock.json"));
 
     var api = {
         createFormForUser: createFormForUser,
