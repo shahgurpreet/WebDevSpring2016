@@ -23,6 +23,7 @@
         // event handler declarations
         $scope.addField = addField;
         $scope.deleteFieldFromForm = deleteFieldFromForm;
+        $scope.createReplicaForm = createReplicaForm;
 
         // event handler implementations
 
@@ -70,6 +71,14 @@
                     }
                 )
             }
+        }
+
+        function createReplicaForm(fieldId) {
+            FieldService.createReplicaForm(formId, fieldId).then(
+                function (response) {
+                    getFieldsForForm(formId);
+                }
+            )
         }
     }
 

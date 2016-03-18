@@ -54,7 +54,7 @@
                 <td class="admin-actions-links wrap-white-spacing">
                     <div class="form-fields-action-links">
                         <a class="glyphicon glyphicon-pencil"></a>
-                        <a class="glyphicon glyphicon-plus" ng-click="addField(selection)"></a>
+                        <a class="glyphicon glyphicon-plus" ng-click="createReplicaForm(field._id)"></a>
                         <a class="glyphicon glyphicon-remove" ng-click="deleteFieldFromForm($index)"></a>
                         <a class="glyphicon glyphicon-align-justify"></a>
                     </div>
@@ -63,22 +63,18 @@
             </tbody>
         </table>
     </div>
+
     <div class="table-responsive">
         <table class="table table-borderless" ng-switch on="selection">
             <tbody>
+            <tr>
+                <td colspan="2"><hr class="form-divider"></td>
+            </tr>
             <tr ng-switch-when="slt">
                 <td>
                     <div class="form-group">
                         <label>New Text Field</label>
                         <input ng-model="model.SingleLineField" type="text" class="form-control" placeholder="New Field">
-                    </div>
-                </td>
-                <td class="admin-actions-links wrap-white-spacing">
-                    <div class="form-fields-action-links">
-                        <a class="glyphicon glyphicon-pencil"></a>
-                        <a class="glyphicon glyphicon-plus" ng-click="addField(selection)"></a>
-                        <a class="glyphicon glyphicon-remove"></a>
-                        <a class="glyphicon glyphicon-align-justify"></a>
                     </div>
                 </td>
             </tr>
@@ -90,28 +86,12 @@
                         </textarea>
                     </div>
                 </td>
-                <td class="admin-actions-links wrap-white-spacing">
-                    <div class="form-fields-action-links">
-                        <a class="glyphicon glyphicon-pencil"></a>
-                        <a class="glyphicon glyphicon-plus" ng-click="addField(selection)"></a>
-                        <a class="glyphicon glyphicon-remove"></a>
-                        <a class="glyphicon glyphicon-align-justify"></a>
-                    </div>
-                </td>
             </tr>
             <tr ng-switch-when="date">
                 <td>
                     <div class="form-group">
                         <label for="inputDOB">New Date Field</label>
                         <input ng-model="model.DateField" type="date" class="form-control" id="inputDOB" placeholder="">
-                    </div>
-                </td>
-                <td class="admin-actions-links wrap-white-spacing">
-                    <div class="form-fields-action-links">
-                        <a class="glyphicon glyphicon-pencil"></a>
-                        <a class="glyphicon glyphicon-plus" ng-click="addField(selection)"></a>
-                        <a class="glyphicon glyphicon-remove"></a>
-                        <a class="glyphicon glyphicon-align-justify"></a>
                     </div>
                 </td>
             </tr>
@@ -124,14 +104,6 @@
                             <option value="OPTION_2">Option 2</option>
                             <option value="OPTION_3">Option 3</option>
                         </select>
-                    </div>
-                </td>
-                <td class="admin-actions-links wrap-white-spacing">
-                    <div class="form-fields-action-links">
-                        <a class="glyphicon glyphicon-pencil"></a>
-                        <a class="glyphicon glyphicon-plus" ng-click="addField(selection)"></a>
-                        <a class="glyphicon glyphicon-remove"></a>
-                        <a class="glyphicon glyphicon-align-justify"></a>
                     </div>
                 </td>
             </tr>
@@ -150,14 +122,6 @@
                         </div>
                     </td>
                 </div>
-                <td class="admin-actions-links wrap-white-spacing">
-                    <div class="form-fields-action-links">
-                        <a class="glyphicon glyphicon-pencil"></a>
-                        <a class="glyphicon glyphicon-plus" ng-click="addField(selection)"></a>
-                        <a class="glyphicon glyphicon-remove"></a>
-                        <a class="glyphicon glyphicon-align-justify"></a>
-                    </div>
-                </td>
             </tr>
             <tr ng-switch-when="rb">
                 <div class="form-group">
@@ -174,17 +138,6 @@
                         </div>
                     </td>
                 </div>
-                <td class="admin-actions-links wrap-white-spacing">
-                    <div class="form-fields-action-links">
-                        <a class="glyphicon glyphicon-pencil"></a>
-                        <a class="glyphicon glyphicon-plus" ng-click="addField(selection)"></a>
-                        <a class="glyphicon glyphicon-remove"></a>
-                        <a class="glyphicon glyphicon-align-justify"></a>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2"><hr class="form-divider"></td>
             </tr>
             <tr>
                 <td>
@@ -202,7 +155,7 @@
                 </td>
                 <td class="admin-actions-links wrap-white-spacing">
                     <div class="form-fields-action-links">
-                        <a class="glyphicon glyphicon-plus"></a>
+                        <a class="glyphicon glyphicon-plus" ng-click="addField(selection)"></a>
                     </div>
                 </td>
             </tr>

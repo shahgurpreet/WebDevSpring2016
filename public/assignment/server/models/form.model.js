@@ -3,9 +3,8 @@
  */
 module.exports = function(app) {
 
-    var fs = require('fs');
     var uuid = require('node-uuid');
-    var formJSON = JSON.parse(fs.readFileSync("./public/assignment/server/models/form.mock.json"));
+    var formJSON = require("./form.mock.json");
 
     var api = {
         createFormForUser: createFormForUser,
@@ -24,6 +23,7 @@ module.exports = function(app) {
         if(form) {
             form._id = _id;
             form.userId = userId;
+            form.fields = [];
             formJSON.push(form);
         }
         return formJSON;
@@ -94,4 +94,5 @@ module.exports = function(app) {
 
         return null;
     }
+
 };

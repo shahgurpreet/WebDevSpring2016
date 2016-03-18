@@ -10,6 +10,15 @@ module.exports = function(app) {
     app.delete("/api/assignment/form/:formId/field/:fieldId", deleteFieldFromForm);
     app.post("/api/assignment/form/:formId/field", createFieldForForm);
     app.put(" /api/assignment/form/:formId/field/:fieldId", updateField);
+    app.post("/api/assignment/form/:formId/:fieldId", createReplicaForm);
+
+    function createReplicaForm(req, res) {
+        var formId = req.params.formId;
+        var fieldId = req.params.fieldId;
+        var forms = fieldsModel.createReplicaForm(formId, fieldId);
+        res.send(forms);
+    }
+
 
     function getFieldsForForm(req, res) {
         var formId = req.params.formId;

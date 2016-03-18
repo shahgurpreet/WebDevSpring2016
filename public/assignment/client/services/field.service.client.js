@@ -15,7 +15,8 @@
             getFieldsForForm: getFieldsForForm,
             getFieldForForm: getFieldForForm,
             deleteFieldFromForm: deleteFieldFromForm,
-            updateField: updateField
+            updateField: updateField,
+            createReplicaForm: createReplicaForm
         };
         return api;
 
@@ -79,6 +80,16 @@
                     field: field
                 }
             };
+
+            return $http(req);
+        }
+
+        function createReplicaForm(formId, fieldId) {
+            var endpoint = "/api/assignment/form/" + formId + "/" + fieldId;
+            var req = {
+                method: 'POST',
+                url: endpoint
+            }
 
             return $http(req);
         }
