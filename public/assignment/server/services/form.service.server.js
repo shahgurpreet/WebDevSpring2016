@@ -29,7 +29,7 @@ module.exports = function(app) {
     }
 
     function createFormForUser(req, res) {
-        var form = req.body;
+        var form = req.body.form;
         var userId = req.params.userId;
         var forms = formModel.createFormForUser(userId, form);
         res.send(forms);
@@ -37,7 +37,8 @@ module.exports = function(app) {
 
     function updateFormById(req, res) {
         var formId = req.params.formId;
-        var forms = formModel.updateFormById(formId);
+        var form = req.body.form;
+        var forms = formModel.updateFormById(formId, form);
         res.send(forms);
     }
 };
