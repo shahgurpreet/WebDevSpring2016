@@ -34,7 +34,7 @@
                 controller: "FormController"
             })
             .when("/form-fields", {
-                templateUrl: "./views/forms/form-fields.view.html"
+                templateUrl: "./views/forms/fields.view.html"
             })
             .when("/search/:city", {
                 templateUrl: "./views/search/search.view.html",

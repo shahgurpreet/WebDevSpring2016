@@ -1,0 +1,213 @@
+
+<h2>Forms: Registration Form</h2>
+<ul class="nav nav-tabs">
+    <li role="presentation"><a href="#/forms">Forms</a></li>
+    <li role="presentation" class="active"><a>Fields</a></li>
+</ul>
+
+<form>
+    <div class="table-responsive">
+        <table class="table table-borderless">
+            <tbody>
+            <tr ng-repeat="field in allFields" ng-class="{'success' : $index == selectedFieldIndex}">
+                <td>
+                    <div ng-if="field.type=='TEXT'" class="form-group">
+                        <label class="control-label">{{field.label}}</label>
+                        <input type="{{field.type}}" class="form-control" placeholder="{{field.placeholder}}"/>
+                    </div>
+                    <div ng-if="field.type=='OPTIONS'" class="form-group">
+                        <label class="control-label">{{field.label}}</label>
+                        <select class="form-control">
+                            <option ng-repeat="option in field.options" value="option.value">{{option.label}}</option>
+                        </select>
+                    </div>
+                    <div ng-if="field.type=='EMAIL'" class="form-group">
+                        <label class="control-label">{{field.label}}</label>
+                        <input type="{{field.type}}" class="form-control" placeholder="{{field.placeholder}}"/>
+                    </div>
+                    <div ng-if="field.type=='RADIOS'" class="form-group">
+                        <label class="control-label">{{field.label}}</label>
+                        <div ng-repeat="option in field.options">
+                            <div class="radio">
+                                <label><input type="radio" name="{{option.label}}" value="{{option.value}}">{{option.label}}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="field.type=='CHECKBOXES'" class="form-group">
+                        <label class="control-label">{{field.label}}</label>
+                        <div ng-repeat="option in field.options">
+                            <div class="checkbox">
+                                <label><input type="checkbox" value="{{field.value}}">{{field.label}}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="field.type=='DATE'" class="form-group">
+                        <label class="control-label">{{field.label}}</label>
+                        <input type="date" class="form-control" placeholder=""/>
+                    </div>
+                    <div ng-if="field.type=='TEXTAREA'" class="form-group">
+                        <label class="control-label">{{field.label}}</label>
+                        <textarea class="form-control" placeholder="{{field.placeholder}}">
+                        </textarea>
+                    </div>
+                </td>
+                <td class="admin-actions-links wrap-white-spacing">
+                    <div class="form-fields-action-links">
+                        <a class="glyphicon glyphicon-pencil"></a>
+                        <a class="glyphicon glyphicon-plus" ng-click="addField(selection)"></a>
+                        <a class="glyphicon glyphicon-remove" ng-click="deleteFieldFromForm($index)"></a>
+                        <a class="glyphicon glyphicon-align-justify"></a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-borderless" ng-switch on="selection">
+            <tbody>
+            <tr ng-switch-when="slt">
+                <td>
+                    <div class="form-group">
+                        <label>New Text Field</label>
+                        <input ng-model="model.SingleLineField" type="text" class="form-control" placeholder="New Field">
+                    </div>
+                </td>
+                <td class="admin-actions-links wrap-white-spacing">
+                    <div class="form-fields-action-links">
+                        <a class="glyphicon glyphicon-pencil"></a>
+                        <a class="glyphicon glyphicon-plus" ng-click="addField(selection)"></a>
+                        <a class="glyphicon glyphicon-remove"></a>
+                        <a class="glyphicon glyphicon-align-justify"></a>
+                    </div>
+                </td>
+            </tr>
+            <tr ng-switch-when="mlt">
+                <td>
+                    <div class="form-group">
+                        <label for="hobbies">New Text Field</label>
+                        <textarea class="form-control" id="hobbies" placeholder="New Field">
+                        </textarea>
+                    </div>
+                </td>
+                <td class="admin-actions-links wrap-white-spacing">
+                    <div class="form-fields-action-links">
+                        <a class="glyphicon glyphicon-pencil"></a>
+                        <a class="glyphicon glyphicon-plus" ng-click="addField(selection)"></a>
+                        <a class="glyphicon glyphicon-remove"></a>
+                        <a class="glyphicon glyphicon-align-justify"></a>
+                    </div>
+                </td>
+            </tr>
+            <tr ng-switch-when="date">
+                <td>
+                    <div class="form-group">
+                        <label for="inputDOB">New Date Field</label>
+                        <input ng-model="model.DateField" type="date" class="form-control" id="inputDOB" placeholder="">
+                    </div>
+                </td>
+                <td class="admin-actions-links wrap-white-spacing">
+                    <div class="form-fields-action-links">
+                        <a class="glyphicon glyphicon-pencil"></a>
+                        <a class="glyphicon glyphicon-plus" ng-click="addField(selection)"></a>
+                        <a class="glyphicon glyphicon-remove"></a>
+                        <a class="glyphicon glyphicon-align-justify"></a>
+                    </div>
+                </td>
+            </tr>
+            <tr ng-switch-when="drop">
+                <td>
+                    <div class="form-group">
+                        <label >New Dropdown</label>
+                        <select ng-model="model.DropdownField" class="form-control">
+                            <option value="OPTION_1">Option 1</option>
+                            <option value="OPTION_2">Option 2</option>
+                            <option value="OPTION_3">Option 3</option>
+                        </select>
+                    </div>
+                </td>
+                <td class="admin-actions-links wrap-white-spacing">
+                    <div class="form-fields-action-links">
+                        <a class="glyphicon glyphicon-pencil"></a>
+                        <a class="glyphicon glyphicon-plus" ng-click="addField(selection)"></a>
+                        <a class="glyphicon glyphicon-remove"></a>
+                        <a class="glyphicon glyphicon-align-justify"></a>
+                    </div>
+                </td>
+            </tr>
+            <tr ng-switch-when="cb">
+                <div class="form-group">
+                    <td>
+                        <b>New Checkboxes</b>
+                        <div class="checkbox">
+                            <label><input type="checkbox" value="OPTION_A">Option A</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" value="OPTION_B">Option B</label>
+                        </div>
+                        <div class="checkbox disabled">
+                            <label><input type="checkbox" value="OPTION_C">Option C</label>
+                        </div>
+                    </td>
+                </div>
+                <td class="admin-actions-links wrap-white-spacing">
+                    <div class="form-fields-action-links">
+                        <a class="glyphicon glyphicon-pencil"></a>
+                        <a class="glyphicon glyphicon-plus" ng-click="addField(selection)"></a>
+                        <a class="glyphicon glyphicon-remove"></a>
+                        <a class="glyphicon glyphicon-align-justify"></a>
+                    </div>
+                </td>
+            </tr>
+            <tr ng-switch-when="rb">
+                <div class="form-group">
+                    <td>
+                        <b>New Radio Buttons</b>
+                        <div class="radio">
+                            <label><input ng-model="model.radio" type="radio" name="optradio" value="OPTION_X">Option X</label>
+                        </div>
+                        <div class="radio">
+                            <label><input ng-model="model.radio" type="radio" name="optradio" value="OPTION_Y">Option Y</label>
+                        </div>
+                        <div class="radio">
+                            <label><input ng-model="model.radio" type="radio" name="optradio" value="OPTION_Z">Option Z</Z></label>
+                        </div>
+                    </td>
+                </div>
+                <td class="admin-actions-links wrap-white-spacing">
+                    <div class="form-fields-action-links">
+                        <a class="glyphicon glyphicon-pencil"></a>
+                        <a class="glyphicon glyphicon-plus" ng-click="addField(selection)"></a>
+                        <a class="glyphicon glyphicon-remove"></a>
+                        <a class="glyphicon glyphicon-align-justify"></a>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"><hr class="form-divider"></td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-group">
+                        <label>Add New Field:</label>
+                        <select class="form-control" id="inputNewField" ng-model="selection">
+                            <option value="slt">Single Line Text</option>
+                            <option value="mlt">Multi Line Text</option>
+                            <option value="date">Date</option>
+                            <option value="drop">Dropdown</option>
+                            <option value="cb">Checkboxes</option>
+                            <option value="rb">Radio Buttons</option>
+                        </select>
+                    </div>
+                </td>
+                <td class="admin-actions-links wrap-white-spacing">
+                    <div class="form-fields-action-links">
+                        <a class="glyphicon glyphicon-plus"></a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</form>
+

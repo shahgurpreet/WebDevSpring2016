@@ -51,32 +51,27 @@ module.exports = function (app) {
     }
 
     function deleteFieldFromForm(formId, fieldId) {
-        var fields = [];
-        var removeFormIndex = -1;
         var removeFieldIndex = -1;
+        var removeFormIndex = -1;
         for(var i in formJSON) {
             var form = formJSON[i];
             if(form._id === formId) {
-                fields = form.fields;
                 removeFormIndex = i;
-                break;
+                var fields = form.fields;
+                for(var j in fields) {
+                    var field = fields[j];
+                    if(field._id === fieldId) {
+                        removeFieldIndex = j;
+                        break;
+                    }
+                }
             }
-        }
-
-        for(var j in fields) {
-            var field = fields[j];
-            if(field._id === fieldId) {
-                removeFieldIndex = j;
-                break;
-            }
-        }
-
-        if (removeFieldIndex > -1) {
-            fields.splice(removeFieldIndex, 1);
         }
 
         if(removeFormIndex > -1) {
-            formJSON[removeFormIndex] = fields;
+            var fields = formJSON[removeFormIndex].fields;
+            fields.splice(removeFieldIndex, 1);
+            formJSON[removeFormIndex].fields = fields;
         }
 
         return formJSON;
@@ -95,7 +90,6 @@ module.exports = function (app) {
                 }
             }
         }
-
         return formJSON;
     }
 

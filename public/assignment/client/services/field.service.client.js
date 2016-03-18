@@ -28,7 +28,7 @@
                     field: field
                 }
             };
-            return($http(req));
+            return $http(req);
         }
 
         function getFieldsForForm(formId) {
