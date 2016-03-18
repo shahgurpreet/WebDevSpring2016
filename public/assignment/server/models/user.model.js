@@ -56,8 +56,7 @@ module.exports = function(app) {
                 }
             }
         }
-
-        return updatedUser;
+        return userJSON;
     }
 
     function deleteUser(userId) {

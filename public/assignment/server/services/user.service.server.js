@@ -17,10 +17,10 @@ module.exports = function(app) {
     }
 
     function findAllUsers(req, res) {
-        if(req.query.username) {
-            findUserByUsername(req, res);
-        } else if(req.query.username && req.query.password) {
+        if(req.query.password && req.query.username) {
             findUserByCredentials(req, res);
+        } else if(req.query.username) {
+            findUserByUsername(req, res);
         } else {
             res.send(userModel.findAllUsers());
         }
@@ -49,8 +49,7 @@ module.exports = function(app) {
 
     function updateUser(req, res) {
         var userId = req.params.id;
-        var user = req.body;
-
+        var user = req.body.user;
         var users = userModel.updateUser(userId, user);
         res.send(users);
     }

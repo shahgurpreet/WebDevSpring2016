@@ -16,9 +16,6 @@
 
         // event handler implementation
         function login(unloggedUser) {
-
-            $rootScope.currentUser = null;
-
             if(unloggedUser) {
                 var username = unloggedUser.username;
                 var password = unloggedUser.password;

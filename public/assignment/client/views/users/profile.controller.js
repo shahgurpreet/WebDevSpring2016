@@ -18,8 +18,7 @@
                 var userId = $rootScope.currentUser._id;
                 UserService.updateUser(userId, currentUser).then(
                     function (response) {
-                        console.log(response);
-                        $rootScope.currentUser = response.data.user;
+                        $rootScope.currentUser = currentUser;
                     }
                 )
             }
