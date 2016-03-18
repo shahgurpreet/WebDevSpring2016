@@ -68,7 +68,7 @@
 
         function deleteUserById(userId) {
             var deferred = $q.defer();
-            $http.get("/api/assignment/user/" + userId)
+            $http.delete("/api/assignment/user/" + userId)
                 .success(function (response) {
                     deferred.resolve(response);
                 })

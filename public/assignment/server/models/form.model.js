@@ -5,7 +5,7 @@ module.exports = function(app) {
 
     var fs = require('fs');
     var uuid = require('node-uuid');
-    var userJSON = JSON.parse(fs.readFileSync("./public/assignment/server/models/form.mock.json"));
+    var formJSON = JSON.parse(fs.readFileSync("./public/assignment/server/models/form.mock.json"));
 
     var api = {
         createFormForUser: createFormForUser,
@@ -19,6 +19,7 @@ module.exports = function(app) {
     return api;
 
     function createFormForUser(userId, form) {
+        userId = parseInt(userId);
         var _id = uuid.v1();
         if(form) {
             form._id = _id;
@@ -29,6 +30,7 @@ module.exports = function(app) {
     }
 
     function findAllFormsForUser(userId) {
+        userId = parseInt(userId);
         var userForms = [];
         for(var i in formJSON) {
             var form = formJSON[i];
@@ -47,7 +49,6 @@ module.exports = function(app) {
                 formJSON[i] = updatedForm;
             }
         }
-
         return formJSON;
     }
 

@@ -22,23 +22,24 @@
 
 
         function getAllFormsForCurrentUser() {
-            FormService.findAllFormsForUser(currentUserId, getAllForms);
-
-            function getAllForms(allForms) {
-                $scope.allForms = allForms;
-            }
+            FormService.findAllFormsForUser(currentUserId).then(
+                function (response) {
+                    $scope.allForms = response;
+                }
+            )
         }
+
         // event handler implementation
         function addForm(title){
             var newForm = {};
             if(title) {
                 newForm.title = title;
-                FormService.createFormForUser(currentUserId, newForm, callback);
-
-                function callback(addedForm) {
-                    getAllFormsForCurrentUser();
-                    $scope.inputForm = {};
-                }
+                FormService.createFormForUser(currentUserId, newForm).then(
+                    function(response) {
+                        getAllFormsForCurrentUser();
+                        $scope.inputForm = {};
+                    }
+                )
             }
         }
 
@@ -48,22 +49,22 @@
             var formId = null;
             if(formTitle) {
                 oldForm.title = formTitle;
-                FormService.updateFormById(formId, oldForm, doSomething);
-
-                function doSomething(updatedForm) {
-                    $scope.inputForm = {};
-                }
+                FormService.updateFormById(oldForm._id, oldForm).then(
+                    function(response) {
+                        $scope.inputForm = {};
+                    }
+                )
             }
         }
 
         function deleteForm(index) {
             if(index > -1) {
                 var formId = $scope.allForms[index]._id;;
-                FormService.deleteFormById(formId, doSomething);
-
-                function doSomething(forms) {
-                    getAllFormsForCurrentUser();
-                }
+                FormService.deleteFormById(formId).then(
+                    function(response) {
+                        getAllFormsForCurrentUser();
+                    }
+                )
             }
         }
 

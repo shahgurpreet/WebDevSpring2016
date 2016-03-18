@@ -33,7 +33,7 @@
 
         function findAllFormsForUser(userId) {
             var deferred = $q.defer();
-            $http.get("/api/assignment/user/:userId/" + userId + "/form")
+            $http.get("/api/assignment/user/" + userId + "/form")
                 .success(function (response) {
                     deferred.resolve(response);
                 });
@@ -43,7 +43,7 @@
 
         function deleteFormById(formId) {
             var deferred = $q.defer();
-            $http.get("/api/assignment/form/" + formId)
+            $http.delete("/api/assignment/form/" + formId)
                 .success(function (response) {
                     deferred.resolve(response);
                 })
