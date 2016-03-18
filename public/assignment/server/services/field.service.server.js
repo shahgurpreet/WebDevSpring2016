@@ -5,43 +5,43 @@ module.exports = function(app) {
 
     var fieldsModel = require("./../models/fields.model.js")();
 
-    app.get("/api/assignment/form/:formId/field", getFormFields);
-    app.get("/api/assignment/form/:formId/field/:fieldId", getFormField);
-    app.delete("/api/assignment/form/:formId/field/:fieldId", deleteFormField);
-    app.post("/api/assignment/form/:formId/field", createFormField);
-    app.put(" /api/assignment/form/:formId/field/:fieldId", updateFormField);
+    app.get("/api/assignment/form/:formId/field", getFieldsForForm);
+    app.get("/api/assignment/form/:formId/field/:fieldId", getFieldForForm);
+    app.delete("/api/assignment/form/:formId/field/:fieldId", deleteFieldFromForm);
+    app.post("/api/assignment/form/:formId/field", createFieldForForm);
+    app.put(" /api/assignment/form/:formId/field/:fieldId", updateField);
 
-    function getFormFields(req, res) {
+    function getFieldsForForm(req, res) {
         var formId = req.params.formId;
-        var forms = fieldsModel.getFormFields(formId);
+        var forms = fieldsModel.getFieldsForForm(formId);
         res.send(forms);
     }
 
-    function getFormField(req, res) {
+    function getFieldForForm(req, res) {
         var formId = req.params.formId;
         var fieldId = req.params.fieldId;
-        var field = fieldsModel.getFormField(formId, fieldId);
+        var field = fieldsModel.getFieldForForm(formId, fieldId);
         res.send(field);
     }
 
-    function deleteFormField(req, res) {
+    function deleteFieldFromForm(req, res) {
         var formId = req.params.formId;
         var fieldId = req.params.fieldId;
-        var forms = fieldsModel.deleteFormField(formId, fieldId);
+        var forms = fieldsModel.deleteFieldFromForm(formId, fieldId);
         res.send(forms);
     }
 
-    function createFormField(req, res) {
+    function createFieldForForm(req, res) {
         var formId = req.params.formId;
         var field = req.body.field;
-        var forms = fieldsModel.createFormField(formId, field);
+        var forms = fieldsModel.createFieldForForm(formId, field);
     }
 
-    function updateFormField(req, res) {
+    function updateField(req, res) {
         var formId = req.params.formId;
         var fieldId = req.params.fieldId;
         var field = req.body.field;
-        var forms = fieldsModel.updateFormField(formId, fieldId, field);
+        var forms = fieldsModel.updateField(formId, fieldId, field);
     }
 
 };

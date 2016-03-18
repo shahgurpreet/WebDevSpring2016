@@ -8,16 +8,16 @@ module.exports = function (app) {
     var formJSON = JSON.parse(fs.readFileSync("./public/assignment/server/models/form.mock.json"));
 
     var api = {
-        getFormFields: getFormFields,
-        getFormField: getFormField,
-        deleteFormField: deleteFormField,
-        createFormField: createFormField,
-        updateFormField: updateFormField
+        getFieldsForForm: getFieldsForForm,
+        getFieldForForm: getFieldForForm,
+        deleteFieldFromForm: deleteFieldFromForm,
+        createFieldForForm: createFieldForForm,
+        updateField: updateField
     };
 
     return api;
 
-    function getFormFields(formId) {
+    function getFieldsForForm(formId) {
         for(var i in formJSON) {
             var form = formJSON[i];
             if(form._id === formId) {
@@ -28,7 +28,7 @@ module.exports = function (app) {
         return null;
     }
 
-    function getFormField(formId, fieldId) {
+    function getFieldForForm(formId, fieldId) {
         var fields = [];
         var fieldResp = {};
         for(var i in formJSON) {
@@ -50,7 +50,7 @@ module.exports = function (app) {
 
     }
 
-    function deleteFormField(formId, fieldId) {
+    function deleteFieldFromForm(formId, fieldId) {
         var fields = [];
         var removeFormIndex = -1;
         var removeFieldIndex = -1;
@@ -83,7 +83,7 @@ module.exports = function (app) {
 
     }
 
-    function createFormField(formId, field) {
+    function createFieldForForm(formId, field) {
         if(field) {
             field._id = uuid.v1();
         }
@@ -99,7 +99,7 @@ module.exports = function (app) {
         return formJSON;
     }
 
-    function updateFormField(formId, fieldId, field) {
+    function updateField(formId, fieldId, field) {
         if(formId) {
             for(var i in formJSON) {
                 var form = formJSON[i];
