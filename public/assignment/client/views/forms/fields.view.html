@@ -8,7 +8,7 @@
 <form>
     <div class="table-responsive">
         <table class="table table-borderless">
-            <tbody>
+            <tbody ui-sortable="sortableOptions" ng-model="allFields">
             <tr ng-repeat="field in allFields" ng-class="{'success' : $index == selectedFieldIndex}">
                 <td>
                     <div ng-if="field.type=='TEXT'" class="form-group">
@@ -56,7 +56,7 @@
                         <a class="glyphicon glyphicon-pencil"></a>
                         <a class="glyphicon glyphicon-plus" ng-click="createReplicaForm(field._id)"></a>
                         <a class="glyphicon glyphicon-remove" ng-click="deleteFieldFromForm($index)"></a>
-                        <a class="glyphicon glyphicon-align-justify"></a>
+                        <span class="myHandle"><a class="glyphicon glyphicon-align-justify"></a></span>
                     </div>
                 </td>
             </tr>

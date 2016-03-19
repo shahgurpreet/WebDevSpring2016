@@ -8,6 +8,10 @@
 
     function FieldController($routeParams, $scope, $rootScope, FieldService) {
 
+        $scope.sortableOptions = {
+            handle: '.myHandle'
+        };
+
         $scope.allFields = [];
         var formId = $routeParams.formId;
         function getFieldsForForm(formId) {
