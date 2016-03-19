@@ -1,7 +1,7 @@
 <h2>Forms</h2>
 <ul class="nav nav-tabs">
     <li role="presentation" class="active"><a>Forms</a></li>
-    <li role="presentation"><a href="#/form-fields">Fields</a></li>
+    <li role="presentation"><a>Fields</a></li>
 </ul>
 <div class="table-responsive" ng-init="getAllFormsForCurrentUser()">
     <table class="table table-striped">
@@ -25,7 +25,7 @@
             </td>
         </tr>
         <tr ng-repeat="form in allForms" ng-class="{'success' : $index == selectedFormIndex}">
-            <td><a href="#/form-fields/{{form._id}}">{{form.title}}</a></td>
+            <td><a href="#/form-fields/{{form._id}}/{{form.title}}">{{form.title}}</a></td>
             <td class="form-action-links wrap-white-spacing">
                 <a class="glyphicon glyphicon-remove" ng-click="deleteForm($index)"></a>
                 <a class="glyphicon glyphicon glyphicon-pencil" ng-click="selectForm($index)"></a>

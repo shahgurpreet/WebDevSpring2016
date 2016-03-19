@@ -6,7 +6,7 @@
         .module("FormBuilderApp")
         .controller("FieldController", FieldController);
 
-    function FieldController($routeParams, $scope, $rootScope, FieldService) {
+    function FieldController($routeParams, $scope, $rootScope, FieldService, $uibModal) {
 
         $scope.sortableOptions = {
             handle: '.myHandle'
@@ -14,6 +14,7 @@
 
         $scope.allFields = [];
         var formId = $routeParams.formId;
+        $scope.formName = $routeParams.formName;
         function getFieldsForForm(formId) {
             FieldService.getFieldsForForm(formId).then(
                 function(response) {
@@ -28,6 +29,8 @@
         $scope.addField = addField;
         $scope.deleteFieldFromForm = deleteFieldFromForm;
         $scope.createReplicaForm = createReplicaForm;
+        $scope.openModal = openModal;
+        $scope.fromModal = fromModal;
 
         // event handler implementations
 
@@ -83,6 +86,25 @@
                     getFieldsForForm(formId);
                 }
             )
+        }
+
+        function openModal(field){
+            $scope.fieldId = field._id;
+            $scope.value = field;
+            $scope.type = field.type;
+        }
+        function fromModal(field){
+            if(field) {
+                field.id = $scope.fieldId;
+                field.type = $scope.type;
+                $scope.value =null;
+                FieldService.updateField(formId, $scope.fieldId, field).then(
+                    function(response) {
+                        getFieldsForForm(formId);
+                    }
+                )
+            }
+            $scope.value = null;
         }
     }
 

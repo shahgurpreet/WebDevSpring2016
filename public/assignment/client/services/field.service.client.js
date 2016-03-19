@@ -91,7 +91,7 @@
                 url: endpoint
             }
 
-            return $http(req);
+            return $http(req)
         }
     }
 })();

@@ -1,5 +1,5 @@
 
-<h2>Forms: Registration Form</h2>
+<h2>Forms: {{formName}}</h2>
 <ul class="nav nav-tabs">
     <li role="presentation"><a href="#/forms">Forms</a></li>
     <li role="presentation" class="active"><a>Fields</a></li>
@@ -53,7 +53,7 @@
                 </td>
                 <td class="admin-actions-links wrap-white-spacing">
                     <div class="form-fields-action-links">
-                        <a class="glyphicon glyphicon-pencil"></a>
+                        <a class="glyphicon glyphicon-pencil" ng-click="openModal(field)"></a>
                         <a class="glyphicon glyphicon-plus" ng-click="createReplicaForm(field._id)"></a>
                         <a class="glyphicon glyphicon-remove" ng-click="deleteFieldFromForm($index)"></a>
                         <span class="myHandle"><a class="glyphicon glyphicon-align-justify"></a></span>
@@ -161,6 +161,42 @@
             </tr>
             </tbody>
         </table>
+    </div>
+
+    <div ng-if="value">
+        <div class="modal">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                    </div>
+                    <div class="modal-body">
+                        <form role="form">
+                            <div class="form-group">
+                                <label>Label</label>
+                                <input type="text" class="form-control" ng-model="field.label"/>
+                            </div>
+                            <div ng-if="value.type != 'DATE' && value.type != 'CHECKBOXES' && value.type != 'RADIOS' && value.type != 'OPTIONS'">
+                                <div class="form-group">
+                                    <label>Placeholder</label>
+                                    <input type="text" class="form-control" ng-model="field.placeholder"/>
+                                </div>
+                            </div>
+                            <div ng-if="value.type == 'CHECKBOXES' || value.type == 'RADIOS' || value.type == 'OPTIONS'">
+                                <div class="form-group">
+                                    <label>Options</label>
+                                    <textarea class="form-control" ng-model="field.options"></textarea>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" ng-click="fromModal(field)">OK</button>
+                        <button type="button" class="btn btn-default" ng-click="fromModal()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </form>
 

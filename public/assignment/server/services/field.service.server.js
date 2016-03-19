@@ -9,7 +9,7 @@ module.exports = function(app) {
     app.get("/api/assignment/form/:formId/field/:fieldId", getFieldForForm);
     app.delete("/api/assignment/form/:formId/field/:fieldId", deleteFieldFromForm);
     app.post("/api/assignment/form/:formId/field", createFieldForForm);
-    app.put(" /api/assignment/form/:formId/field/:fieldId", updateField);
+    app.put("/api/assignment/form/:formId/field/:fieldId", updateField);
     app.post("/api/assignment/form/:formId/:fieldId", createReplicaForm);
 
     function createReplicaForm(req, res) {
@@ -43,6 +43,8 @@ module.exports = function(app) {
     function createFieldForForm(req, res) {
         var formId = req.params.formId;
         var field = req.body.field;
+        console.log(formId);
+        console.log(field);
         var forms = fieldsModel.createFieldForForm(formId, field);
         res.send(forms);
     }

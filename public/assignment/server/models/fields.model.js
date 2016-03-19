@@ -93,7 +93,7 @@ module.exports = function (app) {
         return mock;
     }
 
-    function updateField(formId, fieldId, field) {
+    function updateField(formId, fieldId, newField) {
         if(formId) {
             for(var i in mock) {
                 var form = mock[i];
@@ -102,12 +102,11 @@ module.exports = function (app) {
                     for(var j in fields) {
                         var field = fields[j];
                         if(field._id === fieldId) {
-                            mock[i].fields[j] = field;
+                            mock[i].fields[j] = newField;
                         }
                     }
                 }
             }
-
             return mock;
         }
     }
