@@ -43,8 +43,6 @@ module.exports = function(app) {
     function createFieldForForm(req, res) {
         var formId = req.params.formId;
         var field = req.body.field;
-        console.log(formId);
-        console.log(field);
         var forms = fieldsModel.createFieldForForm(formId, field);
         res.send(forms);
     }

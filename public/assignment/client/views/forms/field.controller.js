@@ -95,8 +95,23 @@
         }
         function fromModal(field){
             if(field) {
-                field.id = $scope.fieldId;
+                field._id = $scope.fieldId;
                 field.type = $scope.type;
+
+                if(field.options) {
+                    var options = [];
+                    var optionArray = field.options.split("\n");
+                    for(var i=0;i<optionArray.length;i=i+1){
+                        var k = optionArray[i].split(":");
+                        var obj = {
+                            label:k[0],
+                            value:k[1]
+                        }
+                        options.push(obj);
+                    }
+                    field.options = options;
+                }
+
                 $scope.value =null;
                 FieldService.updateField(formId, $scope.fieldId, field).then(
                     function(response) {
