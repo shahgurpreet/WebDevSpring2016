@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
 app.use(bodyParser.json())
-require('./public/project/server.js')(app);
+require('./public/project/server/app.js')(app);
 require('./public/assignment/server/app.js')(app);
 
 //Serve static content for the app from the “public” directory in the application directory

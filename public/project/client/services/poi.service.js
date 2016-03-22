@@ -37,6 +37,7 @@
         }
 
         function findPOIPerCity(city, callback) {
+            var deferred = $q.defer();
             var places_1;
             var promiseArray = [];
             $http.get("/api/poi/" + city).success(function(response) {
