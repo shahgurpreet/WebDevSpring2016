@@ -1,14 +1,16 @@
-<h1>Welcome !</h1>
-<p class="justify-text">This site is called WanderMust and it caters to serve the wanderlust of
-    travellers interested in seeing the main attraction points of a city.
-    It aims at providing the users with the ‘places to visit’ or the
-    ‘points of interest’ and not just the places like museums and monuments
-    as sometimes even a small coffee shop might be a tourist attraction.
-    So the places shown are ranked by prominence. In addition, the users
-    will also be shown the latest Instagram and Twitter photos for these places. <br>
+<div class="container">
+    <h2>Places of Interest Around You</h2>
+    <div class="row">
 
-    To get started just enter a city in the search box and happy wandering!
-</p>
-
-
-
+        <div ng-repeat="poi in HomePOIresults" class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
+            <a ng-click="selectPOI(poi)" href="">
+                <figure class="cap-bot">
+                    <img class="search-page-img" ng-src="{{poi.photo}}" class="img-responsive">
+                    <figcaption>
+                        {{poi.name}}
+                    </figcaption>
+                </figure>
+            </a>
+        </div>
+    </div>
+</div>

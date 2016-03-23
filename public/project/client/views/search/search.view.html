@@ -4,12 +4,8 @@
 
     <div ng-repeat="poi in POIresults" class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
         <a ng-click="selectPOI(poi)" href="">
-            <!--<div>
-                <img class="search-page-img" ng-src="{{poi.photo}}" title={{poi.name}} class="img-responsive">
-            </div>-->
-
             <figure class="cap-bot">
-                <img class="search-page-img" ng-src="{{poi.photo}}" title={{poi.name}} class="img-responsive">
+                <img class="search-page-img" ng-src="{{poi.photo}}" class="img-responsive">
                 <figcaption>
                     {{poi.name}}
                 </figcaption>

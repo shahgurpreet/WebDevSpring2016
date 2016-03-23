@@ -5,9 +5,31 @@ module.exports = function(app) {
     var https = require('https');
     var htmlparser = require("htmlparser2");
     var api_key = 'AIzaSyD8M-KBuFrLLvqhQ5eMTpOMXhamomRfwZ4';
+
     app.get('/api/poi/:city', getPOIForCity);
+    app.get('/api/poi/:lat/:long', getPOIForHome);
     app.get('/api/place/:place_id', getPlaceDetails);
     app.get('/api/photoPOI/:photo', getPhotoPOI);
+
+    function getPOIForHome(req, res) {
+        var lat = req.params.lat;
+        var long = req.params.long;
+        var endpoint = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?radius=500&location=';
+        endpoint = endpoint + lat + ',' + long;
+        endpoint = endpoint + '&key=' + api_key;
+
+        https.get(endpoint, function(response) {
+            var finalData = '';
+            response.on('data', function(chunk) {
+                finalData += chunk;
+            });
+            response.on('end', function() {
+                var places = JSON.parse(finalData);
+                res.send(places);
+            });
+        });
+
+    }
 
     function getPOIForCity(req, res) {
         var city = req.params.city;
