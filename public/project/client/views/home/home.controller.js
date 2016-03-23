@@ -23,6 +23,7 @@
             POIService.POIForHome(position.coords.latitude,position.coords.longitude, processPOI);
 
             function processPOI(response) {
+                console.log(response);
                 POIService.findPhotos(response, renderPOI);
             }
 
