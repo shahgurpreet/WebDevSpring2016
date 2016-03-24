@@ -91,37 +91,26 @@
             }
         }
 
-        function getInstaPhotos(tag, cfunc){
-            photo_url = photo_url + tag + "/" + 'media/recent?access_token=' + insta_id;
-            console.log(photo_url);
-            var resource = $resource(photo_url,
-                { callback: "JSON_CALLBACK" },
-                {
-                    getResult: {
-                        method: "JSONP"
+        function getInstaPhotos(tag, callback){
+            $http.get('/api/instagram/' + tag).success(function(response) {
+                if(response) {
+                    var data = response.data;
+                    if(data) {
+                        var instaPosts = [];
+                        for(var i=0; i < data.length; ++i) {
+                            var images = data[i].images;
+                            var tags = data[i].tags;
+                            instaPosts.push({
+                                tags: tags,
+                                photo: images.standard_resolution.url
+                            });
+                        }
+                        callback(instaPosts);
                     }
                 }
-            );
-
-            loadRemoteData();
-            function loadRemoteData() {
-                resource.getResult().$promise.then(
-                    function( response ) {
-                        if(response) {
-                            var data = response.data;
-                            var imagesArray = [];
-                            for(var i=0; i < data.length; ++i) {
-                                var images = data[i].images;
-                                imagesArray.push(images.standard_resolution.url);
-                            }
-                            cfunc(imagesArray);
-                        }
-                    },
-                    function( error ) {
-                        console.log( "Something went wrong!" );
-                    }
-                );
-            }
+            }).error(function(error) {
+               console.log(error);
+            });
         }
 
     }

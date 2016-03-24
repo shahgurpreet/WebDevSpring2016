@@ -5,14 +5,14 @@
         .module("WanderMustApp")
         .controller("DetailsController", DetailsController);
 
-    function DetailsController($scope, POIService, InstagramService, $routeParams, TwitterService) {
+    function DetailsController($scope, POIService, InstagramService, $routeParams, TwitterService, $timeout) {
         $scope.name = $routeParams.name;
         var name = $routeParams.name;
         var place_id = $routeParams.place_id;
         var lat = $routeParams.lat;
         var long = $routeParams.long;
         $scope.getInstagramPhotos = getInstagramPhotos;
-        $scope.instagramImages = [];
+        $scope.instagramImagesAndTags = [];
         $scope.twitterImages = [];
 
         var getPlaceDetails = function() {
@@ -20,7 +20,6 @@
         };
 
         getPlaceDetails();
-
 
         function processPlaceDetails(placeDetails) {
             var places = [];
@@ -37,7 +36,7 @@
             $scope.name = $routeParams.name;
             name = $scope.name.replace(/ +/g, "");
             name = name.replace(/\W/g, '')
-            name = accentsTidy(name);
+            //name = accentsTidy(name);
             /*InstagramService.getInstaLocations(lat, long, $scope.name, processInstaLocationId);
 
              function processInstaLocationId(response) {
@@ -48,10 +47,25 @@
              function render(response) {
              $scope.instagramImages = response;
              }*/
+
             InstagramService.getInstaPhotos(name, renderInsta);
 
             function renderInsta(response) {
-                $scope.instagramImages = response;
+                $timeout(function(){
+                    var instaPosts = response;
+                    for(var i = 0; i < instaPosts.length; i++) {
+                        var tag = '';
+                        var tags = instaPosts[i].tags;
+                        for(var j = 0; j < tags.length; j++) {
+                            tag += '#' + tags[j] + ' ';
+                        }
+                        $scope.instagramImagesAndTags.push({
+                            tags: tag,
+                            photo: instaPosts[i].photo
+                        });
+                    }
+                });
+
             }
         }
 
@@ -61,7 +75,7 @@
             TwitterService.getTwitterPosts($routeParams.name, render);
 
             function render(response) {
-                $scope.twitterImages = response;
+                $scope.twitterPosts = response;
             }
         }
 

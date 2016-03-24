@@ -28,25 +28,33 @@
                     </div>
                 </uib-tab>
                 <uib-tab heading="Instagram Posts">
-                    <div class="no-content" ng-if ="instagramImages.length == 0">
+                    <div class="no-content" ng-if ="instagramImagesAndTags.length == 0">
                         Sorry, no content found.
                     </div>
-                    <div ng-repeat="image in instagramImages" class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
-                            <div>
-                                <img class="search-page-img" ng-src="{{image}}" class="img-responsive">
-                            </div>
+                    <div ng-repeat="post in instagramImagesAndTags" class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
+                        <div>
+                            <figure class="cap-bot">
+                                <img ng-src="{{post.photo}}" class="search-page-img"/>
+                                <figcaption>
+                                    {{post.tags}}
+                                </figcaption>
+                            </figure>
+                        </div>
                     </div>
                 </uib-tab>
                 <uib-tab heading="Twitter Posts">
-                    <div class="no-content" ng-if ="twitterImages.length == 0">
+                    <div class="no-content" ng-if ="twitterPosts.length == 0">
                         Sorry, no content found.
                     </div>
-                    <div ng-repeat="image in twitterImages track by $index" class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
-                        <a href="">
-                            <div>
-                                <img class="search-page-img" ng-src="{{image}}" class="img-responsive">
-                            </div>
-                        </a>
+                    <div ng-repeat="tweet in twitterPosts track by $index" class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
+                        <div>
+                            <figure class="cap-bot">
+                                <img ng-src="{{tweet.photo}}" class="search-page-img"/>
+                                <figcaption>
+                                    {{tweet.status}}
+                                </figcaption>
+                            </figure>
+                        </div>
                     </div>
                 </uib-tab>
             </uib-tabset>

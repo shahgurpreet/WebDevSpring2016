@@ -17,20 +17,24 @@
 
         function getTwitterPosts(tag, callback) {
             $http.get("/api/twitter/" + tag).success(function (response) {
+                console.log(response);
                 var statuses = response.statuses;
-                var twitterPhotos_1 = [];
+                var twitterPosts = [];
                 for(var i = 0; i < statuses.length; ++i) {
                     var status = statuses[i];
                     var entities = status.entities;
+                    var text = status.text;
                     if(entities.media) {
-                        var photo = entities.media[0].media_url_https;
-                        twitterPhotos_1.push(photo);
+                        twitterPosts.push({
+                            status: text,
+                            photo: entities.media[0].media_url_https
+                        });
                     }
                 }
-                var twitterPhotos = twitterPhotos_1.filter(function(elem, pos) {
+                /*var twitterPhotos = twitterPhotos_1.filter(function(elem, pos) {
                     return twitterPhotos_1.indexOf(elem) == pos;
-                });
-                callback(twitterPhotos);
+                });*/
+                callback(twitterPosts);
             });
         }
 

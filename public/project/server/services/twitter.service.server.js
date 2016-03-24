@@ -9,9 +9,10 @@ module.exports = function (app) {
 
     function getTwitterPosts(req, res) {
         var tag = req.params.tag;
+        console.log(tag);
         //Callback functions
         var error = function (err, response, body) {
-            console.log('ERROR [%s]', JSON.stringify(err));
+            console.log('Error ' + err);
         };
         var success = function (data) {
             res.send(data);
