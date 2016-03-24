@@ -41,7 +41,7 @@
                 templateUrl: "./views/search/search.view.html",
                 controller: "SearchController"
             })
-            .when("/details/:name/:vicinity/:place_id", {
+            .when("/details/:name/:vicinity/:place_id/:lat/:long", {
                 templateUrl: "./views/details/details.view.html",
                 controller: "DetailsController"
             })

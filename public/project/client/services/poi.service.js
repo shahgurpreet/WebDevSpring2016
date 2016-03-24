@@ -41,14 +41,15 @@
             var places_1;
             $http.get("/api/poi/" + city).success(function(response) {
                 var response = response.results;
-                console.log(response);
                 places_1 = [];
                 for(var r=0; r < response.length; r++) {
                     var place = response[r];
                     var poi = {
                         name: place.name,
                         place_id: place.place_id,
-                        vicinity: place.vicinity
+                        vicinity: place.vicinity,
+                        lat: place.geometry.location.lat,
+                        long: place.geometry.location.lng
                     };
                     if(place.types.length > 0) {
                         if(place.types.indexOf('point_of_interest') != -1 &&
@@ -93,14 +94,15 @@
         function POIForHome(lat, long, callback) {
             var places = [];
             $http.get("/api/poi/" + lat + "/" + long).success(function(response) {
-                console.log(response);
                 var response = response.results;
                 for(var r=0; r < response.length; r++) {
                     var place = response[r];
                     var poi = {
                         name: place.name,
                         place_id: place.place_id,
-                        vicinity: place.vicinity
+                        vicinity: place.vicinity,
+                        lat: place.geometry.location.lat,
+                        long: place.geometry.location.lng
                     };
 
                     if(place.types.length > 0) {

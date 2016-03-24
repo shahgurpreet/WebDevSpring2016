@@ -29,6 +29,7 @@
     "express": "^3.4.8",
     "htmlparser2": "3.9.0",
     "node-uuid": "^1.4.7",
+    "string-similarity": "^1.0.0",
     "twitter-node-client": "0.0.6"
   },
   "devDependencies": {},

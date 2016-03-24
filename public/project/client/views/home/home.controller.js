@@ -6,6 +6,7 @@
 
     function HomeController($scope, $location, POIService) {
         $scope.HomePOIresults = [];
+        var lat, long;
         $scope.selectPOI = selectPOI;
         function getCurrentPosition() {
             if (navigator.geolocation) {
@@ -20,20 +21,22 @@
 
         function showPosition(position) {
             $scope.$apply();
+            lat = position.coords.latitude;
+            long = position.coords.longitude;
             POIService.POIForHome(position.coords.latitude,position.coords.longitude, processPOI);
+        }
 
-            function processPOI(response) {
-                console.log(response);
-                POIService.findPhotos(response, renderPOI);
-            }
+        function processPOI(response) {
+            POIService.findPhotos(response, renderPOI);
+        }
 
-            function renderPOI(poi) {
-                $scope.HomePOIresults = poi;
-            }
+        function renderPOI(poi) {
+            $scope.HomePOIresults = poi;
         }
 
         function selectPOI(poi) {
-            $location.url("/details/"+poi.name+"/"+poi.vicinity+"/"+poi.place_id);
+            $location.url("/details/"+poi.name+"/"+poi.vicinity+"/"+poi.place_id+"/"+poi.lat
+            +"/"+poi.long);
         }
 
         function showError(error) {

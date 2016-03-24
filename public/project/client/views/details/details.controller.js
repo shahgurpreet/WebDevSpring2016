@@ -9,9 +9,11 @@
         $scope.name = $routeParams.name;
         var name = $routeParams.name;
         var place_id = $routeParams.place_id;
+        var lat = $routeParams.lat;
+        var long = $routeParams.long;
         $scope.getInstagramPhotos = getInstagramPhotos;
-
-
+        $scope.instagramImages = [];
+        $scope.twitterImages = [];
 
         var getPlaceDetails = function() {
             POIService.getPlaceDetails(place_id, processPlaceDetails);
@@ -32,14 +34,23 @@
         }
 
         function  getInstagramPhotos() {
-            $scope.instagramImages = [];
             $scope.name = $routeParams.name;
             name = $scope.name.replace(/ +/g, "");
             name = name.replace(/\W/g, '')
             name = accentsTidy(name);
-            InstagramService.getPhotosForHashTag(name, render);
+            /*InstagramService.getInstaLocations(lat, long, $scope.name, processInstaLocationId);
 
-            function render(response) {
+             function processInstaLocationId(response) {
+             var instaLocationId = response;
+             InstagramService.getInstaPhotosForLocation(instaLocationId, render);
+             }
+
+             function render(response) {
+             $scope.instagramImages = response;
+             }*/
+            InstagramService.getInstaPhotos(name, renderInsta);
+
+            function renderInsta(response) {
                 $scope.instagramImages = response;
             }
         }

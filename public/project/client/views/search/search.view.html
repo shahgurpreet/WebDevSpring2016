@@ -1,16 +1,15 @@
 <div class="container">
     <h2>Places of Interest in {{city}}</h2>
-    <div class="row">
-
-    <div ng-repeat="poi in POIresults" class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
-        <a ng-click="selectPOI(poi)" href="">
-            <figure class="cap-bot">
-                <img class="search-page-img" ng-src="{{poi.photo}}" class="img-responsive">
-                <figcaption>
-                    {{poi.name}}
-                </figcaption>
-            </figure>
-        </a>
-    </div>
-</div>
+    <ul class="dynamic-grid" angular-grid="POIresults" ag-grid-width="300" ag-gutter-size="10" ag-id="gallery" ag-refresh-on-img-load="true" >
+        <li data-ng-repeat="pic in POIresults" class="grid">
+            <a ng-click="selectPOI(pic)" href="">
+                <figure class="cap-bot">
+                    <img src="{{pic.photo}}" class="grid-img" />
+                    <figcaption>
+                        {{pic.name}}
+                    </figcaption>
+                </figure>
+            </a>
+        </li>
+    </ul>
 </div>

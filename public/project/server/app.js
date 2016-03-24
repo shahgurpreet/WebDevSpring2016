@@ -4,4 +4,5 @@
 module.exports = function(app) {
     require("./services/google.service.server.js")(app);
     require("./services/twitter.service.server.js")(app);
+    require("./services/similarity.service.server.js")(app);
 };

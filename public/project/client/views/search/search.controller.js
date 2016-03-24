@@ -27,7 +27,7 @@
         }
 
         function selectPOI(poi) {
-            $location.url("/details/"+poi.name+"/"+poi.vicinity+"/"+poi.place_id);
+            $location.url("/details/"+poi.name+"/"+poi.vicinity+"/"+poi.place_id + "/" + poi.lat + "/" + poi.long);
         }
 
     }
