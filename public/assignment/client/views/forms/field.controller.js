@@ -106,7 +106,7 @@
                         var obj = {
                             label:k[0],
                             value:k[1]
-                        }
+                        };
                         options.push(obj);
                     }
                     field.options = options;

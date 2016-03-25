@@ -59,7 +59,7 @@
 
         function deleteForm(index) {
             if(index > -1) {
-                var formId = $scope.allForms[index]._id;;
+                var formId = $scope.allForms[index]._id;
                 FormService.deleteFormById(formId).then(
                     function(response) {
                         getAllFormsForCurrentUser();

@@ -268,7 +268,7 @@ angular.module('ui.sortable', [])
                                 ui.item.sortable.cancel();
                             }
 
-                            // Remove the item from this list's model and copy data into item,
+                            // Remove the item from this list's models and copy data into item,
                             // so the next list can retrive it
                             if (!ui.item.sortable.isCanceled()) {
                                 scope.$apply(function () {

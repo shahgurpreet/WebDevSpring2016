@@ -9,13 +9,5 @@
 
     function MainController($location, $scope, $rootScope, UserService) {
         $scope.$location = $location;
-        if($rootScope.currentUser) {
-            UserService.findUserByUsername($rootScope.currentUser.firstName).then(
-                function(response) {
-                    console.log(response);
-                    $rootScope.currentUser = response;
-                }
-            )
-        }
     }
 })();

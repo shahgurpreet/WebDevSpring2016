@@ -16,12 +16,12 @@
         function update(currentUser) {
             if(currentUser) {
                 var userId = $rootScope.currentUser._id;
-                UserService.updateUser(userId, currentUser, processNewUser);
+                UserService.updateUser(userId, currentUser).then(
+                    function (response) {
+                        $rootScope.currentUser = currentUser;
+                    }
+                )
             }
-        }
-
-        function processNewUser(user) {
-            $rootScope.currentUser = user;
         }
     }
 })();
