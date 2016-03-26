@@ -21,17 +21,21 @@
         function findPhotos(places_1, callback) {
             var promiseArray = [];
             var places = [];
+            var photo_place = [];
             for(var i=0; i<places_1.length; i++) {
                 var photo = places_1[i].photo;
-                promiseArray.push($http.get("/api/photoPOI/"+ photo).success(function (response) {
+                var name = places_1[i].name;
+                promiseArray.push($http.get("/api/photoPOI/"+ photo + "/" + name).success(function (response) {
                     places.push(response);
                 }));
             }
-
             $q.all(promiseArray).then(function () {
+                for(var i = 0; i < places.length; i++) {
+                    photo_place[places[i].name] = places[i].photo;
+                }
+
                 for(var i = 0; i < places_1.length; i++) {
-                    var newPhoto = places[i];
-                    places_1[i].photo = newPhoto;
+                    places_1[i].photo = photo_place[places_1[i].name];
                 }
                 callback(places_1);
             })

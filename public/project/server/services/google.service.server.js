@@ -9,7 +9,7 @@ module.exports = function(app) {
     app.get('/api/poi/:city', getPOIForCity);
     app.get('/api/poi/:lat/:long', getPOIForHome);
     app.get('/api/place/:place_id', getPlaceDetails);
-    app.get('/api/photoPOI/:photo', getPhotoPOI);
+    app.get('/api/photoPOI/:photo/:name', getPhotoPOI);
 
     function getPOIForHome(req, res) {
         var lat = req.params.lat;
@@ -68,6 +68,7 @@ module.exports = function(app) {
 
     function getPhotoPOI(req, res) {
         var photo_reference = req.params.photo;
+        var place_name = req.params.name;
         var endpoint = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&maxheight=500&photoreference=';
         endpoint += photo_reference;
         endpoint = endpoint + '&key=' + api_key;
@@ -93,7 +94,11 @@ module.exports = function(app) {
                 }, {decodeEntities: true});
                 parser.write(finalData);
                 parser.end();
-                res.send(photo_url);
+                var place_photo = {
+                    name: place_name,
+                    photo: photo_url
+                };
+                res.send(place_photo);
             });
         });
     }
