@@ -17,7 +17,6 @@
 
         function getTwitterPosts(tag, callback) {
             $http.get("/api/twitter/" + tag).success(function (response) {
-                console.log(response);
                 var statuses = response.statuses;
                 var twitterPosts = [];
                 for(var i = 0; i < statuses.length; ++i) {

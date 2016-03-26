@@ -1,8 +1,6 @@
 /**
  * Created by Gurpreet on 3/3/2016.
  */
-"use strict";
-
 (function(){
     angular
         .module("WanderMustApp")
@@ -10,11 +8,13 @@
 
     function POIService($http,$q) {
 
+        var nextPageToken = '0';
         var api = {
             findPOIPerCity : findPOIPerCity,
             findPhotos: findPhotos,
             getPlaceDetails: getPlaceDetails,
-            POIForHome: POIForHome
+            POIForHome: POIForHome,
+            POIForHomeNext: POIForHomeNext
         };
         return api;
 
@@ -97,7 +97,12 @@
 
         function POIForHome(lat, long, callback) {
             var places = [];
-            $http.get("/api/poi/" + lat + "/" + long).success(function(response) {
+            $http.get("/api/poi/" + lat + "/" + long + "/" + nextPageToken).success(function(response) {
+                if(response.next_page_token != undefined) {
+                    nextPageToken = response.next_page_token;
+                } else {
+                    nextPageToken = '0';
+                }
                 var response = response.results;
                 for(var r=0; r < response.length; r++) {
                     var place = response[r];
@@ -121,6 +126,15 @@
                 }
                 callback(places);
             });
+        }
+
+        function POIForHomeNext(lat, long, callback) {
+            if(nextPageToken != '0') {
+                POIForHome(lat, long, nextResults);
+                function nextResults(response) {
+                    callback(response);
+                }
+            }
         }
     }
 })();

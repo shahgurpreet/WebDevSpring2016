@@ -4,7 +4,8 @@
         .module("WanderMustApp")
         .controller("HomeController", HomeController);
 
-    function HomeController($scope, $location, POIService) {
+    function HomeController($scope, $location, POIService, $window) {
+        $scope.myPagingFunction = myPagingFunction;
         $scope.HomePOIresults = [];
         var lat, long;
         $scope.selectPOI = selectPOI;
@@ -17,12 +18,27 @@
                 $scope.showErr = true;
             }
         }
+
         getCurrentPosition();
+
+
+        function myPagingFunction() {
+            POIService.POIForHomeNext($scope.lat,$scope.long, processNextPOI);
+
+            function processNextPOI(response) {
+                POIService.findPhotos(response, renderNextPOI);
+            }
+
+            function renderNextPOI(response) {
+                $scope.HomePOIresults = $scope.HomePOIresults.concat(response);
+            }
+
+        }
 
         function showPosition(position) {
             $scope.$apply();
-            lat = position.coords.latitude;
-            long = position.coords.longitude;
+            $scope.lat = position.coords.latitude;
+            $scope.long = position.coords.longitude;
             POIService.POIForHome(position.coords.latitude,position.coords.longitude, processPOI);
         }
 

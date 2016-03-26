@@ -3,5 +3,5 @@
  */
 (function () {
     angular
-        .module("WanderMustApp", ["ngRoute", "ngResource", "ui.bootstrap", 'angularGrid']);
+        .module("WanderMustApp", ["ngRoute", "ngResource", "ui.bootstrap", 'angularGrid', 'infinite-scroll']);
 })();
