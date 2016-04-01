@@ -11,9 +11,24 @@
         $scope.city = $routeParams.city;
         $scope.selectPOI = selectPOI;
         $scope.POIresults = [];
+        $scope.myPagingFunction = myPagingFunction;
+
+        function myPagingFunction() {
+            POIService.POIForCityNext($scope.city, processNextPOI);
+
+            function processNextPOI(response) {
+                POIService.findPhotos(response, renderNextPOI);
+            }
+
+            function renderNextPOI(response) {
+                $scope.POIresults = $scope.POIresults.concat(response);
+            }
+
+        }
+
 
         var getPOIForCity = function() {
-            POIService.findPOIPerCity($scope.city, processPOI);
+            POIService.findPOIPerCity($scope.city, true, processPOI);
         };
 
         getPOIForCity();

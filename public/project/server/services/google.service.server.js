@@ -6,7 +6,7 @@ module.exports = function(app) {
     var htmlparser = require("htmlparser2");
     var api_key = 'AIzaSyD8M-KBuFrLLvqhQ5eMTpOMXhamomRfwZ4';
 
-    app.get('/api/poi/:city', getPOIForCity);
+    app.get('/api/poi/:city/:token', getPOIForCity);
     app.get('/api/poi/:lat/:long/:token', getPOIForHome);
     app.get('/api/place/:place_id', getPlaceDetails);
     app.get('/api/photoPOI/:photo/:name', getPhotoPOI);
@@ -21,7 +21,6 @@ module.exports = function(app) {
         var endpoint = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?radius=500&location=';
         endpoint = endpoint + lat + ',' + long;
         endpoint = endpoint + '&key=' + api_key + '&pagetoken=' + token;
-        console.log(endpoint);
 
         https.get(endpoint, function(response) {
             var finalData = '';
@@ -38,6 +37,10 @@ module.exports = function(app) {
 
     function getPOIForCity(req, res) {
         var city = req.params.city;
+        var token = req.params.token;
+        if(token === '0') {
+            token = '';
+        }
         var endpoint = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?radius=500&location=';
         var lat_long_url = 'https://maps.google.com/maps/api/geocode/json?address=';
 
@@ -54,7 +57,9 @@ module.exports = function(app) {
                 var lat_long_raw = JSON.parse(data);
                 var lat_long_json = lat_long_raw.results[0].geometry.location;
                 endpoint = endpoint + lat_long_json.lat + ',' + lat_long_json.lng;
-                endpoint = endpoint + '&key=' + api_key;
+                endpoint = endpoint + '&key=' + api_key + '&pagetoken=' + token;
+
+                console.log(endpoint);
 
                 https.get(endpoint, function(response) {
                     var finalData = '';

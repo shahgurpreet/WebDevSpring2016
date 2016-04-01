@@ -14,7 +14,8 @@
             findPhotos: findPhotos,
             getPlaceDetails: getPlaceDetails,
             POIForHome: POIForHome,
-            POIForHomeNext: POIForHomeNext
+            POIForHomeNext: POIForHomeNext,
+            POIForCityNext: POIForCityNext
         };
         return api;
 
@@ -41,9 +42,19 @@
             })
         }
 
-        function findPOIPerCity(city, callback) {
+        function findPOIPerCity(city, newCity, callback) {
             var places_1;
-            $http.get("/api/poi/" + city).success(function(response) {
+            if(newCity) {
+                var token = '0';
+            } else {
+                token = nextPageToken;
+            }
+            $http.get("/api/poi/" + city + "/" + token).success(function(response) {
+                if(response.next_page_token != undefined) {
+                    nextPageToken = response.next_page_token;
+                } else {
+                    nextPageToken = '0';
+                }
                 var response = response.results;
                 places_1 = [];
                 for(var r=0; r < response.length; r++) {
@@ -131,6 +142,15 @@
         function POIForHomeNext(lat, long, callback) {
             if(nextPageToken != '0') {
                 POIForHome(lat, long, nextResults);
+                function nextResults(response) {
+                    callback(response);
+                }
+            }
+        }
+
+        function POIForCityNext(city, callback) {
+            if(nextPageToken != '0') {
+                POIForHome(city, false, nextResults);
                 function nextResults(response) {
                     callback(response);
                 }
