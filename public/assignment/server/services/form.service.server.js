@@ -2,7 +2,7 @@
  * Created by Gurpreet on 3/17/2016.
  */
 module.exports = function(app) {
-    var formModel = require("./../models/form.model.js")();
+    var formModel = require("./../models/form.model.server.js")();
 
     app.get("/api/assignment/user/:userId/form", findAllFormsForUser);
     app.get("/api/assignment/form/:formId", findFormById);

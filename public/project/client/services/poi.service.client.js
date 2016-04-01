@@ -152,8 +152,11 @@
             if(nextPageToken != '0') {
                 POIForHome(city, false, nextResults);
                 function nextResults(response) {
+                    console.log(response);
                     callback(response);
                 }
+            } else {
+                console.log('token not');
             }
         }
     }

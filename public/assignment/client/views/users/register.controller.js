@@ -15,10 +15,14 @@
         // event handler implementation
         function register(newUser) {
             if(newUser) {
+                newUser.emails = newUser.emails.split(",");
                 UserService.createUser(newUser).then(
                     function (response) {
-                        $rootScope.currentUser = newUser;
-                        $location.url("/profile/");
+                        var currentUser = response.data;
+                        if(currentUser){
+                            $rootScope.currentUser = currentUser;
+                            $location.url("/profile/");
+                        }
                     }
                 )
             }
