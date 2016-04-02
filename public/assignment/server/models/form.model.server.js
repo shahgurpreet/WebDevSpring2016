@@ -3,8 +3,6 @@
  */
 module.exports = function(db, mongoose) {
 
-    var uuid = require('node-uuid');
-
     // load q promise library
     var q = require("q");
 
@@ -14,17 +12,15 @@ module.exports = function(db, mongoose) {
     // create form model from schema
     var FormModel = mongoose.model('form', FormSchema);
 
-    var formJSON = '';
-
     var api = {
         createFormForUser: createFormForUser,
         findAllFormsForUser: findAllFormsForUser,
         updateFormById:updateFormById,
         deleteFormById:deleteFormById,
         findFormByTitle: findFormByTitle,
-        findFormById: findFormById
+        findFormById: findFormById,
+        getMongooseModel: getMongooseModel
     };
-
     return api;
 
     function createFormForUser(userId, form) {
@@ -152,6 +148,10 @@ module.exports = function(db, mongoose) {
             });
             return deferred.promise;
         }
+    }
+
+    function getMongooseModel() {
+        return FormModel;
     }
 
 };

@@ -21,15 +21,17 @@
         return api;
 
         function createFieldForForm(formId, field) {
-            var endpoint = "/api/assignment/form/" + formId + "/field";
-            var req = {
-                method: 'POST',
-                url: endpoint,
-                data: {
-                    field: field
-                }
-            };
-            return $http(req);
+            if(field) {
+                var endpoint = "/api/assignment/form/" + formId + "/field";
+                var req = {
+                    method: 'POST',
+                    url: endpoint,
+                    data: {
+                        field: field
+                    }
+                };
+                return $http(req);
+            }
         }
 
         function getFieldsForForm(formId) {
