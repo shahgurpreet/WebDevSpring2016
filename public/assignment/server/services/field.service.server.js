@@ -1,9 +1,7 @@
 /**
  * Created by Gurpreet on 3/17/2016.
  */
-module.exports = function(app) {
-
-    var fieldsModel = require("./../models/fields.model.server.js")();
+module.exports = function(app, fieldModel) {
 
     app.get("/api/assignment/form/:formId/field", getFieldsForForm);
     app.get("/api/assignment/form/:formId/field/:fieldId", getFieldForForm);

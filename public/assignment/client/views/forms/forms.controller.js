@@ -33,6 +33,7 @@
         function addForm(title){
             var newForm = {};
             if(title) {
+                console.log(title);
                 newForm.title = title;
                 FormService.createFormForUser(currentUserId, newForm).then(
                     function(response) {

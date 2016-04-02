@@ -1,9 +1,7 @@
 /**
  * Created by Gurpreet on 3/17/2016.
  */
-module.exports = function(app) {
-    var formModel = require("./../models/form.model.server.js")();
-
+module.exports = function(app, formModel) {
     app.get("/api/assignment/user/:userId/form", findAllFormsForUser);
     app.get("/api/assignment/form/:formId", findFormById);
     app.delete("/api/assignment/form/:formId", deleteFormById);
@@ -12,27 +10,52 @@ module.exports = function(app) {
 
     function findAllFormsForUser(req, res) {
         var userId = req.params.userId;
-        var forms = formModel.findAllFormsForUser(userId);
-        res.send(forms);
+        formModel.findAllFormsForUser(userId).then(
+            function(docs) {
+                res.send(docs);
+            },
+            function(err) {
+                res.status(400).send(err);
+            }
+        )
     }
 
     function findFormById(req, res) {
         var formId = req.params.formId;
-        var form = formModel.findFormById(formId);
-        res.send(form);
+        formModel.findFormById(formId).then(
+            function(doc) {
+                res.json(doc);
+            },
+            function(err){
+                res.status(400).send(err);
+            }
+        )
     }
 
     function deleteFormById(req, res) {
         var formId = req.params.formId;
-        var forms = formModel.deleteFormById(formId);
-        res.send(forms);
+        formModel.deleteFormById(formId).then(
+            function(resp) {
+                res.json(resp);
+            },
+            function(err) {
+                res.status(400).send(err);
+            }
+        )
     }
 
     function createFormForUser(req, res) {
         var form = req.body.form;
         var userId = req.params.userId;
-        var forms = formModel.createFormForUser(userId, form);
-        res.send(forms);
+        formModel.createFormForUser(userId, form).then(
+            function(doc) {
+                res.json(doc);
+            },
+            function(err) {
+                res.status(400).send(err);
+            }
+        )
+
     }
 
     function updateFormById(req, res) {
