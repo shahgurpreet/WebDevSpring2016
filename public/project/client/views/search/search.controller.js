@@ -14,7 +14,6 @@
         $scope.myPagingFunction = myPagingFunction;
 
         function myPagingFunction() {
-            console.log('called');
             POIService.POIForCityNext($scope.city, processNextPOI);
 
             function processNextPOI(response) {

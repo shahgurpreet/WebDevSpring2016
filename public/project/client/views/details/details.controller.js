@@ -5,7 +5,7 @@
         .module("WanderMustApp")
         .controller("DetailsController", DetailsController);
 
-    function DetailsController($scope, POIService, InstagramService, $routeParams, TwitterService, $timeout) {
+    function DetailsController($scope, POIService, InstagramService, $routeParams, TwitterService, $timeout, $sce) {
         $scope.name = $routeParams.name;
         var name = $routeParams.name;
         var place_id = $routeParams.place_id;
@@ -20,6 +20,16 @@
         };
 
         getPlaceDetails();
+
+        var getPlaceSummary = function() {
+            POIService.getPlaceSummary(name, processPlaceSummary);
+        };
+
+        function processPlaceSummary(response) {
+            $scope.placeSummary = $sce.trustAsHtml(response);
+        }
+
+        getPlaceSummary();
 
         function processPlaceDetails(placeDetails) {
             var places = [];

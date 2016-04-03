@@ -27,6 +27,9 @@
                         </table>
                     </div>
                 </uib-tab>
+                <uib-tab ng-if="placeSummary" heading="Place Summary">
+                    <div data-ng-bind-html="placeSummary" class="summary"></div>
+                </uib-tab>
                 <uib-tab heading="Instagram Posts">
                     <div class="no-content" ng-if ="instagramImagesAndTags.length == 0">
                         Sorry, no content found.

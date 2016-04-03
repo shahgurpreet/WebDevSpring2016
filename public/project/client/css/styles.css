@@ -166,4 +166,13 @@ figure:hover:before {
     opacity: 1;
 }
 
+.limit{
+    height:30px;
+    overflow-y: scroll;
+}
+
+.summary {
+    padding:20px;
+}
+
 

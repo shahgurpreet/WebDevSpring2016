@@ -15,7 +15,8 @@
             getPlaceDetails: getPlaceDetails,
             POIForHome: POIForHome,
             POIForHomeNext: POIForHomeNext,
-            POIForCityNext: POIForCityNext
+            POIForCityNext: POIForCityNext,
+            getPlaceSummary: getPlaceSummary
         };
         return api;
 
@@ -66,12 +67,14 @@
                         lat: place.geometry.location.lat,
                         long: place.geometry.location.lng
                     };
-                    if(place.types.length > 0) {
-                        if(place.types.indexOf('point_of_interest') != -1 &&
-                            place.types.indexOf('doctor') === -1) {
-                            if(place.photos) {
-                                poi.photo = place.photos[0].photo_reference;
-                                places_1.push(poi);
+                    if(place.name.toLocaleLowerCase().indexOf('tour') < 0){
+                        if(place.types.length > 0) {
+                            if(place.types.indexOf('point_of_interest') != -1 &&
+                                place.types.indexOf('travel_agency') === -1) {
+                                if(place.photos) {
+                                    poi.photo = place.photos[0].photo_reference;
+                                    places_1.push(poi);
+                                }
                             }
                         }
                     }
@@ -127,7 +130,7 @@
 
                     if(place.types.length > 0) {
                         if(place.types.indexOf('point_of_interest') != -1 &&
-                        place.types.indexOf('doctor') === -1) {
+                            place.types.indexOf('travel_agency') === -1) {
                             if(place.photos) {
                                 poi.photo = place.photos[0].photo_reference;
                                 places.push(poi);
@@ -150,14 +153,17 @@
 
         function POIForCityNext(city, callback) {
             if(nextPageToken != '0') {
-                POIForHome(city, false, nextResults);
+                findPOIPerCity(city, false, nextResults);
                 function nextResults(response) {
-                    console.log(response);
                     callback(response);
                 }
-            } else {
-                console.log('token not');
             }
+        }
+
+        function getPlaceSummary(place, callback) {
+            $http.get("/api/wikipedia/" + place).success(function (response) {
+                callback(response);
+            });
         }
     }
 })();

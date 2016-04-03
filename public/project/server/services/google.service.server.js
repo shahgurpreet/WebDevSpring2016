@@ -18,7 +18,8 @@ module.exports = function(app) {
         if(token === '0') {
             token = '';
         }
-        var endpoint = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?radius=500&location=';
+        var endpoint = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?radius=20000&' + '' +
+            '&keyword=touristattraction&type=place_of_interest&location=';
         endpoint = endpoint + lat + ',' + long;
         endpoint = endpoint + '&key=' + api_key + '&pagetoken=' + token;
 
@@ -41,7 +42,8 @@ module.exports = function(app) {
         if(token === '0') {
             token = '';
         }
-        var endpoint = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?radius=500&location=';
+        var endpoint = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?radius=50000' +
+            '&keyword=touristattraction&type=place_of_interest&location=';
         var lat_long_url = 'https://maps.google.com/maps/api/geocode/json?address=';
 
         lat_long_url += city;
@@ -59,8 +61,6 @@ module.exports = function(app) {
                 endpoint = endpoint + lat_long_json.lat + ',' + lat_long_json.lng;
                 endpoint = endpoint + '&key=' + api_key + '&pagetoken=' + token;
 
-                console.log(endpoint);
-
                 https.get(endpoint, function(response) {
                     var finalData = '';
                     response.on('data', function(chunk) {
@@ -70,6 +70,9 @@ module.exports = function(app) {
                         var places = JSON.parse(finalData);
                         res.send(places);
                     });
+                    response.on('error', function(err) {
+                        console.log(err);
+                    })
                 });
 
             });

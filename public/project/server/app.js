@@ -6,5 +6,6 @@ module.exports = function(app) {
     require("./services/twitter.service.server.js")(app);
     require("./services/similarity.service.server.js")(app);
     require("./services/instagram.service.server.js")(app);
+    require("./services/wikipedia.service.server.js")(app);
     require("./services/user.service.server.js")(app);
 };
