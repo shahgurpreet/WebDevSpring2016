@@ -16,7 +16,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row" id="mytabs">
             <uib-tabset justified="true">
                 <uib-tab heading="Reviews">
                     <div class="table-responsive reviews">
@@ -31,17 +31,24 @@
                     <div data-ng-bind-html="placeSummary" class="summary"></div>
                 </uib-tab>
                 <uib-tab heading="Instagram Posts">
-                    <div class="no-content" ng-if ="instagramImagesAndTags.length == 0">
-                        Sorry, no content found.
+                    <div>
+                        <div class="no-content" ng-if ="instagramImagesAndTags.length == 0">
+                            Sorry, no content found.
+                        </div>
+                        <div ng-repeat="post in instagramImagesAndTags" class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
+                            <div>
+                                <figure class="cap-bot">
+                                    <img ng-src="{{post.photo}}" class="search-page-img"/>
+                                    <figcaption>
+                                        {{post.tags}}
+                                    </figcaption>
+                                </figure>
+                            </div>
+                        </div>
                     </div>
-                    <div ng-repeat="post in instagramImagesAndTags" class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
-                        <div>
-                            <figure class="cap-bot">
-                                <img ng-src="{{post.photo}}" class="search-page-img"/>
-                                <figcaption>
-                                    {{post.tags}}
-                                </figcaption>
-                            </figure>
+                    <div class="clearfix">
+                        <div class="center-block text-center">
+                            <a ng-click="paging()" class="button">More</a>
                         </div>
                     </div>
                 </uib-tab>

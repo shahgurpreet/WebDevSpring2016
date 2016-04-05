@@ -23,6 +23,7 @@
 
 
         function myPagingFunction() {
+            console.log('called');
             POIService.POIForHomeNext($scope.lat,$scope.long, processNextPOI);
 
             function processNextPOI(response) {

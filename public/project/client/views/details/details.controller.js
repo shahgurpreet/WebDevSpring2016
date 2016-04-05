@@ -1,11 +1,9 @@
-"use strict";
-
 (function () {
     angular
         .module("WanderMustApp")
         .controller("DetailsController", DetailsController);
 
-    function DetailsController($scope, POIService, InstagramService, $routeParams, TwitterService, $timeout, $sce) {
+    function DetailsController($scope, $rootScope, POIService, InstagramService, TwitterService, $routeParams, $timeout, $sce) {
         $scope.name = $routeParams.name;
         var name = $routeParams.name;
         var place_id = $routeParams.place_id;
@@ -14,6 +12,29 @@
         $scope.getInstagramPhotos = getInstagramPhotos;
         $scope.instagramImagesAndTags = [];
         $scope.twitterImages = [];
+
+        $scope.paging = function(){
+            if($scope.name != undefined) {
+                InstagramService.instaNext($scope.name, getMorePhotos);
+                function getMorePhotos(response) {
+                    $timeout(function(){
+                        var instaPosts = response;
+                        for(var i = 0; i < instaPosts.length; i++) {
+                            var tag = '';
+                            var tags = instaPosts[i].tags;
+                            for(var j = 0; j < tags.length; j++) {
+                                tag += '#' + tags[j] + ' ';
+                            }
+                            $scope.instagramImagesAndTags.push({
+                                tags: tag,
+                                photo: instaPosts[i].photo
+                            });
+                        }
+                    });
+
+                }
+            }
+        };
 
         var getPlaceDetails = function() {
             POIService.getPlaceDetails(place_id, processPlaceDetails);
@@ -44,8 +65,8 @@
 
         function  getInstagramPhotos() {
             $scope.name = $routeParams.name;
-            name = $scope.name.replace(/ +/g, "");
-            name = name.replace(/\W/g, '')
+            $scope.name = $scope.name.replace(/ +/g, "");
+            $scope.name = name.replace(/\W/g, '')
             //name = accentsTidy(name);
             /*InstagramService.getInstaLocations(lat, long, $scope.name, processInstaLocationId);
 
@@ -58,7 +79,7 @@
              $scope.instagramImages = response;
              }*/
 
-            InstagramService.getInstaPhotos(name, renderInsta);
+            InstagramService.getInstaPhotos($scope.name, true, renderInsta);
 
             function renderInsta(response) {
                 $timeout(function(){

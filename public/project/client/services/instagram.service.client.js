@@ -1,24 +1,25 @@
 /**
  * Created by Gurpreet on 3/3/2016.
  */
-"use strict";
-
 (function () {
     angular
         .module("WanderMustApp")
         .factory("InstagramService", InstagramService);
 
+
     var insta_id = '523871488.1677ed0.9bffbc141261470493c0ad2e655d92ce';
     var url = 'https://api.instagram.com/v1/locations/';
     var loc_url = 'https://api.instagram.com/v1/locations/search?';
-    var photo_url = 'https://api.instagram.com/v1/tags/';
+    var photo_url = 'https://api.instagram.com/v1/tags/token';
+
 
     function InstagramService($http, $resource) {
-
+        var nextPageToken = '0';
         var api = {
             getInstaPhotosForLocation : getInstaPhotosForLocation,
             getInstaLocations: getInstaLocations,
-            getInstaPhotos: getInstaPhotos
+            getInstaPhotos: getInstaPhotos,
+            instaNext: instaNext
         };
 
         return api;
@@ -91,9 +92,22 @@
             }
         }
 
-        function getInstaPhotos(tag, callback){
-            $http.get('/api/instagram/' + tag).success(function(response) {
+        function getInstaPhotos(tag, newInsta, callback){
+            var token = '0';
+            if(newInsta) {
+                token = '0';
+            } else {
+                token = nextPageToken;
+            }
+            $http.get('/api/instagram/' + tag + "/" + token).success(function(response) {
                 if(response) {
+                    if(response.pagination != undefined) {
+                        if(response.pagination.next_url != undefined) {
+                            nextPageToken = response.pagination.next_max_tag_id;
+                        } else {
+                            nextPageToken = '0';
+                        }
+                    }
                     var data = response.data;
                     if(data) {
                         var instaPosts = [];
@@ -111,6 +125,15 @@
             }).error(function(error) {
                console.log(error);
             });
+        }
+
+        function instaNext(tag, callback) {
+            if(nextPageToken != '0') {
+                getInstaPhotos(tag, false, nextResults);
+                function nextResults(response) {
+                    callback(response);
+                }
+            }
         }
 
     }

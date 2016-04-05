@@ -45,8 +45,9 @@
 
         function findPOIPerCity(city, newCity, callback) {
             var places_1;
+            var token = '0';
             if(newCity) {
-                var token = '0';
+                token = '0';
             } else {
                 token = nextPageToken;
             }

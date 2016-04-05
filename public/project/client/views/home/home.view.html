@@ -1,6 +1,7 @@
-<div class="container">
+<div class="container" id="content-scroller">
     <h2>Places of Interest Around You</h2>
-    <ul ag-infinite-scroll="myPagingFunction()" class="dynamic-grid" angular-grid="HomePOIresults" ag-grid-width="300" ag-gutter-size="10" ag-id="gallery" ag-refresh-on-img-load="true" >
+    <ul ag-infinite-scroll="myPagingFunction()" class="dynamic-grid" angular-grid="HomePOIresults" ag-grid-width="300" ag-gutter-size="10" ag-id="gallery" ag-refresh-on-img-load="true"
+        >
         <li data-ng-repeat="pic in HomePOIresults" class="grid">
             <a ng-click="selectPOI(pic)" href="">
                 <figure class="cap-bot">

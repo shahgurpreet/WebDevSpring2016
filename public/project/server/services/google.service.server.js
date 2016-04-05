@@ -42,7 +42,7 @@ module.exports = function(app) {
         if(token === '0') {
             token = '';
         }
-        var endpoint = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?radius=50000' +
+        var endpoint = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?radius=30000' +
             '&keyword=touristattraction&type=place_of_interest&location=';
         var lat_long_url = 'https://maps.google.com/maps/api/geocode/json?address=';
 
