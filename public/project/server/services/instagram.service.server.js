@@ -11,6 +11,7 @@ module.exports = function(app) {
 
     app.get('/api/instagram/:tag/:token', getInstagramPhotos);
 
+
     function getInstagramPhotos(req, res) {
         var tag = req.params.tag;
         var token = req.params.token;
