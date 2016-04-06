@@ -133,6 +133,8 @@
                 function nextResults(response) {
                     callback(response);
                 }
+            } else {
+                callback([]);
             }
         }
 

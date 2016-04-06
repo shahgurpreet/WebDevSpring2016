@@ -5,19 +5,26 @@
 
     function DetailsController($scope, $rootScope, POIService, InstagramService, TwitterService, $routeParams, $timeout, $sce) {
         $scope.name = $routeParams.name;
+        $scope.getInstagramPhotos = getInstagramPhotos;
+        $scope.instagramImagesAndTags = [];
+        $scope.twitterPosts = [];
+        $scope.noMoreTwitterData = false;
+        $scope.noMoreInstaData = false;
+
         var name = $routeParams.name;
         var place_id = $routeParams.place_id;
         var lat = $routeParams.lat;
         var long = $routeParams.long;
-        $scope.getInstagramPhotos = getInstagramPhotos;
-        $scope.instagramImagesAndTags = [];
-        $scope.twitterImages = [];
 
         $scope.paging = function(){
             if($scope.name != undefined) {
                 InstagramService.instaNext($scope.name, getMorePhotos);
                 function getMorePhotos(response) {
+                    console.log(response);
                     $timeout(function(){
+                        if(response.length === 0) {
+                            $scope.noMoreInstaData = true;
+                        }
                         var instaPosts = response;
                         for(var i = 0; i < instaPosts.length; i++) {
                             var tag = '';
@@ -29,6 +36,23 @@
                                 tags: tag,
                                 photo: instaPosts[i].photo
                             });
+                        }
+                    });
+
+                }
+            }
+        };
+
+        $scope.pagingTwitter = function() {
+            if($scope.name != undefined) {
+                TwitterService.twitterNext($scope.name, getMoreTweets);
+                function getMoreTweets(response) {
+                    if(response.length === 0) {
+                        $scope.noMoreTwitterData = true;
+                    }
+                    $timeout(function(){
+                        for(var i in response) {
+                            $scope.twitterPosts.push(response[i]);
                         }
                     });
 
@@ -82,6 +106,9 @@
             InstagramService.getInstaPhotos($scope.name, true, renderInsta);
 
             function renderInsta(response) {
+                if(response.length === 0) {
+                    $scope.noMoreInstaData = true;
+                }
                 $timeout(function(){
                     var instaPosts = response;
                     for(var i = 0; i < instaPosts.length; i++) {
@@ -103,9 +130,12 @@
         getInstagramPhotos();
 
         function getTwitterPosts() {
-            TwitterService.getTwitterPosts($routeParams.name, render);
+            TwitterService.getTwitterPosts($routeParams.name, true, render);
 
             function render(response) {
+                if(response.length === 0) {
+                    $scope.noMoreTwitterData = true;
+                }
                 $scope.twitterPosts = response;
             }
         }

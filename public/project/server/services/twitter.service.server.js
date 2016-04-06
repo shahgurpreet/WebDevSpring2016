@@ -5,14 +5,18 @@ module.exports = function (app) {
 
     var https = require('https');
     var Twitter = require('twitter-node-client').Twitter;
-    app.get('/api/twitter/:tag', getTwitterPosts);
+    app.get('/api/twitter/:tag/:token', getTwitterPosts);
 
     function getTwitterPosts(req, res) {
         var tag = req.params.tag;
-        console.log(tag);
+        tag = tag + ' -RT';
+        var token = req.params.token;
+        if(token === '0') {
+            token = '';
+        }
         //Callback functions
         var error = function (err, response, body) {
-            console.log('Error ' + err);
+            console.log('Error ' + JSON.stringify(err));
         };
         var success = function (data) {
             res.send(data);
@@ -27,6 +31,6 @@ module.exports = function (app) {
         };
 
         var twitter = new Twitter(config);
-        twitter.getSearch({'q':tag,'count': 20, 'include_entities': true, 'filter':'images'}, error, success);
+        twitter.getCustomApiCall('/search/tweets.json?max_id='+token+'&q='+tag+'&include_entities=true&count=33&filter=images',{}, error, success);
     }
 };

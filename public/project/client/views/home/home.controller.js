@@ -31,7 +31,9 @@
             }
 
             function renderNextPOI(response) {
-                $scope.HomePOIresults = $scope.HomePOIresults.concat(response);
+                for(var i in response) {
+                    $scope.HomePOIresults.push(response[i]);
+                }
             }
 
         }

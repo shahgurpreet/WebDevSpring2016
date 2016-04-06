@@ -46,17 +46,17 @@
                             </div>
                         </div>
                     </div>
-                    <div class="clearfix">
-                        <div class="center-block text-center">
-                            <a ng-click="paging()" class="button">More</a>
-                        </div>
+                    <div class="clearfix"></div>
+                    <div class="center-block text-center">
+                        <a ng-if="!noMoreInstaData" ng-click="paging()" class="button">More</a>
                     </div>
+
                 </uib-tab>
                 <uib-tab heading="Twitter Posts">
                     <div class="no-content" ng-if ="twitterPosts.length == 0">
                         Sorry, no content found.
                     </div>
-                    <div ng-repeat="tweet in twitterPosts track by $index" class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
+                    <div ng-repeat="tweet in twitterPosts" class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
                         <div>
                             <figure class="cap-bot">
                                 <img ng-src="{{tweet.photo}}" class="search-page-img"/>
@@ -66,6 +66,11 @@
                             </figure>
                         </div>
                     </div>
+                    <div class="clearfix"></div>
+                    <div class="center-block text-center">
+                        <a ng-if="!noMoreTwitterData" ng-click="pagingTwitter()" class="button">More</a>
+                    </div>
+
                 </uib-tab>
             </uib-tabset>
         </div>

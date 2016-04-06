@@ -21,7 +21,9 @@
             }
 
             function renderNextPOI(response) {
-                $scope.POIresults = $scope.POIresults.concat(response);
+                for(var i in response) {
+                    $scope.POIresults.push(response[i]);
+                }
             }
 
         }

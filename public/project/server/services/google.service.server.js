@@ -22,7 +22,6 @@ module.exports = function(app) {
             '&keyword=touristattraction&type=place_of_interest&location=';
         endpoint = endpoint + lat + ',' + long;
         endpoint = endpoint + '&key=' + api_key + '&pagetoken=' + token;
-
         https.get(endpoint, function(response) {
             var finalData = '';
             response.on('data', function(chunk) {
