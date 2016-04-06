@@ -22,8 +22,13 @@
 
 
         $scope.myPagingFunction = function() {
+            $scope.loading = true;
             POIService.POIForHomeNext($scope.lat,$scope.long, processNextPOI);
-
+            setTimeout(function () {
+                $scope.$apply(function(){
+                    $scope.loading = false;
+                });
+            }, 2000);
             function processNextPOI(response) {
                 POIService.findPhotos(response, renderNextPOI);
             }
