@@ -23,11 +23,13 @@
     "npm": ">= 1.0.0"
   },
   "dependencies": {
+    "angular-slimscroll": "^1.0.0",
     "angular-ui-bootstrap": "^1.2.4",
     "angular-ui-sortable": "^0.13.4",
     "body-parser": "^1.15.0",
     "express": "^3.4.8",
     "htmlparser2": "3.9.0",
+    "limax": "^1.2.0",
     "mongoose": "^4.4.10",
     "node-uuid": "^1.4.7",
     "ntwitter": "^0.5.0",

@@ -4,6 +4,7 @@
 module.exports = function(app) {
     var https = require('https');
     var htmlparser = require("htmlparser2");
+    var slug = require('limax');
     var api_key = 'AIzaSyD8M-KBuFrLLvqhQ5eMTpOMXhamomRfwZ4';
 
     app.get('/api/poi/:city/:token', getPOIForCity);
@@ -37,6 +38,7 @@ module.exports = function(app) {
 
     function getPOIForCity(req, res) {
         var city = req.params.city;
+        city = slug(city);
         var token = req.params.token;
         if(token === '0') {
             token = '';
@@ -44,7 +46,6 @@ module.exports = function(app) {
         var endpoint = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?radius=30000' +
             '&keyword=touristattraction&type=place_of_interest&location=';
         var lat_long_url = 'https://maps.google.com/maps/api/geocode/json?address=';
-
         lat_long_url += city;
         var lat_long_promise = https.get(lat_long_url);
 

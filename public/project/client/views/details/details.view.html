@@ -1,8 +1,8 @@
 <div class="container">
     <div class = "place-details">
-        <div class="row">
-            <div class="col-md-8">
-                <img class="details-page-img img-responsive" ng-src="{{placeDetails.photo}}" />
+        <div class="row well">
+            <div class="col-md-offset-2 col-md-4">
+                <img class="details-page-img img-responsive pull-right" ng-src="{{placeDetails.photo}}" />
             </div>
             <div class="col-md-4">
                 <div class="place-text-details">
@@ -15,10 +15,12 @@
                 </div>
             </div>
         </div>
-
         <div class="row" id="mytabs">
             <uib-tabset justified="true">
                 <uib-tab heading="Reviews">
+                    <div class="no-content" ng-if ="placeDetails.reviews.length == 0">
+                        Sorry, no content found.
+                    </div>
                     <div class="table-responsive reviews">
                         <table class="table table-striped">
                             <tr ng-repeat = "review in placeDetails.reviews">

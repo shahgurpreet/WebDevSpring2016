@@ -28,7 +28,7 @@
                 $scope.$apply(function(){
                     $scope.loading = false;
                 });
-            }, 2000);
+            }, 4000);
             function processNextPOI(response) {
                 POIService.findPhotos(response, renderNextPOI);
             }

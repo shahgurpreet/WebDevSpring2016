@@ -13,14 +13,13 @@
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    overflow: hidden
+    box-sizing: content-box;
+    overflow: hidden;
 }
 
 .pac-container:after {
     content: "";
     padding: 1px 1px 1px 0;
-    height: 16px;
     text-align: right;
     display: block;
     background-position: right;
@@ -35,7 +34,7 @@
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    line-height: 30px;
+    line-height: 40px;
     text-align: left;
     border-top: 1px solid #e6e6e6;
     font-size: 11px;
@@ -64,7 +63,7 @@
     width: 15px;
     height: 20px;
     margin-right: 7px;
-    margin-top: 6px;
+    margin-top: 12px;
     display: inline-block;
     vertical-align: top;
     background-image: url(//maps.gstatic.com/mapfiles/api-3/images/autocomplete-icons.png);
