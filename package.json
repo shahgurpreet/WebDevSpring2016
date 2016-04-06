@@ -26,7 +26,6 @@
     "angular-ui-bootstrap": "^1.2.4",
     "angular-ui-sortable": "^0.13.4",
     "body-parser": "^1.15.0",
-    "cy-infinite-scroll": "^1.0.0",
     "express": "^3.4.8",
     "htmlparser2": "3.9.0",
     "mongoose": "^4.4.10",
