@@ -4,8 +4,7 @@
         .module("WanderMustApp")
         .controller("HomeController", HomeController);
 
-    function HomeController($scope, $location, POIService, $window) {
-        $scope.myPagingFunction = myPagingFunction;
+    function HomeController($scope, $location, POIService, $window, $timeout) {
         $scope.HomePOIresults = [];
         var lat, long;
         $scope.selectPOI = selectPOI;
@@ -22,8 +21,7 @@
         getCurrentPosition();
 
 
-        function myPagingFunction() {
-            console.log('called');
+        $scope.myPagingFunction = function() {
             POIService.POIForHomeNext($scope.lat,$scope.long, processNextPOI);
 
             function processNextPOI(response) {
@@ -36,10 +34,9 @@
                 }
             }
 
-        }
+        };
 
         function showPosition(position) {
-            $scope.$apply();
             $scope.lat = position.coords.latitude;
             $scope.long = position.coords.longitude;
             POIService.POIForHome(position.coords.latitude,position.coords.longitude, processPOI);

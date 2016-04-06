@@ -23,7 +23,6 @@
                 token = nextPageToken;
             }
             $http.get("/api/twitter/" + tag + "/" + token).success(function (response) {
-                console.log(response);
                 var metadata = response.search_metadata;
                 if(metadata.next_results != undefined) {
                     var max_id= metadata.next_results.substr(0, metadata.next_results.indexOf('&'));

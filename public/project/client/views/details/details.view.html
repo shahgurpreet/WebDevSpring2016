@@ -7,10 +7,10 @@
             <div class="col-md-4">
                 <div class="place-text-details">
                     <i class="fa fa-fort-awesome"></i>&nbsp;<b class="place-heading">{{placeDetails.name}}</b><br><br>
-                    <i class="fa fa-map-marker fa-3"></i>&nbsp;{{placeDetails.address}} <br>
-                    <i class="fa fa-phone-square fa-5"></i>&nbsp;{{placeDetails.phone}} <br>
-                    <i class="fa fa-external-link-square"></i>&nbsp;<a ng-href="{{placeDetails.website}}" target="_blank"> Website</a> <br>
-                    <i class="fa fa-star"></i>&nbsp;{{placeDetails.rating}} <br>
+                    <i ng-if="placeDetails.address" class="fa fa-map-marker fa-3"></i>&nbsp;{{placeDetails.address}} <br>
+                    <i ng-if="placeDetails.phone" class="fa fa-phone-square fa-5"></i>&nbsp;{{placeDetails.phone}} <br>
+                    <i ng-if="placeDetails.website" class="fa fa-external-link-square"></i>&nbsp;<a ng-href="{{placeDetails.website}}" target="_blank"> Website</a> <br>
+                    <i ng-if="placeDetails.rating" class="fa fa-star"></i>&nbsp;{{placeDetails.rating}} <br>
                     <br>
                 </div>
             </div>
@@ -22,7 +22,7 @@
                     <div class="table-responsive reviews">
                         <table class="table table-striped">
                             <tr ng-repeat = "review in placeDetails.reviews">
-                                <td>"{{review.text}}"</td>
+                                <td>"{{review}}"</td>
                             </tr>
                         </table>
                     </div>

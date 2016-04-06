@@ -92,7 +92,13 @@
                 var phone = result.international_phone_number;
                 var name = result.name;
                 var photoReference = result.photos[0].photo_reference;
-                var reviews = result.reviews;
+                var reviews = [];
+                for(var i in result.reviews) {
+                    if(result.reviews[i].text != '') {
+                        reviews.push(result.reviews[i].text);
+                    }
+                }
+
                 var website = result.website;
                 var rating = result.rating;
 
