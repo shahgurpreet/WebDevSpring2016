@@ -17,8 +17,14 @@
             if(newUser) {
                 UserService.createUser(newUser).then(
                     function (response) {
-                        $rootScope.currentUser = newUser;
-                        $location.url("/profile/");
+                        var user = response.data;
+                        if(user != null) {
+                            $rootScope.currentUser = user;
+                            $location.url("/home/");
+                        }
+                    },
+                    function(err) {
+                        $scope.error = err;
                     }
                 )
             }

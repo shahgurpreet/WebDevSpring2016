@@ -21,9 +21,13 @@
                 var password = unloggedUser.password;
                 UserService.findUserByCredentials(username, password)
                     .then(function (response) {
-                        $rootScope.currentUser = response;
-                        $location.url('/profile');
-                    });
+                        console.log(response);
+                        $rootScope.currentUser = response.data;
+                        $location.url('/home');
+                    },
+                        function (err) {
+                            $scope.error = err;
+                        });
             }
 
         }

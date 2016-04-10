@@ -8,12 +8,13 @@
 
     function configuration($routeProvider, $httpProvider) {
 
-        delete $httpProvider.defaults.headers.common['X-Requested-With'];
-
         $routeProvider
             .when("/home",{
                 templateUrl: "./views/home/home.view.html",
-                controller: "HomeController"
+                controller: "HomeController",
+                resolve: {
+                    loggedin: checkCurrentUser
+                }
             })
             .when("/register", {
                 templateUrl: "./views/users/register.view.html",
@@ -25,17 +26,10 @@
             })
             .when("/profile", {
                 templateUrl: "./views/users/profile.view.html",
-                controller: "ProfileController"
-            })
-            .when("/admin", {
-                templateUrl: "./views/admin/admin.view.html"
-            })
-            .when("/forms", {
-                templateUrl: "./views/forms/forms.view.html",
-                controller: "FormController"
-            })
-            .when("/form-fields", {
-                templateUrl: "./views/forms/fields.view.html"
+                controller: "ProfileController",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
             })
             .when("/search/:city", {
                 templateUrl: "./views/search/search.view.html",
@@ -49,4 +43,48 @@
                 redirectTo: "/home"
             });
     }
-})();
+
+    var checkCurrentUser = function($q, $timeout, $http, $location, $rootScope) {
+        var deferred = $q.defer();
+
+        $http.get('/api/project/loggedin').success(function(user)
+        {
+            $rootScope.errorMessage = null;
+            // User is Authenticated
+            if (user !== '0')
+            {
+                $rootScope.currentUser = user;
+            }
+            deferred.resolve();
+        });
+
+        return deferred.promise;
+    };
+
+    var checkLoggedin = function($q, $timeout, $http, $location, $rootScope) {
+        var deferred = $q.defer();
+
+        $http.get('/api/project/loggedin').success(function(user)
+        {
+            $rootScope.errorMessage = null;
+            // User is Authenticated
+            if (user !== '0')
+            {
+                $rootScope.currentUser = user;
+                deferred.resolve();
+            }
+            // User is Not Authenticated
+            else
+            {
+                $rootScope.errorMessage = 'You need to log in.';
+                deferred.reject();
+                $location.url('/login');
+            }
+        });
+
+        return deferred.promise;
+    };
+
+
+})
+();
