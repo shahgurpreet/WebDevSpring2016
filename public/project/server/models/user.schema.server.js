@@ -9,7 +9,15 @@ module.exports = function(mongoose) {
         password: String,
         firstName: String,
         lastName: String,
-        email: String
+        email: String,
+        google:   {
+            id:    String,
+            token: String
+        },
+        facebook:   {
+            id:    String,
+            token: String
+        },
     }, {collection: 'wandermust_user'});
 
     return UserSchema;

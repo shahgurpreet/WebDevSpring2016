@@ -11,9 +11,10 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var passport = require('passport');
 
+
 app.use(cookieParser());
 app.use(session({
-    secret: 'this is the secret',
+    secret: process.env.passport_secret,
     resave: true,
     saveUninitialized: true
 }));

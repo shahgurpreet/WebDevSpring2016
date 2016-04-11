@@ -33,11 +33,17 @@
             })
             .when("/search/:city", {
                 templateUrl: "./views/search/search.view.html",
-                controller: "SearchController"
+                controller: "SearchController",
+                resolve: {
+                    loggedin: checkCurrentUser
+                }
             })
             .when("/details/:name/:vicinity/:place_id/:lat/:long", {
                 templateUrl: "./views/details/details.view.html",
-                controller: "DetailsController"
+                controller: "DetailsController",
+                resolve: {
+                    loggedin: checkCurrentUser
+                }
             })
             .otherwise({
                 redirectTo: "/home"

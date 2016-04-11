@@ -5,7 +5,7 @@ module.exports = function(app) {
     var https = require('https');
     var htmlparser = require("htmlparser2");
     var slug = require('limax');
-    var api_key = 'AIzaSyD8M-KBuFrLLvqhQ5eMTpOMXhamomRfwZ4';
+    var api_key = process.env.GOOGLE_PLACES_KEY;
 
     app.get('/api/poi/:city/:token', getPOIForCity);
     app.get('/api/poi/:lat/:long/:token', getPOIForHome);

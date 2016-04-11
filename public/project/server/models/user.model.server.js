@@ -21,7 +21,9 @@ module.exports = function(db, mongoose) {
         updateUser:updateUser,
         deleteUser:deleteUser,
         findUserByUsername: findUserByUsername,
-        findUserByCredentials: findUserByCredentials
+        findUserByCredentials: findUserByCredentials,
+        findUserByGoogleId: findUserByGoogleId,
+        findUserByFacebookId: findUserByFacebookId
     };
 
     return api;
@@ -151,5 +153,13 @@ module.exports = function(db, mongoose) {
             });
 
         return deferred.promise;
+    }
+
+    function findUserByGoogleId(googleId) {
+        return UserModel.findOne({'google.id': googleId});
+    }
+
+    function findUserByFacebookId(facebookId) {
+        return UserModel.findOne({'facebook.id': facebookId});
     }
 };

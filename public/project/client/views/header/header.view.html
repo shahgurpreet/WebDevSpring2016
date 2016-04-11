@@ -15,7 +15,7 @@
             <ul class="nav navbar-nav navbar-right">
                 <li ng-if = "!currentUser" ng-class="{'active': $location.url() == '/register'}"><a href="#/register">Register</a></li>
                 <li ng-if = "!currentUser" ng-class="{'active': $location.url() == '/login'}"><a href="#/login">Login</a></li>
-                <li ng-if = "currentUser" ng-class="{'active': $location.url() == '/profile'}"><a href="#profile">{{currentUser.username}}</a></li>
+                <li ng-if = "currentUser" ng-class="{'active': $location.url() == '/profile'}"><a href="#profile">{{currentUser.firstName}}</a></li>
                 <li class="visible-xs" ng-if = "currentUser" ng-class="{'active': $location.url() == '/forms'}"><a href="#forms">Forms</a></li>
                 <li class="visible-xs" ng-if = "currentUser && currentUser.roles.indexOf('admin') >= 0" ng-class="{'active': $location.url() == '/admin'}"><a href="#/admin">Admin</a></li>
                 <li ng-if = "currentUser"><a href="#/home" ng-click="logout()">Logout</a></li>

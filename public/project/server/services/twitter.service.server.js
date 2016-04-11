@@ -23,11 +23,11 @@ module.exports = function (app) {
         };
 
         var config = {
-            "consumerKey": "8VlpyEzOzlSRpwXxKNqaQnEzN",
-            "consumerSecret": "sirG58Jh5Lvr3vQIR3PRuBM0KvLJAmsCdGRtKGE54bHmYmwuTc",
-            "accessToken": "138294064-vuF7hXX7yp4C9gGPy1VKNCycDwIhOBFJdvUz9sbh",
-            "accessTokenSecret": "uIWu0gNwBKmC8KK6ptSJ2tcNi6jDQbexMHUgdLNIEiSSo",
-            "callBackUrl": "http://webdev2016-shahgurpreet.rhcloud.com/"
+            "consumerKey": process.env.TWITTER_CONSUMER_KEY,
+            "consumerSecret": process.env.TWITTER_CONSUMER_SECRET,
+            "accessToken": process.env.TWITTER_ACCESS_TOKEN,
+            "accessTokenSecret": process.env.TWITTER_ACCESS_TOKEN_SECRET,
+            "callBackUrl": process.env.TWITTER_CALLBACK
         };
 
         var twitter = new Twitter(config);

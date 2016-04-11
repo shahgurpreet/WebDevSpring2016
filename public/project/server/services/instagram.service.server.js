@@ -4,7 +4,7 @@
 module.exports = function(app) {
 
     var https = require('https');
-    var insta_id = '523871488.1677ed0.9bffbc141261470493c0ad2e655d92ce';
+    var insta_id = process.env.INSTAGRAM_KEY;
     var url = 'https://api.instagram.com/v1/locations/';
     var loc_url = 'https://api.instagram.com/v1/locations/search?';
     var photo_url = 'https://api.instagram.com/v1/tags/';
