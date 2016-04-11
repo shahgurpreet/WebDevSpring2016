@@ -14,7 +14,7 @@ var passport = require('passport');
 
 app.use(cookieParser());
 app.use(session({
-    secret: process.env.passport_secret,
+    secret: process.env.PASSPORT_SECRET,
     resave: true,
     saveUninitialized: true
 }));
