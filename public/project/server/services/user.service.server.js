@@ -212,6 +212,8 @@ module.exports = function(app, userModel) {
 
     // this is called for user retrieval
     function loggedin(req, res) {
+        console.log(req);
+        console.log(req.isAuthenticated());
         res.send(req.isAuthenticated() ? req.user : '0');
     }
 
