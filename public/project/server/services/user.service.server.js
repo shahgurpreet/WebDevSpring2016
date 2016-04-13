@@ -46,7 +46,7 @@ module.exports = function(app, userModel, placeModel) {
 
     // configuring web service endpoint to respond to the facebook button click
     app.get   ('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
-    app.get('/auth/facebook/callback',
+    app.get('/project/auth/facebook/callback',
         passport.authenticate('facebook', {
             successRedirect: '/project/client/index.html#/home',
             failureRedirect: '/project/client/index.html#/login'
@@ -388,8 +388,7 @@ module.exports = function(app, userModel, placeModel) {
                     // list of places this user likes
                     // places are not stored in database
                     // only added for UI rendering
-                    user.likesPlaces = places;
-                    res.json(user);
+                    res.json(places);
                 },
 
                 // send error if promise rejected

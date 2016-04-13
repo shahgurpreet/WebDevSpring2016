@@ -300,3 +300,53 @@ figure {
         }
 }
 
+.flexslider-container {
+    width: 100%;
+    margin: 10px auto;
+}
+
+.flexslider .slides img {
+    padding:10px;
+    width: 70%;
+    height: 350px;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.flex-control-thumbs {
+    height: 100px;
+}
+
+/* Small */
+@media(min-width:768px) and (max-width:991px){
+    .flexslider .slides img {
+        padding:10px;
+        width: 80%;
+        margin: auto;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+}
+
+/*extra small*/
+@media(max-width:767px){
+    .flexslider .slides img {
+        padding:10px;
+        width: 100%;
+        height:200px;
+        margin: auto;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+}
+
+.flex-direction-nav a {
+    top:40%;
+}

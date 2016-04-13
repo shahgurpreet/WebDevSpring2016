@@ -31,6 +31,13 @@
                     loggedin: checkLoggedin
                 }
             })
+            .when("/favorites", {
+                templateUrl: "./views/favorites/favorites.view.html",
+                controller: "FavoritesController",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
+            })
             .when("/search/:city", {
                 templateUrl: "./views/search/search.view.html",
                 controller: "SearchController",

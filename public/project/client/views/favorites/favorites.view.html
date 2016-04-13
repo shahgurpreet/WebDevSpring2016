@@ -1,0 +1,28 @@
+<div class="container">
+    <h2>My favorites</h2>
+
+
+    <div class="row">
+        <div class="col-md-6">
+            <div ng-if="likedPlaces">
+                <h3>Places I Liked</h3>
+                <flex-slider slide="s in slides" animation="slide" control-nav="thumbnails" class="pull-left">
+                    <li data-thumb="{{s}}">
+                        <img ng-src="{{s}}">
+                    </li>
+                </flex-slider>
+
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div ng-if="reviewedPlaces">
+                <h3>Places I Reviewed</h3>
+                <flex-slider slide="s in thumbs" animation="slide" control-nav="thumbnails" class="pull-left">
+                    <li data-thumb="{{s}}">
+                        <img ng-src="{{s}}">
+                    </li>
+                </flex-slider>
+            </div>
+        </div>
+    </div>
+</div>

@@ -3,5 +3,6 @@
  */
 (function () {
     angular
-        .module("WanderMustApp", ["ngRoute", "ngResource", "ui.bootstrap", 'angularGrid', 'infinite-scroll', 'google.places']);
+        .module("WanderMustApp", ["ngRoute", "ngResource", "ui.bootstrap", 'angularGrid', 'infinite-scroll',
+            'google.places', 'angular-flexslider']);
 })();
