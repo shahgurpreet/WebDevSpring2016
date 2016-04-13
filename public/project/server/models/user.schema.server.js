@@ -3,6 +3,7 @@
  */
 module.exports = function(mongoose) {
 
+    var PlaceSchema = require("./place.schema.server.js")(mongoose);
     // use mongoose to declare a user schema
     var UserSchema = mongoose.Schema({
         username: String,
@@ -18,6 +19,11 @@ module.exports = function(mongoose) {
             id:    String,
             token: String
         },
+        // place ids of places this user likes
+        likes: [String],
+        reviews: [String],
+        // places this user likes
+        likesPlaces: [PlaceSchema],
     }, {collection: 'wandermust_user'});
 
     return UserSchema;

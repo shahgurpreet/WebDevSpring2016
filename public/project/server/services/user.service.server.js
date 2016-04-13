@@ -8,7 +8,7 @@ var GoogleStrategy   = require('passport-google-oauth').OAuth2Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 
 
-module.exports = function(app, userModel) {
+module.exports = function(app, userModel, placeModel) {
 
     app.get("/api/project/user", findAllUsers);
     app.post("/api/project/user", createUser);
@@ -18,6 +18,8 @@ module.exports = function(app, userModel) {
     app.post("/api/project/login", passport.authenticate('local'), login);
     app.post  ('/api/project/logout', logout);
     app.get   ('/api/project/loggedin', loggedin);
+    app.get("/api/project/liked/:userId", getLikedPlaces);
+    app.get("/api/project/reviewed/:userId", getReviewedPlaces);
 
 
     // passport functionalities - start
@@ -212,8 +214,6 @@ module.exports = function(app, userModel) {
 
     // this is called for user retrieval
     function loggedin(req, res) {
-        console.log(req);
-        console.log(req.isAuthenticated());
         res.send(req.isAuthenticated() ? req.user : '0');
     }
 
@@ -318,4 +318,84 @@ module.exports = function(app, userModel) {
             next();
         }
     };
+
+    function getLikedPlaces(req, res) {
+        var userId = req.params.userId;
+        var user = null;
+
+        // use model to find user by user id
+        userModel.findUserById(userId)
+            .then(
+
+                // first retrieve the user by user name
+                function (doc) {
+
+                    user = doc;
+
+                    // fetch places this user likes
+                    return placeModel.findPlacesByIds(doc.likes);
+                },
+
+                // reject promise if error
+                function (err) {
+                    res.status(400).send(err);
+                }
+            )
+            .then(
+                // fetch places this user likes
+                function (places) {
+
+                    // list of places this user likes
+                    // places are not stored in database
+                    // only added for UI rendering
+                    user.likesPlaces = places;
+                    res.json(user);
+                },
+
+                // send error if promise rejected
+                function (err) {
+                    res.status(400).send(err);
+                }
+            )
+    }
+
+    function getReviewedPlaces(req, res) {
+        var userId = req.params.userId;
+        var user = null;
+
+        // use model to find user by user id
+        userModel.findUserById(userId)
+            .then(
+
+                // first retrieve the user by user name
+                function (doc) {
+
+                    user = doc;
+
+                    // fetch places this user likes
+                    return placeModel.findPlacesByIds(doc.reviews);
+                },
+
+                // reject promise if error
+                function (err) {
+                    res.status(400).send(err);
+                }
+            )
+            .then(
+                // fetch places this user likes
+                function (places) {
+
+                    // list of places this user likes
+                    // places are not stored in database
+                    // only added for UI rendering
+                    user.likesPlaces = places;
+                    res.json(user);
+                },
+
+                // send error if promise rejected
+                function (err) {
+                    res.status(400).send(err);
+                }
+            )
+    }
 };

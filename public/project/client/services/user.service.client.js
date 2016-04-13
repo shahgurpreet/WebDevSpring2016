@@ -9,7 +9,7 @@
         .module("WanderMustApp")
         .factory("UserService", UserService);
 
-    function UserService($http, $q) {
+    function UserService($http, $q, $rootScope) {
 
         var api = {
             findUserByCredentials: findUserByCredentials,
@@ -18,7 +18,9 @@
             updateUser: updateUser,
             findUserByUsername: findUserByUsername,
             findAllUsers: findAllUsers,
-            logout: logout
+            logout: logout,
+            getLikedPlaces: getLikedPlaces,
+            getReviewedPlaces: getReviewedPlaces
         };
         return api;
 
@@ -98,6 +100,16 @@
         // logout user
         function logout() {
             return $http.post("/api/project/logout");
+        }
+
+        // fetch the liked places
+        function getLikedPlaces() {
+            return $http.get("/api/project/liked/"+$rootScope.currentUser._id);
+        }
+
+        // fetch the reviewed places
+        function getReviewedPlaces() {
+            return $http.get("/api/project/reviewed/"+$rootScope.currentUser._id);
         }
     }
 })();

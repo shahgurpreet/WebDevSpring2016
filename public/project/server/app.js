@@ -10,5 +10,7 @@ module.exports = function(app, db, mongoose) {
 
     // pass db and mongoose reference to model
     var userModel = require("./models/user.model.server.js")(db, mongoose);
-    require("./services/user.service.server.js") (app, userModel);
+    var placeModel = require("./models/place.model.server.js")(db, mongoose);
+    require("./services/user.service.server.js") (app, userModel, placeModel);
+    require("./services/place.service.server.js") (app, placeModel, userModel);
 };

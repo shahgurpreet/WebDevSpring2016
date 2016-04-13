@@ -23,10 +23,98 @@ module.exports = function(db, mongoose) {
         findUserByUsername: findUserByUsername,
         findUserByCredentials: findUserByCredentials,
         findUserByGoogleId: findUserByGoogleId,
-        findUserByFacebookId: findUserByFacebookId
+        findUserByFacebookId: findUserByFacebookId,
+        findUsersByUserIds: findUsersByUserIds,
+        userLikesPlace: userLikesPlace,
+        userCommentsOnPlace: userCommentsOnPlace
     };
 
     return api;
+
+    // add place to user's comments
+    function userCommentsOnPlace (userId, place) {
+
+        var deferred = q.defer();
+
+        // find the user
+        UserModel.findById(userId, function (err, doc) {
+
+            // reject promise if error
+            if (err) {
+                deferred.reject(err);
+            } else {
+
+                // add place id to user reviews
+                doc.reviews.push (place.place_id);
+
+                // save user
+                doc.save (function (err, doc) {
+
+                    if (err) {
+                        deferred.reject(err);
+                    } else {
+
+                        // resolve promise with user
+                        deferred.resolve (doc);
+                    }
+                });
+            }
+        });
+
+        return deferred;
+    }
+
+    // add place to user likes
+    function userLikesPlace (userId, place) {
+
+        var deferred = q.defer();
+
+        // find the user
+        UserModel.findById(userId, function (err, doc) {
+
+            // reject promise if error
+            if (err) {
+                deferred.reject(err);
+            } else {
+
+                // add place id to user likes
+                doc.likes.push (place.place_id);
+
+                // save user
+                doc.save (function (err, doc) {
+
+                    if (err) {
+                        deferred.reject(err);
+                    } else {
+
+                        // resolve promise with user
+                        deferred.resolve (doc);
+                    }
+                });
+            }
+        });
+
+        return deferred;
+    }
+
+
+    function findUsersByUserIds (userIds) {
+        var deferred = q.defer();
+
+        // find all users in array of user names
+        UserModel.find({
+            userId: {$in: userIds}
+
+        }, function (err, users) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(users);
+            }
+        });
+
+        return deferred.promise;
+    }
 
     function createUser(user) {
         // use q to defer the response

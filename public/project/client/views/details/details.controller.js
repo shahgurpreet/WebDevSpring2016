@@ -3,13 +3,15 @@
         .module("WanderMustApp")
         .controller("DetailsController", DetailsController);
 
-    function DetailsController($scope, $rootScope, POIService, InstagramService, TwitterService, $routeParams, $timeout, $sce) {
+    function DetailsController($scope, $rootScope, $location, POIService, InstagramService, TwitterService, PlaceService, $routeParams, $timeout, $sce) {
         $scope.name = $routeParams.name;
         $scope.getInstagramPhotos = getInstagramPhotos;
         $scope.instagramImagesAndTags = [];
         $scope.twitterPosts = [];
         $scope.noMoreTwitterData = false;
         $scope.noMoreInstaData = false;
+        $scope.favorite = favorite;
+        $scope.addComment = addComment;
 
         var name = $routeParams.name;
         var place_id = $routeParams.place_id;
@@ -66,6 +68,28 @@
 
         getPlaceDetails();
 
+        var currentUser = $rootScope.currentUser;
+
+        var init = function() {
+            PlaceService
+                .findUserLikes (place_id)
+                .then(function(response){
+                    $scope.place = response.data;
+                });
+        };
+        init();
+
+        var getReviews = function(){
+            PlaceService
+                .findPlaceById(place_id)
+                .then(function(response){
+                    if(response.data)
+                        $scope.reviews = response.data.reviews;
+                });
+        };
+
+        getReviews();
+
         var getPlaceSummary = function() {
             POIService.getPlaceSummary(name, processPlaceSummary);
         };
@@ -85,6 +109,9 @@
         function renderPlaceDetails(placeDetailsArray) {
             $scope.placeDetails = {};
             $scope.placeDetails = placeDetailsArray[0];
+            if($scope.reviews) {
+                $scope.placeDetails.reviews = $scope.reviews;
+            }
         }
 
         function  getInstagramPhotos() {
@@ -92,16 +119,6 @@
             $scope.name = $scope.name.replace(/ +/g, "");
             $scope.name = name.replace(/\W/g, '')
             //name = accentsTidy(name);
-            /*InstagramService.getInstaLocations(lat, long, $scope.name, processInstaLocationId);
-
-             function processInstaLocationId(response) {
-             var instaLocationId = response;
-             InstagramService.getInstaPhotosForLocation(instaLocationId, render);
-             }
-
-             function render(response) {
-             $scope.instagramImages = response;
-             }*/
 
             InstagramService.getInstaPhotos($scope.name, true, renderInsta);
 
@@ -152,6 +169,48 @@
                 );
             }
             return r;
+        }
+
+        function favorite(place1) {
+            if(currentUser) {
+                var place = {};
+                place.likes = [];
+                $scope.place.likes = [];
+                $scope.place.likes.push(currentUser._id);
+                place.likes.push(currentUser._id);
+                place.name = $routeParams.name;
+                place.place_id = $routeParams.place_id;
+                place.thumb = place1.photo;
+                place.vicinity = place1.address;
+                place.lat = lat;
+                place.long = long;
+                place.reviews = place1.reviews;
+                PlaceService
+                    .userLikesPlace(currentUser._id, place);
+            } else {
+                $location.url("/login");
+            }
+        }
+
+        function addComment(comment) {
+            if(currentUser) {
+                if(comment) {
+                    $scope.newComment = null;
+                    $scope.placeDetails.reviews.push(comment);
+                    var place = {};
+                    place.name = $routeParams.name;
+                    place.place_id = $routeParams.place_id;
+                    place.thumb = $scope.placeDetails.photo;
+                    place.vicinity = $scope.placeDetails.address;
+                    place.lat = lat;
+                    place.long = long;
+                    place.reviews = $scope.placeDetails.reviews;
+
+                    PlaceService.userCommentsOnPlace(currentUser._id, place);
+                }
+            } else {
+                $location.url("/login");
+            }
         }
     }
 

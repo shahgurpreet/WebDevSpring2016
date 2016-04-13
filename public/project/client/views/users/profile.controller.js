@@ -9,6 +9,25 @@
 
     function ProfileController($rootScope, $location, $scope, UserService) {
 
+        var getLikedPlaces = function() {
+            UserService
+                .getLikedPlaces()
+                .then(function (response) {
+                    $scope.likedPlaces = response.data;
+                });
+        };
+        getLikedPlaces();
+
+        var getReviewedPlaces = function() {
+          UserService
+              .getReviewedPlaces()
+              .then(function(response) {
+                 $scope.reviewedPlaces = response.data;
+              });
+        };
+
+        getReviewedPlaces();
+
         // event handler declarations
         $scope.update = update;
 
