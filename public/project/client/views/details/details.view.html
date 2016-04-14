@@ -9,7 +9,7 @@
                         <span ng-show="!placeDetails || !placeDetails.likes || placeDetails.likes.indexOf(currentUser._id) == -1" class="glyphicon glyphicon-star-empty"></span>
                     </button>
                 </div>
-                <span class="users-like glyphicon glyphicon-heart"></span>
+                <span ng-if="usernames.length > 0" class="users-like glyphicon glyphicon-heart"></span>
                 <span class="users-like" ng-if="usernames.length > 0" ng-repeat = "user in usernames">
                     <a ng-click="followUser(user)">{{user.username}}</a>
                 </span>
