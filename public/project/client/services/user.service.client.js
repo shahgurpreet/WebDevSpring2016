@@ -20,9 +20,13 @@
             findAllUsers: findAllUsers,
             logout: logout,
             getLikedPlaces: getLikedPlaces,
-            getReviewedPlaces: getReviewedPlaces
+            getReviewedPlaces: getReviewedPlaces,
+            getUsernamesByIds: getUsernamesByIds,
+            getLikedPlacesForUsername: getLikedPlacesForUsername
         };
         return api;
+
+
 
         // get all users
         function findAllUsers() {
@@ -103,12 +107,36 @@
         }
 
         // fetch the liked places
-        function getLikedPlaces() {
+        function getLikedPlaces(userId) {
+            if(userId) {
+                return $http.get("/api/project/liked/"+userId);
+            }
             return $http.get("/api/project/liked/"+$rootScope.currentUser._id);
         }
 
         // fetch the reviewed places
-        function getReviewedPlaces() {
+        function getReviewedPlaces(userId) {
+            if(userId) {
+                return $http.get("/api/project/reviewed/"+userId);
+            }
+            return $http.get("/api/project/reviewed/"+$rootScope.currentUser._id);
+        }
+
+        // fetch usernames by userIds
+        function getUsernamesByIds(userIds) {
+            var endpoint = "/api/project/userid/username";
+            var req = {
+                method: 'POST',
+                url: endpoint,
+                data: {
+                    userIds: userIds
+                }
+            };
+
+            return $http(req);
+        }
+
+        function getLikedPlacesForUsername(username) {
             return $http.get("/api/project/reviewed/"+$rootScope.currentUser._id);
         }
     }

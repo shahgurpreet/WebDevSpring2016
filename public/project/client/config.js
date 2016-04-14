@@ -52,6 +52,13 @@
                     loggedin: checkCurrentUser
                 }
             })
+            .when("/follow/:username/:userId", {
+                templateUrl: "./views/follow/follow.view.html",
+                controller: "FollowController",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
+            })
             .otherwise({
                 redirectTo: "/home"
             });

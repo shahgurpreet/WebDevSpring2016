@@ -100,10 +100,9 @@ module.exports = function(db, mongoose) {
 
     function findUsersByUserIds (userIds) {
         var deferred = q.defer();
-
         // find all users in array of user names
         UserModel.find({
-            userId: {$in: userIds}
+            _id: {$in: userIds}
 
         }, function (err, users) {
             if (err) {

@@ -3,7 +3,8 @@
         .module("WanderMustApp")
         .controller("DetailsController", DetailsController);
 
-    function DetailsController($scope, $rootScope, $location, POIService, InstagramService, TwitterService, PlaceService, $routeParams, $timeout, $sce) {
+    function DetailsController($scope, $rootScope, $location, POIService, InstagramService, TwitterService, PlaceService,
+                               UserService, $routeParams, $timeout, $sce) {
         $scope.name = $routeParams.name;
         $scope.getInstagramPhotos = getInstagramPhotos;
         $scope.instagramImagesAndTags = [];
@@ -12,6 +13,7 @@
         $scope.noMoreInstaData = false;
         $scope.favorite = favorite;
         $scope.addComment = addComment;
+        $scope.followUser = followUser;
 
         var name = $routeParams.name;
         var place_id = $routeParams.place_id;
@@ -62,22 +64,46 @@
             }
         };
 
+        var getLikes = function() {
+            PlaceService
+                .findUserLikes (place_id)
+                .then(function(response){
+                    var userLikesIds = response.data.likes;
+                    UserService.getUsernamesByIds(userLikesIds).then(
+                        function(doc) {
+                            $scope.likes = response.data.likes;
+                            if($rootScope.currentUser) {
+                                var users = doc.data;
+                                console.log(users);
+                                var usernames = [];
+                                for(var i in users) {
+                                    var user = users[i];
+                                    if(user.username != $rootScope.currentUser.username)  {
+                                        usernames.push(user);
+                                    }
+                                }
+                                $scope.usernames = usernames;
+                                console.log($scope.usernames);
+                            }
+                        },
+                        function(err) {
+                            console.log(err);
+                        }
+                    );
+                });
+        };
+        getLikes();
+
         var getPlaceDetails = function() {
             POIService.getPlaceDetails(place_id, processPlaceDetails);
         };
 
+        if(!$scope.placeDetails) {
+
+        }
         getPlaceDetails();
 
         var currentUser = $rootScope.currentUser;
-
-        var init = function() {
-            PlaceService
-                .findUserLikes (place_id)
-                .then(function(response){
-                    $scope.place = response.data;
-                });
-        };
-        init();
 
         var getReviews = function(){
             PlaceService
@@ -111,6 +137,9 @@
             $scope.placeDetails = placeDetailsArray[0];
             if($scope.reviews) {
                 $scope.placeDetails.reviews = $scope.reviews;
+            }
+            if($scope.likes) {
+                $scope.placeDetails.likes = $scope.likes;
             }
         }
 
@@ -175,8 +204,8 @@
             if(currentUser) {
                 var place = {};
                 place.likes = [];
-                $scope.place.likes = [];
-                $scope.place.likes.push(currentUser._id);
+                $scope.placeDetails.likes = [];
+                $scope.placeDetails.likes.push(currentUser._id);
                 place.likes.push(currentUser._id);
                 place.name = $routeParams.name;
                 place.place_id = $routeParams.place_id;
@@ -211,6 +240,10 @@
             } else {
                 $location.url("/login");
             }
+        }
+
+        function followUser(user) {
+            $location.url("/follow/" + user.username + "/" + user.userId);
         }
     }
 

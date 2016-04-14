@@ -6,9 +6,11 @@
 (function(){
     angular
         .module("WanderMustApp")
-        .controller("FavoritesController", FavoritesController);
+        .controller("FollowController", FollowController);
 
-    function FavoritesController($location, $scope, UserService) {
+    function FollowController($location, $scope, UserService, $routeParams) {
+        $scope.username = $routeParams.username;
+        $scope.userId = $routeParams.userId;
 
         $scope.toLDetailsPage = toLDetailsPage;
         $scope.toRDetailsPage = toRDetailsPage;
@@ -33,7 +35,7 @@
 
         var getLikedPlaces = function() {
             UserService
-                .getLikedPlaces()
+                .getLikedPlaces($scope.userId)
                 .then(function (response) {
                     $scope.likedPlaces = response.data.likesPlaces;
                     $scope.slides = [];
@@ -51,7 +53,7 @@
 
         var getReviewedPlaces = function() {
             UserService
-                .getReviewedPlaces()
+                .getReviewedPlaces($scope.userId)
                 .then(function(response) {
                     $scope.reviewedPlaces = response.data;
                     $scope.thumbs = [];
@@ -66,6 +68,7 @@
         };
 
         getReviewedPlaces();
+
     }
 })();
 

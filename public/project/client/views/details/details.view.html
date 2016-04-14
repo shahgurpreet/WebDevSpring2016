@@ -1,21 +1,27 @@
 <div class="container">
     <div class = "place-details">
         <div class="row well">
-            <div class="col-md-offset-2 col-md-4">
+            <div class="col-md-offset-2 col-md-4 col-sm-6">
                 <img class="details-page-img img-responsive pull-right" ng-src="{{placeDetails.photo}}" />
+                <div class="like-button">
+                    <button class="btn btn-primary" ng-click="favorite(placeDetails)">
+                        <span ng-show="placeDetails.likes.indexOf(currentUser._id) > -1" class="glyphicon glyphicon-star"></span>
+                        <span ng-show="!placeDetails || !placeDetails.likes || placeDetails.likes.indexOf(currentUser._id) == -1" class="glyphicon glyphicon-star-empty"></span>
+                    </button>
+                </div>
+                <span class="users-like glyphicon glyphicon-heart"></span>
+                <span class="users-like" ng-if="usernames.length > 0" ng-repeat = "user in usernames">
+                    <a ng-click="followUser(user)">{{user.username}}</a>
+                </span>
+
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 col-sm-6">
                 <div class="place-text-details">
                     <i class="fa fa-fort-awesome"></i>&nbsp;<b class="place-heading">{{placeDetails.name}}</b><br>
                     <span ng-if="placeDetails.address"><i class="fa fa-map-marker fa-3"></i>&nbsp;{{placeDetails.address}} <br></span>
                     <span ng-if="placeDetails.phone"><i class="fa fa-phone-square fa-5"></i>&nbsp;{{placeDetails.phone}} <br></span>
                     <span ng-if="placeDetails.website"><i class="fa fa-external-link-square"></i>&nbsp;<a ng-href="{{placeDetails.website}}" target="_blank"> Website</a> <br></span>
                     <span ng-if="placeDetails.rating"><i class="fa fa-star"></i>&nbsp;{{placeDetails.rating}} <br></span>
-                    <br>
-                    <button class="btn btn-primary" ng-click="favorite(placeDetails)">
-                        <span ng-show="place.likes.indexOf(currentUser._id) > -1" class="glyphicon glyphicon-star"></span>
-                        <span ng-show="!place || !place.likes || place.likes.indexOf(currentUser._id) == -1" class="glyphicon glyphicon-star-empty"></span>
-                    </button>
                 </div>
             </div>
         </div>

@@ -20,6 +20,7 @@ module.exports = function(app, userModel, placeModel) {
     app.get   ('/api/project/loggedin', loggedin);
     app.get("/api/project/liked/:userId", getLikedPlaces);
     app.get("/api/project/reviewed/:userId", getReviewedPlaces);
+    app.post("/api/project/userid/username", getUsernamesByIds);
 
 
     // passport functionalities - start
@@ -37,7 +38,7 @@ module.exports = function(app, userModel, placeModel) {
 
     // configuring web service endpoint to respond to the google button click
     app.get   ('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
-    app.get   ('/auth/google/callback',
+    app.get   ('/project/auth/google/callback',
         passport.authenticate('google', {
             successRedirect: '/project/client/index.html#/home',
             failureRedirect: '/project/client/index.html#/login'
@@ -76,7 +77,8 @@ module.exports = function(app, userModel, placeModel) {
                             facebook: {
                                 id:    profile.id,
                                 token: token
-                            }
+                            },
+                            username: names[0]
                         };
                         return userModel.createUser(newFacebookUser);
                     }
@@ -112,7 +114,8 @@ module.exports = function(app, userModel, placeModel) {
                             google: {
                                 id:          profile.id,
                                 token:       token
-                            }
+                            },
+                            username: profile.name.givenName
                         };
                         return userModel.createUser(newGoogleUser);
                     }
@@ -392,6 +395,27 @@ module.exports = function(app, userModel, placeModel) {
                 },
 
                 // send error if promise rejected
+                function (err) {
+                    res.status(400).send(err);
+                }
+            )
+    }
+
+    function getUsernamesByIds(req, res) {
+        var userIds = req.body.userIds;
+        var usernames = [];
+        userModel.findUsersByUserIds(userIds)
+            .then(
+                function(users) {
+                    for(var i in users) {
+                        var user = users[i];
+                        usernames.push({
+                            username: user.username,
+                            userId: user._id}
+                        );
+                    }
+                    res.send(usernames);
+                },
                 function (err) {
                     res.status(400).send(err);
                 }
