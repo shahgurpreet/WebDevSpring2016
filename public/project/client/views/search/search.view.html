@@ -1,7 +1,10 @@
 <div class="container" id="gallery">
     <h2>Places of Interest in {{city}}</h2>
+    <div ng-if="noResultsFound">
+        Sorry, no content found.
+    </div>
     <ul class="dynamic-grid" angular-grid="POIresults" ag-grid-width="300" ag-gutter-size="10" ag-id="gallery" ag-refresh-on-img-load="true"
-        ag-infinite-scroll="myPagingFunction()" ag-scroll-container="gallery">
+        ag-scroll-container="gallery">
         <li data-ng-repeat="pic in POIresults" class="grid">
             <a ng-click="selectPOI(pic)" href="">
                 <figure class="cap-bot">
@@ -13,7 +16,11 @@
             </a>
         </li>
     </ul>
-    <div ng-show="loading">
+    <div class="clearfix"></div>
+    <div class="center-block text-center">
+        <a ng-if="more" ng-click="myPagingFunction()" class="button">More</a>
+    </div>
+    <div ng-if="!more && loading">
         <div class="spinner"></div>
     </div>
 </div>

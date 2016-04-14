@@ -7,24 +7,26 @@
         .module("WanderMustApp")
         .controller("SearchController", SearchController);
 
-    function SearchController($location, $scope, POIService, $routeParams, $timeout) {
+    function SearchController($location, $scope, POIService, $routeParams, $window) {
         $scope.city = $routeParams.city;
         $scope.selectPOI = selectPOI;
         $scope.POIresults = [];
+        $scope.POINextresults = [];
         $scope.myPagingFunction = myPagingFunction;
+        $scope.more = false;
+        $scope.loading = true;
+        $scope.noResultsFound = false;
 
         function myPagingFunction() {
-            $scope.loading = true;
+            $scope.more = false;
             POIService.POIForCityNext($scope.city, processNextPOI);
-            setTimeout(function () {
-                $scope.$apply(function(){
-                    $scope.loading = false;
-                });
-            }, 2000);
             function processNextPOI(response) {
-                POIService.findPhotos(response, renderNextPOI);
+                if(response.length > 0) {
+                    POIService.findPhotos(response, renderNextPOI);
+                } else {
+                    $scope.loading = false;
+                }
             }
-
             function renderNextPOI(response) {
                 for(var i in response) {
                     $scope.POINextresults.push(response[i]);
@@ -40,8 +42,12 @@
                     nonDuplicatedArray[i++] = arrResult[item];
                 }
                 $scope.POIresults = nonDuplicatedArray;
+                setTimeout(function () {
+                    $scope.$apply(function(){
+                        $scope.more = true;
+                    });
+                }, 2000);
             }
-
         }
 
         var getPOIForCity = function() {
@@ -57,6 +63,15 @@
         function renderPOI(poi) {
             $scope.POIresults = poi;
             $scope.POINextresults = $scope.POIresults;
+            if($scope.POINextresults.length > 0) {
+                setTimeout(function () {
+                    $scope.$apply(function(){
+                        $scope.more = true;
+                    });
+                }, 2000);
+            } else {
+                $scope.noResultsFound = true;
+            }
         }
 
         function selectPOI(poi) {

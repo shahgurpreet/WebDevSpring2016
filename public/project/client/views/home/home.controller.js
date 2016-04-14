@@ -6,13 +6,17 @@
 
     function HomeController($scope, $location, POIService, $window, $timeout) {
         $scope.HomePOIresults = [];
-        var lat, long;
         $scope.selectPOI = selectPOI;
+        $scope.more = false;
+        $scope.noResultsFound = false;
+        $scope.loading = true;
+
+
+
         function getCurrentPosition() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(showPosition, showError);
             } else {
-                $scope.loader = false;
                 $scope.error = "Geolocation is not supported by this browser";
                 $scope.showErr = true;
             }
@@ -22,20 +26,26 @@
 
 
         $scope.myPagingFunction = function() {
-            $scope.loading = true;
+            $scope.more = false;
             POIService.POIForHomeNext($scope.lat,$scope.long, processNextPOI);
-            setTimeout(function () {
-                $scope.$apply(function(){
-                    $scope.loading = false;
-                });
-            }, 4000);
+
             function processNextPOI(response) {
-                POIService.findPhotos(response, renderNextPOI);
+                if(response.length > 0) {
+                    POIService.findPhotos(response, renderNextPOI);
+                } else {
+                    $scope.loading = false;
+                }
+
             }
 
             function renderNextPOI(response) {
                 for(var i in response) {
                     $scope.HomePOIresults.push(response[i]);
+                    setTimeout(function () {
+                        $scope.$apply(function(){
+                            $scope.more = true;
+                        });
+                    }, 2000);
                 }
             }
 
@@ -53,6 +63,16 @@
 
         function renderPOI(poi) {
             $scope.HomePOIresults = poi;
+            $scope.POINextresults = $scope.HomePOIresults;
+            if($scope.POINextresults.length > 0) {
+                setTimeout(function () {
+                    $scope.$apply(function(){
+                        $scope.more = true;
+                    });
+                }, 2000);
+            } else {
+                $scope.noResultsFound = true;
+            }
         }
 
         function selectPOI(poi) {

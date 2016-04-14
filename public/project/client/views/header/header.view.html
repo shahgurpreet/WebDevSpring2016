@@ -11,7 +11,7 @@
             <a class="navbar-brand" ng-class="{'active': $location.url() == '#/home'}" href="#/home">WanderMust</a>
         </div>
 
-        <div class="navbar-collapse collapse" id="navbar-collapse">
+        <div class="navbar-collapse collapse" id="navbar-collapsible">
             <ul class="nav navbar-nav navbar-right">
                 <li ng-if = "!currentUser" ng-class="{'active': $location.url() == '/register'}"><a href="#/register">Register</a></li>
                 <li ng-if = "!currentUser" ng-class="{'active': $location.url() == '/login'}"><a href="#/login">Login</a></li>

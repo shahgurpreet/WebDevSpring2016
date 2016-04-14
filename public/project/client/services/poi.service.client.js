@@ -155,6 +155,8 @@
                 function nextResults(response) {
                     callback(response);
                 }
+            } else {
+                callback([]);
             }
         }
 
@@ -164,6 +166,8 @@
                 function nextResults(response) {
                     callback(response);
                 }
+            } else {
+                callback([]);
             }
         }
 
