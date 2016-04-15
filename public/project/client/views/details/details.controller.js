@@ -143,15 +143,16 @@
             }
         }
 
-        UserService.getLikedPhotos()
-            .then(function(response) {
-                var likedPhotos = response.data;
-                for(var i in likedPhotos) {
-                    var photo = likedPhotos[i];
-                    $scope.likedPhotos.push(photo.photo);
-                }
-            });
-
+        if(currentUser) {
+            UserService.getLikedPhotos()
+                .then(function(response) {
+                    var likedPhotos = response.data;
+                    for(var i in likedPhotos) {
+                        var photo = likedPhotos[i];
+                        $scope.likedPhotos.push(photo.photo);
+                    }
+                });
+        }
 
         function  getInstagramPhotos() {
             $scope.name = $routeParams.name;
