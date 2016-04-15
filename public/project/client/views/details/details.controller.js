@@ -16,6 +16,10 @@
         $scope.likePhoto = likePhoto;
         $scope.followUser = followUser;
         $scope.likedPhotos = [];
+        $scope.moreInsta = false;
+        $scope.moreTwit = false;
+        $scope.loading = true;
+        $scope.loadingT = true;
 
         var name = $routeParams.name;
         var place_id = $routeParams.place_id;
@@ -23,25 +27,30 @@
         var long = $routeParams.long;
 
         $scope.paging = function(){
+            $scope.moreInsta = false;
             if($scope.name != undefined) {
                 InstagramService.instaNext($scope.name, getMorePhotos);
                 function getMorePhotos(response) {
-                    console.log(response);
                     $timeout(function(){
                         if(response.length === 0) {
-                            $scope.noMoreInstaData = true;
+                            $scope.loading = false;
                         }
                         var instaPosts = response;
                         for(var i = 0; i < instaPosts.length; i++) {
                             var tag = '';
                             var tags = instaPosts[i].tags;
-                            for(var j = 0; j < tags.length; j++) {
+                            for(var j = 0; j < 5; j++) {
                                 tag += '#' + tags[j] + ' ';
                             }
                             $scope.instagramImagesAndTags.push({
                                 tags: tag,
                                 photo: instaPosts[i].photo
                             });
+                            setTimeout(function () {
+                                $scope.$apply(function(){
+                                    $scope.moreInsta = true;
+                                });
+                            }, 1000);
                         }
                     });
 
@@ -50,17 +59,23 @@
         };
 
         $scope.pagingTwitter = function() {
+            $scope.moreTwit = false;
             if($scope.name != undefined) {
                 TwitterService.twitterNext($scope.name, getMoreTweets);
                 function getMoreTweets(response) {
                     if(response.length === 0) {
-                        $scope.noMoreTwitterData = true;
+                        $scope.loadingT = false;
                     }
                     $timeout(function(){
                         for(var i in response) {
                             $scope.twitterPosts.push(response[i]);
                         }
                     });
+                    setTimeout(function () {
+                        $scope.$apply(function(){
+                            $scope.moreTwit = true;
+                        });
+                    }, 1000);
 
                 }
             }
@@ -164,7 +179,7 @@
 
             function renderInsta(response) {
                 if(response.length === 0) {
-                    $scope.noMoreInstaData = true;
+                    $scope.loading = false;
                 }
                 $timeout(function(){
                     var instaPosts = response;
@@ -179,6 +194,14 @@
                             tags: tag,
                             photo: instaPosts[i].photo
                         });
+
+                        if(response.length > 0) {
+                            setTimeout(function () {
+                                $scope.$apply(function(){
+                                    $scope.moreInsta = true;
+                                });
+                            }, 2000);
+                        }
                     }
                 });
 
@@ -192,9 +215,15 @@
 
             function render(response) {
                 if(response.length === 0) {
-                    $scope.noMoreTwitterData = true;
+                    $scope.loadingT = false;
                 }
                 $scope.twitterPosts = response;
+                setTimeout(function () {
+                    $scope.$apply(function(){
+                        $scope.moreTwit = true;
+                    });
+                }, 2000);
+
             }
         }
 
