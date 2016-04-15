@@ -301,11 +301,18 @@ figure {
 }
 
 .like-button {
-    padding-left: 10px;
-    padding-bottom: 10px;
+    position: absolute;
+    top: 15px;
+    left: 20px;
 }
+
 .users-like {
     padding:10px;
+}
+
+.insta-img {
+    padding-bottom: 10px;
+    position: relative;
 }
 
 

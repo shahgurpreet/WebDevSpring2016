@@ -4,7 +4,7 @@
         .controller("DetailsController", DetailsController);
 
     function DetailsController($scope, $rootScope, $location, POIService, InstagramService, TwitterService, PlaceService,
-                               UserService, $routeParams, $timeout, $sce) {
+                               UserService, $routeParams, $timeout, $sce, PhotoService) {
         $scope.name = $routeParams.name;
         $scope.getInstagramPhotos = getInstagramPhotos;
         $scope.instagramImagesAndTags = [];
@@ -13,7 +13,9 @@
         $scope.noMoreInstaData = false;
         $scope.favorite = favorite;
         $scope.addComment = addComment;
+        $scope.likePhoto = likePhoto;
         $scope.followUser = followUser;
+        $scope.likedPhotos = [];
 
         var name = $routeParams.name;
         var place_id = $routeParams.place_id;
@@ -74,7 +76,6 @@
                             $scope.likes = response.data.likes;
                             if($rootScope.currentUser) {
                                 var users = doc.data;
-                                console.log(users);
                                 var usernames = [];
                                 for(var i in users) {
                                     var user = users[i];
@@ -83,7 +84,6 @@
                                     }
                                 }
                                 $scope.usernames = usernames;
-                                console.log($scope.usernames);
                             }
                         },
                         function(err) {
@@ -143,6 +143,16 @@
             }
         }
 
+        UserService.getLikedPhotos()
+            .then(function(response) {
+                var likedPhotos = response.data;
+                for(var i in likedPhotos) {
+                    var photo = likedPhotos[i];
+                    $scope.likedPhotos.push(photo.photo);
+                }
+            });
+
+
         function  getInstagramPhotos() {
             $scope.name = $routeParams.name;
             $scope.name = $scope.name.replace(/ +/g, "");
@@ -160,9 +170,10 @@
                     for(var i = 0; i < instaPosts.length; i++) {
                         var tag = '';
                         var tags = instaPosts[i].tags;
-                        for(var j = 0; j < tags.length; j++) {
+                        for(var j = 0; j < 5; j++) {
                             tag += '#' + tags[j] + ' ';
                         }
+
                         $scope.instagramImagesAndTags.push({
                             tags: tag,
                             photo: instaPosts[i].photo
@@ -244,6 +255,18 @@
 
         function followUser(user) {
             $location.url("/follow/" + user.username + "/" + user.userId);
+        }
+
+        function likePhoto(post) {
+            if(currentUser) {
+                $scope.likedPhotos.push(post.photo);
+                var photo = {};
+                photo.photo = post.photo;
+                photo.tags = post.tags;
+                photo.userLikes = [];
+                photo.userLikes.push(currentUser._id);
+                PhotoService.userLikesPhoto(currentUser._id, photo);
+            }
         }
     }
 

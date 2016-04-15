@@ -22,7 +22,8 @@
             getLikedPlaces: getLikedPlaces,
             getReviewedPlaces: getReviewedPlaces,
             getUsernamesByIds: getUsernamesByIds,
-            getLikedPlacesForUsername: getLikedPlacesForUsername
+            getLikedPlacesForUsername: getLikedPlacesForUsername,
+            getLikedPhotos: getLikedPhotos
         };
         return api;
 
@@ -138,6 +139,14 @@
 
         function getLikedPlacesForUsername(username) {
             return $http.get("/api/project/reviewed/"+$rootScope.currentUser._id);
+        }
+
+        // fetch the liked photos
+        function getLikedPhotos(userId) {
+            if(userId) {
+                return $http.get("/api/project/liked/photos/"+userId);
+            }
+            return $http.get("/api/project/liked/photos/"+$rootScope.currentUser._id);
         }
     }
 })();

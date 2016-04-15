@@ -39,7 +39,7 @@
                     var text = status.text;
                     if(entities.media) {
                         twitterPosts.push({
-                            status: text,
+                            tags: text,
                             photo: entities.media[0].media_url_https
                         });
                     }

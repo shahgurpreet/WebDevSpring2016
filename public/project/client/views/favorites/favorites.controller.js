@@ -66,6 +66,24 @@
         };
 
         getReviewedPlaces();
+
+        var getLikedPhotos = function () {
+            UserService
+                .getLikedPhotos()
+                .then(function(response) {
+                    var likedPhotos = response.data;
+                    $scope.likedPhotos = [];
+                    for(var i in likedPhotos) {
+                        var photo = likedPhotos[i];
+                        $scope.likedPhotos.push({
+                            thumb: photo.photo,
+                            img: photo.photo
+                        });
+                    }
+                });
+        };
+
+        getLikedPhotos();
     }
 })();
 

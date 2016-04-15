@@ -23,7 +23,9 @@ module.exports = function(mongoose) {
         likes: [String],
         reviews: [String],
         // places this user likes
-        likesPlaces: [PlaceSchema]
+        likesPlaces: [PlaceSchema],
+        // photos this user likes
+        likesPhotos: [String]
     }, {collection: 'wandermust_user'});
 
     return UserSchema;

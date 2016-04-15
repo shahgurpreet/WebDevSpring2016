@@ -3,13 +3,7 @@
         <div class="row well">
             <div class="col-md-offset-2 col-md-4 col-sm-6">
                 <img class="details-page-img img-responsive pull-right" ng-src="{{placeDetails.photo}}" />
-                <div class="like-button">
-                    <button class="btn btn-primary" ng-click="favorite(placeDetails)">
-                        <span ng-show="placeDetails.likes.indexOf(currentUser._id) > -1" class="glyphicon glyphicon-star"></span>
-                        <span ng-show="!placeDetails || !placeDetails.likes || placeDetails.likes.indexOf(currentUser._id) == -1" class="glyphicon glyphicon-star-empty"></span>
-                    </button>
-                </div>
-                <span ng-if="usernames.length > 0" class="users-like glyphicon glyphicon-heart"></span>
+                <span ng-if="usernames.length > 0" class="users-like fa fa-thumbs-o-up"></span>
                 <span class="users-like" ng-if="usernames.length > 0" ng-repeat = "user in usernames">
                     <a ng-click="followUser(user)">{{user.username}}</a>
                 </span>
@@ -22,6 +16,11 @@
                     <span ng-if="placeDetails.phone"><i class="fa fa-phone-square fa-5"></i>&nbsp;{{placeDetails.phone}} <br></span>
                     <span ng-if="placeDetails.website"><i class="fa fa-external-link-square"></i>&nbsp;<a ng-href="{{placeDetails.website}}" target="_blank"> Website</a> <br></span>
                     <span ng-if="placeDetails.rating"><i class="fa fa-star"></i>&nbsp;{{placeDetails.rating}} <br></span>
+                    <br>
+                    <button class="btn btn-primary" ng-click="favorite(placeDetails)">
+                        <span ng-show="placeDetails.likes.indexOf(currentUser._id) > -1" class="fa fa-heart"></span>
+                        <span ng-show="!placeDetails || !placeDetails.likes || placeDetails.likes.indexOf(currentUser._id) == -1" class="fa fa-heart-o"></span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -51,12 +50,16 @@
                         <div class="no-content" ng-if ="instagramImagesAndTags.length == 0">
                             Sorry, no content found.
                         </div>
-                        <div ng-repeat="post in instagramImagesAndTags" class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
+                        <div ng-repeat="post in instagramImagesAndTags" class="col-md-4 col-lg-4 col-sm-6 col-xs-12 insta-img">
                             <div>
                                 <figure class="cap-bot">
                                     <img ng-src="{{post.photo}}" class="search-page-img"/>
                                     <figcaption>
                                         {{post.tags}}
+                                        <button class="btn btn-primary" ng-click="likePhoto(post)">
+                                            <span ng-show="likedPhotos.indexOf(post.photo) > -1" class="fa fa-heart"></span>
+                                            <span ng-show = "likedPhotos.indexOf(post.photo) === -1" class="fa fa-heart-o"></span>
+                                        </button>
                                     </figcaption>
                                 </figure>
                             </div>
@@ -77,7 +80,11 @@
                             <figure class="cap-bot">
                                 <img ng-src="{{tweet.photo}}" class="search-page-img"/>
                                 <figcaption>
-                                    {{tweet.status}}
+                                    {{tweet.tags}}
+                                    <button class="btn btn-primary" ng-click="likePhoto(tweet)">
+                                        <span ng-show="likedPhotos.indexOf(tweet.photo) > -1" class="fa fa-heart"></span>
+                                        <span ng-show = "likedPhotos.indexOf(tweet.photo) === -1" class="fa fa-heart-o"></span>
+                                    </button>
                                 </figcaption>
                             </figure>
                         </div>

@@ -8,7 +8,7 @@ var GoogleStrategy   = require('passport-google-oauth').OAuth2Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 
 
-module.exports = function(app, userModel, placeModel) {
+module.exports = function(app, userModel, placeModel, photoModel) {
 
     app.get("/api/project/user", findAllUsers);
     app.post("/api/project/user", createUser);
@@ -21,6 +21,7 @@ module.exports = function(app, userModel, placeModel) {
     app.get("/api/project/liked/:userId", getLikedPlaces);
     app.get("/api/project/reviewed/:userId", getReviewedPlaces);
     app.post("/api/project/userid/username", getUsernamesByIds);
+    app.get("/api/project/liked/photos/:userId", getLikedPhotos);
 
 
     // passport functionalities - start
@@ -416,6 +417,45 @@ module.exports = function(app, userModel, placeModel) {
                     }
                     res.send(usernames);
                 },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            )
+    }
+
+    function getLikedPhotos(req, res) {
+        var userId = req.params.userId;
+        var user = null;
+
+        // use model to find user by user id
+        userModel.findUserById(userId)
+            .then(
+
+                // first retrieve the user by user name
+                function (doc) {
+
+                    user = doc;
+
+                    // fetch photos this user likes
+                    return photoModel.findPhotosByUrls(doc.likesPhotos);
+                },
+
+                // reject promise if error
+                function (err) {
+                    res.status(400).send(err);
+                }
+            )
+            .then(
+                // fetch photos this user likes
+                function (photos) {
+
+                    // list of places this user likes
+                    // places are not stored in database
+                    // only added for UI rendering
+                    res.json(photos);
+                },
+
+                // send error if promise rejected
                 function (err) {
                     res.status(400).send(err);
                 }

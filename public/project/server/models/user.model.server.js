@@ -26,7 +26,8 @@ module.exports = function(db, mongoose) {
         findUserByFacebookId: findUserByFacebookId,
         findUsersByUserIds: findUsersByUserIds,
         userLikesPlace: userLikesPlace,
-        userCommentsOnPlace: userCommentsOnPlace
+        userCommentsOnPlace: userCommentsOnPlace,
+        userLikesPhoto: userLikesPhoto
     };
 
     return api;
@@ -248,5 +249,37 @@ module.exports = function(db, mongoose) {
 
     function findUserByFacebookId(facebookId) {
         return UserModel.findOne({'facebook.id': facebookId});
+    }
+
+    // add photo to user likes
+    function userLikesPhoto (userId, photo) {
+
+        var deferred = q.defer();
+
+        // find the user
+        UserModel.findById(userId, function (err, doc) {
+
+            // reject promise if error
+            if (err) {
+                deferred.reject(err);
+            } else {
+                // add photo url to user likes
+                doc.likesPhotos.push (photo.photo);
+
+                // save user
+                doc.save (function (err, doc) {
+
+                    if (err) {
+                        deferred.reject(err);
+                    } else {
+
+                        // resolve promise with user
+                        deferred.resolve (doc);
+                    }
+                });
+            }
+        });
+
+        return deferred;
     }
 };
