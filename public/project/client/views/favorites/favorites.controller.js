@@ -77,7 +77,8 @@
                         var photo = likedPhotos[i];
                         $scope.likedPhotos.push({
                             thumb: photo.photo,
-                            img: photo.photo
+                            img: photo.photo,
+                            description: photo.tags
                         });
                     }
                 });

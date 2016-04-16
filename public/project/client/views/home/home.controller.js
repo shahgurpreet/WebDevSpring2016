@@ -10,7 +10,7 @@
         $scope.more = false;
         $scope.noResultsFound = false;
         $scope.loading = true;
-
+        $scope.error = undefined;
 
 
         function getCurrentPosition() {
@@ -81,6 +81,7 @@
         }
 
         function showError(error) {
+            $scope.loading = false;
             $scope.showErr = true;
             switch (error.code) {
                 case error.PERMISSION_DENIED:
@@ -96,6 +97,7 @@
                     $scope.error = "An unknown error occurred.";
                     break;
             }
+            console.log($scope.error);
             $scope.$apply();
         }
     }

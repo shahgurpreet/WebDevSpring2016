@@ -70,6 +70,7 @@
                     });
                 }, 2000);
             } else {
+                $scope.loading = false;
                 $scope.noResultsFound = true;
             }
         }

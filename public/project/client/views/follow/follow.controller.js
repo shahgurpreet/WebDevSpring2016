@@ -8,12 +8,15 @@
         .module("WanderMustApp")
         .controller("FollowController", FollowController);
 
-    function FollowController($location, $scope, UserService, $routeParams) {
+    function FollowController($location, $scope, UserService, PhotoService, $routeParams, $rootScope) {
         $scope.username = $routeParams.username;
         $scope.userId = $routeParams.userId;
 
         $scope.toLDetailsPage = toLDetailsPage;
         $scope.toRDetailsPage = toRDetailsPage;
+        $scope.likePhoto = likePhoto;
+
+        $scope.activeUserLikedPhotos = [];
 
         function toLDetailsPage(url) {
             for(var i in $scope.likedPlaces) {
@@ -68,6 +71,43 @@
         };
 
         getReviewedPlaces();
+
+
+        var getCurrentUserLikedPhotos = function() {
+            UserService.getLikedPhotos()
+                .then(function(response) {
+                    var likedPhotos = response.data;
+                    for(var i in likedPhotos) {
+                        var photo = likedPhotos[i];
+                        $scope.activeUserLikedPhotos.push(photo.photo);
+                    }
+                });
+        };
+
+        getCurrentUserLikedPhotos();
+
+        var getLikedPhotos = function () {
+            UserService
+                .getLikedPhotos($scope.userId)
+                .then(function(response) {
+                    var likedPhotos = response.data;
+                    $scope.likedPhotos = likedPhotos;
+                });
+        };
+
+        getLikedPhotos();
+
+        function likePhoto(photo) {
+            if($rootScope.currentUser) {
+                $scope.activeUserLikedPhotos.push(photo.photo);
+                var photo_1 = {};
+                photo_1.photo = photo.photo;
+                photo_1.tags = photo.tags;
+                photo_1.userLikes = [];
+                photo_1.userLikes.push($rootScope.currentUser._id);
+                PhotoService.userLikesPhoto($rootScope.currentUser._id, photo_1);
+            }
+        }
 
     }
 })();

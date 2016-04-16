@@ -170,9 +170,33 @@ module.exports = function(db, mongoose) {
     }
 
     // update the user in the database based on the user id
-    function updateUser(userId, user) {
-        // The $set operator replaces the value of a field with the specified value
-        return UserModel.update({_id: userId}, {$set: user});
+    function updateUser(userId, updatedUser) {
+        if(userId) {
+            var deferred = q.defer();
+            UserModel.findById(userId, function (err, doc) {
+                if (err) {
+                    deferred.reject(err);
+                } else {
+                    return doc;
+                }
+            }).then(function(doc) {
+                doc.username = updatedUser.username;
+                doc.password = updatedUser.password;
+                doc.firstName = updatedUser.firstName;
+                doc.lastName = updatedUser.lastName;
+                doc.email = updatedUser.email;
+                doc.save(function(err, resp) {
+                    if(err) {
+                        console.log(err);
+                        deferred.reject(err);
+                    } else {
+                        deferred.resolve(resp);
+                    }
+                });
+            });
+
+            return deferred.promise;
+        }
     }
 
     function deleteUser(userId) {

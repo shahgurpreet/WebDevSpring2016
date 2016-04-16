@@ -33,5 +33,24 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-12">
+            <div ng-if="likedPhotos.length > 0">
+                <h3>Photos {{username}} Liked</h3>
+                <div ng-repeat="p in likedPhotos" class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
+                    <div>
+                        <figure class="cap-bot">
+                            <img ng-src="{{p.photo}}" class="search-page-img"/>
+                            <figcaption>
+                                {{p.tags}}
+                                <button class="btn btn-primary" ng-click="likePhoto(p)">
+                                    <span ng-show="activeUserLikedPhotos.indexOf(p.photo) > -1" class="fa fa-heart"></span>
+                                    <span ng-show = "activeUserLikedPhotos.indexOf(p.photo) === -1" class="fa fa-heart-o"></span>
+                                </button>
+                            </figcaption>
+                        </figure>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

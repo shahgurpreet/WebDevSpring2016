@@ -1,4 +1,23 @@
-<div class="container" id="gallery">
+<div class="container" ng-if="error">
+    <div class="row">
+        <div class="span12">
+            <div class="hero-unit center">
+                <h2><i class="fa  fa-exclamation-triangle"></i>
+                    Oops. <small><font face="Tahoma" color="red">Geolocation error</font></small></h2>
+                <br />
+                <p><b>Reason: {{error}} <i class="fa  fa-location-arrow"></i></b></p>
+                <p><b>With geolocation service disabled, we cannot fetch the attractions near you.</b></p>
+                <p><b>But you can still search for attractions in other cities by using the search box.
+                <i class="fa fa-hand-pointer-o"></i></b></p>
+                <p><b>Happy wandering.</b></p>
+            </div>
+            <br />
+            <!-- By ConnerT HTML & CSS Enthusiast -->
+        </div>
+    </div>
+</div>
+
+<div class="container" id="gallery" ng-if="!error">
     <h2>Places of Interest Around You</h2>
     <ul class="dynamic-grid" angular-grid="HomePOIresults" ag-grid-width="300" ag-gutter-size="10" ag-id="gallery" ag-refresh-on-img-load="true"
         ag-scroll-container="gallery">

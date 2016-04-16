@@ -9,6 +9,9 @@
 
     function ProfileController($rootScope, $location, $scope, UserService) {
 
+        $scope.success = undefined;
+        $scope.failure = undefined;
+
         var getLikedPlaces = function() {
             UserService
                 .getLikedPlaces()
@@ -38,6 +41,9 @@
                 UserService.updateUser(userId, currentUser).then(
                     function (response) {
                         $rootScope.currentUser = currentUser;
+                        $scope.success = 'Profile updated.'
+                    }, function(error) {
+                        $scope.failure = error;
                     }
                 )
             }

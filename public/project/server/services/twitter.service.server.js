@@ -6,9 +6,11 @@ module.exports = function (app) {
     var https = require('https');
     var Twitter = require('twitter-node-client').Twitter;
     app.get('/api/twitter/:tag/:token', getTwitterPosts);
+    var slug = require('limax');
 
     function getTwitterPosts(req, res) {
         var tag = req.params.tag;
+        tag = slug(tag);
         tag = tag + ' -RT';
         var token = req.params.token;
         if(token === '0') {

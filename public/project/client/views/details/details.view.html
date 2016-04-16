@@ -37,13 +37,19 @@
                             </tr>
                         </table>
                     </div>
-                    <div class="form-group">
-                        <textarea ng-model = "newComment" required></textarea>
-                        <input type="submit" ng-click="addComment(newComment, placeDetails)">
+                    <div>
+                        <div class="widget-area no-padding blank">
+                            <div class="status-upload">
+                                <form>
+                                    <textarea placeholder="Add a review?" ng-model="comment"></textarea>
+                                    <button type="submit" class="btn btn-primary green" ng-click="addComment(comment)">Post</button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </uib-tab>
                 <uib-tab ng-if="placeSummary" heading="Place Summary">
-                    <div data-ng-bind-html="placeSummary" class="summary"></div>
+                    <div data-ng-bind-html="placeSummary" class="summary text-justify"></div>
                 </uib-tab>
                 <uib-tab heading="Instagram Posts">
                     <div>

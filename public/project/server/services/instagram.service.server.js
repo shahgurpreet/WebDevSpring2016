@@ -8,12 +8,14 @@ module.exports = function(app) {
     var url = 'https://api.instagram.com/v1/locations/';
     var loc_url = 'https://api.instagram.com/v1/locations/search?';
     var photo_url = 'https://api.instagram.com/v1/tags/';
+    var slug = require('limax');
 
     app.get('/api/instagram/:tag/:token', getInstagramPhotos);
 
 
     function getInstagramPhotos(req, res) {
         var tag = req.params.tag;
+        tag = slug(tag);
         var token = req.params.token;
         if(token === '0') {
             token = '';

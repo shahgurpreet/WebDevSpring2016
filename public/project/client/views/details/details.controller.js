@@ -172,7 +172,6 @@
         function  getInstagramPhotos() {
             $scope.name = $routeParams.name;
             $scope.name = $scope.name.replace(/ +/g, "");
-            $scope.name = name.replace(/\W/g, '')
             //name = accentsTidy(name);
 
             InstagramService.getInstaPhotos($scope.name, true, renderInsta);
@@ -216,13 +215,15 @@
             function render(response) {
                 if(response.length === 0) {
                     $scope.loadingT = false;
+                    $scope.moreTwit = false;
+                } else {
+                    $scope.twitterPosts = response;
+                    setTimeout(function () {
+                        $scope.$apply(function(){
+                            $scope.moreTwit = true;
+                        });
+                    }, 2000);
                 }
-                $scope.twitterPosts = response;
-                setTimeout(function () {
-                    $scope.$apply(function(){
-                        $scope.moreTwit = true;
-                    });
-                }, 2000);
 
             }
         }
@@ -265,7 +266,7 @@
         function addComment(comment) {
             if(currentUser) {
                 if(comment) {
-                    $scope.newComment = null;
+                    $scope.comment = '';
                     $scope.placeDetails.reviews.push(comment);
                     var place = {};
                     place.name = $routeParams.name;
