@@ -28,12 +28,15 @@
             <uib-tabset justified="true">
                 <uib-tab heading="Reviews">
                     <div class="no-content" ng-if ="placeDetails.reviews.length == 0">
-                        Sorry, no content found.
+                        No reviews. Be the first one to review this place!
                     </div>
                     <div class="table-responsive reviews">
                         <table class="table table-striped">
-                            <tr ng-repeat = "review in placeDetails.reviews track by $index">
-                                <td>"{{review}}"</td>
+                            <tr ng-repeat = "review in placeDetails.reviews" ng-class="{'success' : $index == commentIndex}">
+                                <td>
+                                    "{{review}}"
+                                    <a ng-if="dc" ng-click="deleteComment($index)"><i class="fa fa-remove"></i></a>
+                                </td>
                             </tr>
                         </table>
                     </div>

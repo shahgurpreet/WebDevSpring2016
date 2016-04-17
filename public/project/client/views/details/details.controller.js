@@ -5,22 +5,27 @@
 
     function DetailsController($scope, $rootScope, $location, POIService, InstagramService, TwitterService, PlaceService,
                                UserService, $routeParams, $timeout, $sce, PhotoService) {
-        $scope.name = $routeParams.name;
+
         $scope.getInstagramPhotos = getInstagramPhotos;
-        $scope.instagramImagesAndTags = [];
-        $scope.twitterPosts = [];
-        $scope.noMoreTwitterData = false;
-        $scope.noMoreInstaData = false;
         $scope.favorite = favorite;
         $scope.addComment = addComment;
         $scope.likePhoto = likePhoto;
         $scope.followUser = followUser;
+        $scope.deleteComment = deleteComment;
+
+        $scope.name = $routeParams.name;
+        $scope.instagramImagesAndTags = [];
+        $scope.twitterPosts = [];
+        $scope.noMoreTwitterData = false;
+        $scope.noMoreInstaData = false;
         $scope.likedPhotos = [];
         $scope.moreInsta = false;
         $scope.moreTwit = false;
         $scope.loading = true;
         $scope.loadingT = true;
+        $scope.commentIndex = -1;
 
+        var currentUser = $rootScope.currentUser;
         var name = $routeParams.name;
         var place_id = $routeParams.place_id;
         var lat = $routeParams.lat;
@@ -113,12 +118,7 @@
             POIService.getPlaceDetails(place_id, processPlaceDetails);
         };
 
-        if(!$scope.placeDetails) {
-
-        }
         getPlaceDetails();
-
-        var currentUser = $rootScope.currentUser;
 
         var getReviews = function(){
             PlaceService
@@ -184,8 +184,12 @@
                     var instaPosts = response;
                     for(var i = 0; i < instaPosts.length; i++) {
                         var tag = '';
+                        var noOfTags = 5;
                         var tags = instaPosts[i].tags;
-                        for(var j = 0; j < 5; j++) {
+                        if(tags.length < 5) {
+                            noOfTags = tags.length;
+                        }
+                        for(var j = 0; j < noOfTags; j++) {
                             tag += '#' + tags[j] + ' ';
                         }
 
@@ -240,6 +244,10 @@
                 );
             }
             return r;
+        }
+
+        if(currentUser && currentUser.roles && currentUser.roles.indexOf('Admin') > -1) {
+            $scope.dc = true;
         }
 
         function favorite(place1) {
@@ -299,6 +307,21 @@
                 PhotoService.userLikesPhoto(currentUser._id, photo);
             } else {
                 $location.url("/login");
+            }
+        }
+
+        function deleteComment(index) {
+            if(index > -1) {
+                $scope.placeDetails.reviews.splice(index, 1);
+                var place = {};
+                place.name = $routeParams.name;
+                place.place_id = $routeParams.place_id;
+                place.thumb = $scope.placeDetails.photo;
+                place.vicinity = $scope.placeDetails.address;
+                place.lat = lat;
+                place.long = long;
+                place.reviews = $scope.placeDetails.reviews;
+                PlaceService.adminDeletesReview(place);
             }
         }
     }

@@ -6,12 +6,27 @@ module.exports = function(app, placeModel, userModel) {
     app.get("/api/project/place/:place_id/user", findUserLikes);
     app.post("/api/project/user/:userId/comment/place/:place_id", userCommentsOnPlace);
     app.get("/api/project/place/details/:place_id", findPlaceById);
+    app.post("/api/project/place/admin/review/", adminDeletesReview);
+
+    function adminDeletesReview(req, res) {
+        var place = req.body;
+
+        placeModel
+            .adminDeletesReview(place)
+            .then (
+                function (doc) {
+                   res.json(doc);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
+    }
 
 
     function userCommentsOnPlace(req, res) {
         var place = req.body;
         var userId = req.params.userId;
-        var place_id = req.params.place_id;
 
         placeModel
             .userCommentsOnPlace(userId, place)

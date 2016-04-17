@@ -11,9 +11,14 @@
             userLikesPlace: userLikesPlace,
             findUserLikes: findUserLikes,
             userCommentsOnPlace: userCommentsOnPlace,
-            findPlaceById: findPlaceById
+            findPlaceById: findPlaceById,
+            adminDeletesReview: adminDeletesReview
         };
         return api;
+
+        function adminDeletesReview(place) {
+            return $http.post("/api/project/place/admin/review/", place);
+        }
 
         function findUserLikes (place_id) {
             return $http.get("/api/project/place/"+place_id+"/user");

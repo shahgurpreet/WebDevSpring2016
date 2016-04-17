@@ -18,9 +18,62 @@ module.exports = function(db, mongoose) {
         findPlacesByIds: findPlacesByIds,
         createPlace: createPlace,
         userLikesPlace: userLikesPlace,
-        userCommentsOnPlace: userCommentsOnPlace
+        userCommentsOnPlace: userCommentsOnPlace,
+        adminDeletesReview: adminDeletesReview
     };
     return api;
+
+    function adminDeletesReview(place) {
+        var deferred = q.defer();
+
+        // find the place by place id
+        Place.findOne({place_id: place.place_id},
+
+            function (err, doc) {
+
+                // reject promise if error
+                if (err) {
+                    deferred.reject(err);
+                }
+
+                // if there's a place
+                if (doc) {
+                    doc.reviews = place.reviews;
+                    // save changes
+                    doc.save(function(err, doc){
+                        if (err) {
+                            deferred.reject(err);
+                        } else {
+                            deferred.resolve(doc);
+                        }
+                    });
+                } else {
+                    // if there's no place
+                    // create a new instance
+                    place = new Place({
+                        place_id: place.place_id,
+                        name: place.name,
+                        thumb: place.thumb,
+                        vicinity: place.vicinity,
+                        lat: place.lat,
+                        long: place.long,
+                        likes: [],
+                        reviews: place.reviews
+                    });
+
+                    // save new instance
+                    place.save(function(err, doc) {
+                        if (err) {
+                            deferred.reject(err);
+                        } else {
+                            deferred.resolve(doc);
+                        }
+                    });
+                }
+            });
+
+        return deferred.promise;
+    }
 
     function userCommentsOnPlace(userId, place){
         var deferred = q.defer();
