@@ -31,6 +31,13 @@
                     loggedin: checkLoggedin
                 }
             })
+            .when("/admin", {
+                templateUrl: "./views/admin/admin.view.html",
+                controller: "AdminController",
+                resolve: {
+                    loggedin: checkAdmin
+                }
+            })
             .when("/favorites", {
                 templateUrl: "./views/favorites/favorites.view.html",
                 controller: "FavoritesController",
@@ -98,6 +105,26 @@
             {
                 $rootScope.errorMessage = 'You need to log in.';
                 deferred.reject();
+                $location.url('/login');
+            }
+        });
+
+        return deferred.promise;
+    };
+
+    var checkAdmin = function($q, $timeout, $http, $location, $rootScope)
+    {
+        var deferred = $q.defer();
+
+        $http.get('/api/project/loggedin').success(function(user)
+        {
+            $rootScope.errorMessage = null;
+            // User is Authenticated
+            if (user !== '0' && user.roles.indexOf('Admin') != -1)
+            {
+                $rootScope.currentUser = user;
+                deferred.resolve();
+            } else {
                 $location.url('/login');
             }
         });

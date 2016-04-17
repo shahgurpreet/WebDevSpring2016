@@ -36,5 +36,7 @@
                 $location.url("/search/"+query.formatted_address);
             }
         }
+
+
     }
 })();

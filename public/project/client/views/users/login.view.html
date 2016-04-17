@@ -40,6 +40,9 @@
             <div ng-if="error" class="col-sm-offset-2 col-sm-10 alert alert-danger text-center">
                 <p>Oops! Invalid username/password combination.</p>
             </div>
+            <div ng-if="errorMessage" class="col-sm-offset-2 col-sm-10 alert alert-danger text-center">
+                <p>{{errorMessage}}</p>
+            </div>
         </form>
     </div>
 </div>

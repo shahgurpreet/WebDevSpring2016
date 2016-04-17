@@ -26,7 +26,6 @@
                     },
                         function (err) {
                             $scope.error = err;
-                            console.log(err);
                         });
             }
 

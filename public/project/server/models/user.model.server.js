@@ -185,9 +185,9 @@ module.exports = function(db, mongoose) {
                 doc.firstName = updatedUser.firstName;
                 doc.lastName = updatedUser.lastName;
                 doc.email = updatedUser.email;
+                doc.roles = updatedUser.roles;
                 doc.save(function(err, resp) {
                     if(err) {
-                        console.log(err);
                         deferred.reject(err);
                     } else {
                         deferred.resolve(resp);

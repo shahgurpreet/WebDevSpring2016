@@ -64,12 +64,12 @@
         function renderPOI(poi) {
             $scope.HomePOIresults = poi;
             $scope.POINextresults = $scope.HomePOIresults;
-            if($scope.POINextresults.length > 0) {
+            if($scope.HomePOIresults.length > 0) {
                 setTimeout(function () {
                     $scope.$apply(function(){
                         $scope.more = true;
                     });
-                }, 2000);
+                }, 1000);
             } else {
                 $scope.noResultsFound = true;
             }

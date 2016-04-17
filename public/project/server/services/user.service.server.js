@@ -10,10 +10,11 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 
 module.exports = function(app, userModel, placeModel, photoModel) {
 
+    var auth = authorized;
     app.get("/api/project/user", findAllUsers);
-    app.post("/api/project/user", createUser);
+    app.post("/api/project/user", auth, createUser);
     app.get("/api/project/user/:id", findUserById);
-    app.put("/api/project/user/:id", updateUser);
+    app.put("/api/project/user/:id", auth, updateUser);
     app.delete("/api/project/user/:id", deleteUser);
     app.post("/api/project/login", passport.authenticate('local'), login);
     app.post  ('/api/project/logout', logout);
@@ -184,14 +185,33 @@ module.exports = function(app, userModel, placeModel, photoModel) {
      */
     function createUser(req, res) {
         var newUser = req.body.user;
+
+        if(newUser.roles && newUser.roles.length > 1) {
+            newUser.roles = newUser.roles.split(",");
+        } else {
+            newUser.roles = ["visitor"];
+        }
+
         userModel
             .findUserByUsername(newUser.username)
             .then(
                 function(user){
-                    if(user) {
-                        res.json(null);
+                    // if the user does not already exist
+                    if(user == null) {
+                        // create a new user
+                        return userModel.createUser(newUser)
+                            .then(
+                                // fetch all the users
+                                function(){
+                                    return userModel.findAllUsers();
+                                },
+                                function(err){
+                                    res.status(400).send(err);
+                                }
+                            );
+                        // if the user already exists, then just fetch all the users
                     } else {
-                        return userModel.createUser(newUser);
+                        return userModel.findAllUsers();
                     }
                 },
                 function(err){
@@ -199,21 +219,13 @@ module.exports = function(app, userModel, placeModel, photoModel) {
                 }
             )
             .then(
-                function(user){
-                    if(user){
-                        req.login(user, function(err) {
-                            if(err) {
-                                res.status(400).send(err);
-                            } else {
-                                res.json(user);
-                            }
-                        });
-                    }
+                function(users){
+                    res.json(users);
                 },
-                function(err){
+                function(){
                     res.status(400).send(err);
                 }
-            );
+            )
     }
 
     // this is called for user retrieval
@@ -286,27 +298,58 @@ module.exports = function(app, userModel, placeModel, photoModel) {
 
     function updateUser(req, res) {
         var userId = req.params.id;
-        var user = req.body.user;
-        userModel.updateUser(userId, user).then(
+        var newUser = req.body.user;
+
+        if(!isAdmin(req.user)) {
+            delete newUser.roles;
+        }
+
+        if(typeof newUser.roles == "string") {
+            newUser.roles = newUser.roles.split(",");
+        }
+
+        userModel.updateUser(userId, newUser).then(
             function(doc) {
-                res.json(doc);
+                return userModel.findAllUsers();
             },
             function(err) {
                 res.status(400).send(err);
             }
         )
+            .then(
+            function(users){
+                res.json(users);
+            },
+            function(err){
+                res.status(400).send(err);
+            }
+        );
     }
 
     function deleteUser(req, res) {
-        var userid = req.params.id;
-        userModel.deleteUser(userid).then(
-            function(docs) {
-                res.json(docs);
-            },
-            function(err) {
-                res.status(400).send(err);
-            }
-        )
+        if(isAdmin(req.user)) {
+
+            userModel
+                .deleteUser(req.params.id)
+                .then(
+                    function(user){
+                        return userModel.findAllUsers();
+                    },
+                    function(err){
+                        res.status(400).send(err);
+                    }
+                )
+                .then(
+                    function(users){
+                        res.json(users);
+                    },
+                    function(err){
+                        res.status(400).send(err);
+                    }
+                );
+        } else {
+            res.status(403);
+        }
     }
 
     // logout user by using passport's req.logOut
@@ -460,5 +503,13 @@ module.exports = function(app, userModel, placeModel, photoModel) {
                     res.status(400).send(err);
                 }
             )
+    }
+
+    function isAdmin(user) {
+        if(user.roles.indexOf('Admin') > -1) {
+            return true;
+        } else {
+            return false;
+        }
     }
 };

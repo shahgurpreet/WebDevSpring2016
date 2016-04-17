@@ -297,6 +297,8 @@
                 photo.userLikes = [];
                 photo.userLikes.push(currentUser._id);
                 PhotoService.userLikesPhoto(currentUser._id, photo);
+            } else {
+                $location.url("/login");
             }
         }
     }

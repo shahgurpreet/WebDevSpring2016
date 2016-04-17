@@ -25,7 +25,8 @@ module.exports = function(mongoose) {
         // places this user likes
         likesPlaces: [PlaceSchema],
         // photos this user likes
-        likesPhotos: [String]
+        likesPhotos: [String],
+        roles: [String]
     }, {collection: 'wandermust_user'});
 
     return UserSchema;
