@@ -18,7 +18,10 @@
             })
             .when("/register", {
                 templateUrl: "./views/users/register.view.html",
-                controller: "RegisterController"
+                controller: "RegisterController",
+                resolve: {
+                    loggedin: checkCurrentUser
+                }
             })
             .when("/login", {
                 templateUrl: "./views/users/login.view.html",

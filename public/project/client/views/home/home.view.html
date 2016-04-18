@@ -18,7 +18,7 @@
 </div>
 
 <div class="container" id="gallery" ng-if="!error">
-    <h2>Places of Interest Around You</h2>
+    <h3>Places of Interest Around You</h3>
     <ul class="dynamic-grid" angular-grid="HomePOIresults" ag-grid-width="300" ag-gutter-size="10" ag-id="gallery" ag-refresh-on-img-load="true"
         ag-scroll-container="gallery">
         <li data-ng-repeat="pic in HomePOIresults" class="grid">
@@ -34,9 +34,9 @@
     </ul>
     <div class="clearfix"></div>
     <div class="center-block text-center">
-        <a ng-if="more" ng-click="myPagingFunction()" class="button">More</a>
+        <a ng-if="more" ng-click="myPagingFunction()" class="button more-button">More</a>
     </div>
     <div ng-if="!more && loading">
-        <div class="spinner"></div>
+        <div class="spinner spinner-color"></div>
     </div>
 </div>

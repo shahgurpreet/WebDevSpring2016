@@ -3,7 +3,7 @@
         .module("WanderMustApp")
         .controller("AdminController", AdminController);
 
-    function AdminController($scope, UserService) {
+    function AdminController($scope, $rootScope, UserService) {
         {
             $scope.remove = remove;
             $scope.update = update;
@@ -19,9 +19,13 @@
 
             function remove(user)
             {
-                UserService
-                    .deleteUserById(user._id)
-                    .then(handleSuccess, handleError);
+                if(user._id === $rootScope.currentUser._id) {
+                    $scope.error = 'You need other admins to complete this process.';
+                } else {
+                    UserService
+                        .deleteUserById(user._id)
+                        .then(handleSuccess, handleError);
+                }
             }
 
             function update(user)
@@ -36,6 +40,7 @@
                 UserService
                     .createUser(user)
                     .then(handleSuccess, handleError);
+                init();
             }
 
             function select(user)

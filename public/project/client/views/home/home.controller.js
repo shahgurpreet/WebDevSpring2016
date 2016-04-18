@@ -76,6 +76,10 @@
         }
 
         function selectPOI(poi) {
+            var hashIndex = poi.vicinity.indexOf('#');
+            if(hashIndex > -1){
+                poi.vicinity = poi.vicinity.slice(0, hashIndex) + poi.vicinity.slice(hashIndex + 1);
+            }
             $location.url("/details/"+poi.name+"/"+poi.vicinity+"/"+poi.place_id+"/"+poi.lat
             +"/"+poi.long);
         }

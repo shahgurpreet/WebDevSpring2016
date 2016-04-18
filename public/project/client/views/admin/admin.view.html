@@ -1,6 +1,6 @@
-<h1>Admin</h1>
+<h3>Admin</h3>
 
-<h2>User List</h2>
+<h3>User List</h3>
 <div class="table-responsive">
     <table class="table table-striped">
         <tr>
@@ -28,4 +28,7 @@
             <td><button ng-click="select(user)" class="btn btn-success">...</button>
         </tr>
     </table>
+</div>
+<div ng-if="error" class="alert alert-danger text-center">
+    <p>{{error}}</p>
 </div>

@@ -12,7 +12,7 @@ module.exports = function(app, userModel, placeModel, photoModel) {
 
     var auth = authorized;
     app.get("/api/project/user", findAllUsers);
-    app.post("/api/project/user", auth, createUser);
+    app.post("/api/project/user", createUser);
     app.get("/api/project/user/:id", findUserById);
     app.put("/api/project/user/:id", auth, updateUser);
     app.delete("/api/project/user/:id", deleteUser);
@@ -196,22 +196,10 @@ module.exports = function(app, userModel, placeModel, photoModel) {
             .findUserByUsername(newUser.username)
             .then(
                 function(user){
-                    // if the user does not already exist
-                    if(user == null) {
-                        // create a new user
-                        return userModel.createUser(newUser)
-                            .then(
-                                // fetch all the users
-                                function(){
-                                    return userModel.findAllUsers();
-                                },
-                                function(err){
-                                    res.status(400).send(err);
-                                }
-                            );
-                        // if the user already exists, then just fetch all the users
+                    if(user) {
+                        res.json(null);
                     } else {
-                        return userModel.findAllUsers();
+                        return userModel.createUser(newUser);
                     }
                 },
                 function(err){
@@ -219,12 +207,22 @@ module.exports = function(app, userModel, placeModel, photoModel) {
                 }
             )
             .then(
+                function(user){
+                    if(user){
+                        req.login(user, function(err) {
+                            if(err) {
+                                res.status(400).send(err);
+                            } else {
+                                return userModel.findAllUsers();
+                            }
+                        });
+                    }
+                }
+            ).then(
                 function(users){
                     res.json(users);
-                },
-                function(){
-                    res.status(400).send(err);
                 }
+
             )
     }
 

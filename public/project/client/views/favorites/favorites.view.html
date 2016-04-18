@@ -1,6 +1,8 @@
 <div class="container">
-    <h2>My favorites</h2>
+    <h3>My favorites</h3>
 
+    <h4 ng-if="likedPlaces.length === 0 && reviewedPlaces.length === 0
+    && likedPhotos.length === 0">Your favorites appear here.</h4>
 
     <div class="row">
         <div class="col-md-12">

@@ -23,7 +23,7 @@
                     function (response) {
                         var user = response.data;
                         if(user != null) {
-                            $rootScope.currentUser = user;
+                            $rootScope.currentUser = newUser;
                             $location.url("/home/");
                         } else {
                             $scope.err = 'Username already exists!'

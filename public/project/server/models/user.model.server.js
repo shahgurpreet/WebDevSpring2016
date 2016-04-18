@@ -8,6 +8,9 @@ module.exports = function(db, mongoose) {
     // load q promise library
     var q = require("q");
 
+    // load the bcrypt module
+    var bcrypt = require('bcrypt-nodejs');
+
     // load user schema
     var UserSchema = require("./user.schema.server.js")(mongoose);
 
@@ -120,6 +123,11 @@ module.exports = function(db, mongoose) {
         // use q to defer the response
         var deferred = q.defer();
 
+        var decrytedPassword = user.password;
+        var encrytedPassword = bcrypt.hashSync(decrytedPassword);
+        user.password = encrytedPassword;
+
+
         // insert new user with mongoose user model's create()
         UserModel.create(user, function (err, doc) {
 
@@ -181,7 +189,7 @@ module.exports = function(db, mongoose) {
                 }
             }).then(function(doc) {
                 doc.username = updatedUser.username;
-                doc.password = updatedUser.password;
+                doc.password = bcrypt.hashSync(updatedUser.password);
                 doc.firstName = updatedUser.firstName;
                 doc.lastName = updatedUser.lastName;
                 doc.email = updatedUser.email;
@@ -248,8 +256,7 @@ module.exports = function(db, mongoose) {
         UserModel.findOne(
 
             // first argument is predicate
-            { username: credentials.username,
-                password: credentials.password },
+            { username: credentials.username},
 
             // doc is unique instance matches predicate
             function(err, doc) {
@@ -259,7 +266,16 @@ module.exports = function(db, mongoose) {
                     deferred.reject(err);
                 } else {
                     // resolve promise
-                    deferred.resolve(doc);
+                    if(doc && doc.password) {
+                        if(bcrypt.compareSync(credentials.password, doc.password)) {
+                            deferred.resolve(doc);
+                        } else{
+                            deferred.resolve('');
+                        }
+                    } else {
+                        deferred.resolve('');
+                    }
+
                 }
 
             });
