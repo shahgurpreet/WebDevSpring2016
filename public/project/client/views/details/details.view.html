@@ -17,7 +17,7 @@
                     <span ng-if="placeDetails.website"><i class="fa fa-external-link-square"></i>&nbsp;<a ng-href="{{placeDetails.website}}" target="_blank"> Website</a> <br></span>
                     <span ng-if="placeDetails.rating"><i class="fa fa-star"></i>&nbsp;{{placeDetails.rating}} <br></span>
                     <br>
-                    <button class="btn btn-primary" ng-click="favorite(placeDetails)">
+                    <button class="btn btn-primary more-button" ng-click="favorite(placeDetails)">
                         <span ng-show="placeDetails.likes.indexOf(currentUser._id) > -1" class="fa fa-heart"></span>
                         <span ng-show="!placeDetails || !placeDetails.likes || placeDetails.likes.indexOf(currentUser._id) == -1" class="fa fa-heart-o"></span>
                     </button>
@@ -45,7 +45,7 @@
                             <div class="status-upload">
                                 <form>
                                     <textarea placeholder="Add a review?" ng-model="comment"></textarea>
-                                    <button type="submit" class="btn btn-primary green" ng-click="addComment(comment)">Post</button>
+                                    <button type="submit" class="btn btn-primary more-button" ng-click="addComment(comment)">Post</button>
                                 </form>
                             </div>
                         </div>
@@ -76,7 +76,7 @@
                     </div>
                     <div class="clearfix"></div>
                     <div class="center-block text-center">
-                        <a ng-if="moreInsta" ng-click="paging()" class="button">More</a>
+                        <a ng-if="moreInsta" ng-click="paging()" class="button more-button">More</a>
                     </div>
                     <div ng-if="!moreInsta && loading">
                         <div class="spinner"></div>
@@ -103,7 +103,7 @@
                     </div>
                     <div class="clearfix"></div>
                     <div class="center-block text-center">
-                        <a ng-if="moreTwit" ng-click="pagingTwitter()" class="button">More</a>
+                        <a ng-if="moreTwit" ng-click="pagingTwitter()" class="button more-button">More</a>
                     </div>
                     <div ng-if="!moreTwit && loadingT">
                         <div class="spinner"></div>

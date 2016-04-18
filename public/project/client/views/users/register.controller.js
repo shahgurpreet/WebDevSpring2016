@@ -18,21 +18,24 @@
             if(newUser.password !== newUser.confirmPassword) {
                 $scope.err = 'Please make sure that your passwords match.'
             }
-            if(newUser && !$scope.err) {
-                UserService.createUser(newUser).then(
-                    function (response) {
-                        var user = response.data;
-                        if(user != null) {
-                            $rootScope.currentUser = newUser;
-                            $location.url("/home/");
-                        } else {
-                            $scope.err = 'Username already exists!'
+
+            if(newUser && newUser.username && newUser.email) {
+                if(newUser && !$scope.err) {
+                    UserService.createUser(newUser).then(
+                        function (response) {
+                            var user = response.data;
+                            if(user != null) {
+                                $rootScope.currentUser = newUser;
+                                $location.url("/home/");
+                            } else {
+                                $scope.err = 'Username already exists!'
+                            }
+                        },
+                        function(err) {
+                            $scope.err = err;
                         }
-                    },
-                    function(err) {
-                        $scope.err = err;
-                    }
-                )
+                    )
+                }
             }
         }
     }

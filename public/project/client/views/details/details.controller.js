@@ -39,23 +39,24 @@
                     $timeout(function(){
                         if(response.length === 0) {
                             $scope.loading = false;
-                        }
-                        var instaPosts = response;
-                        for(var i = 0; i < instaPosts.length; i++) {
-                            var tag = '';
-                            var tags = instaPosts[i].tags;
-                            for(var j = 0; j < 5; j++) {
-                                tag += '#' + tags[j] + ' ';
-                            }
-                            $scope.instagramImagesAndTags.push({
-                                tags: tag,
-                                photo: instaPosts[i].photo
-                            });
-                            setTimeout(function () {
-                                $scope.$apply(function(){
-                                    $scope.moreInsta = true;
+                        } else {
+                            var instaPosts = response;
+                            for(var i = 0; i < instaPosts.length; i++) {
+                                var tag = '';
+                                var tags = instaPosts[i].tags;
+                                for(var j = 0; j < 5; j++) {
+                                    tag += '#' + tags[j] + ' ';
+                                }
+                                $scope.instagramImagesAndTags.push({
+                                    tags: tag,
+                                    photo: instaPosts[i].photo
                                 });
-                            }, 1000);
+                                setTimeout(function () {
+                                    $scope.$apply(function(){
+                                        $scope.moreInsta = true;
+                                    });
+                                }, 1000);
+                            }
                         }
                     });
 
@@ -70,17 +71,18 @@
                 function getMoreTweets(response) {
                     if(response.length === 0) {
                         $scope.loadingT = false;
-                    }
-                    $timeout(function(){
-                        for(var i in response) {
-                            $scope.twitterPosts.push(response[i]);
-                        }
-                    });
-                    setTimeout(function () {
-                        $scope.$apply(function(){
-                            $scope.moreTwit = true;
+                    } else {
+                        $timeout(function(){
+                            for(var i in response) {
+                                $scope.twitterPosts.push(response[i]);
+                            }
                         });
-                    }, 1000);
+                        setTimeout(function () {
+                            $scope.$apply(function(){
+                                $scope.moreTwit = true;
+                            });
+                        }, 1000);
+                    }
 
                 }
             }

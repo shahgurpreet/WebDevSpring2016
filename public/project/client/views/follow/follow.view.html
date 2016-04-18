@@ -1,11 +1,12 @@
 <div class="container">
-    <h3>{{username}}'s favorites</h3>
-
+    <h4>{{username}}'s favorites</h4>
+    <h5 ng-if="likedPlaces.length === 0 && reviewedPlaces.length === 0
+    && likedPhotos.length === 0">{{username}} hasn't liked pr reviewed any places yet.</h5>
 
     <div class="row">
         <div class="col-md-12">
             <div ng-if="likedPlaces.length > 0">
-                <h3>Places {{username}} Liked</h3>
+                <h4>Places {{username}} Liked</h4>
                 <div ng-repeat="s in slides" class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
                     <div>
                         <figure class="cap-bot">
@@ -20,7 +21,7 @@
         </div>
         <div class="col-md-12">
             <div ng-if="reviewedPlaces.length > 0">
-                <h3>Places {{username}} Reviewed</h3>
+                <h4>Places {{username}} Reviewed</h4>
                 <div ng-repeat="s in thumbs" class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
                     <div>
                         <figure class="cap-bot">
@@ -35,7 +36,7 @@
         </div>
         <div class="col-md-12">
             <div ng-if="likedPhotos.length > 0">
-                <h3>Photos {{username}} Liked</h3>
+                <h4>Photos {{username}} Liked</h4>
                 <div ng-repeat="p in likedPhotos" class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
                     <div>
                         <figure class="cap-bot">

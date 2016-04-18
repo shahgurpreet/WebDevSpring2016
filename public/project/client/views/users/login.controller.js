@@ -16,9 +16,10 @@
 
         // event handler implementation
         function login(unloggedUser) {
-            if (unloggedUser) {
+            if (unloggedUser && unloggedUser.username && unloggedUser.password) {
                 var username = unloggedUser.username;
                 var password = unloggedUser.password;
+
                 UserService.findUserByCredentials(username, password)
                     .then(function (response) {
 

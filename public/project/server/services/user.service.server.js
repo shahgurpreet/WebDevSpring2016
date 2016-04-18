@@ -79,7 +79,8 @@ module.exports = function(app, userModel, placeModel, photoModel) {
                             facebook: {
                                 id:    profile.id,
                                 token: token
-                            }
+                            },
+                            roles: ['visitor']
                         };
                         newFacebookUser.username = names[0];
                         return userModel.createUser(newFacebookUser);
@@ -116,7 +117,8 @@ module.exports = function(app, userModel, placeModel, photoModel) {
                             google: {
                                 id:          profile.id,
                                 token:       token
-                            }
+                            },
+                            roles:['visitor']
                         };
                         newGoogleUser.username = profile.name.givenName;
                         return userModel.createUser(newGoogleUser);

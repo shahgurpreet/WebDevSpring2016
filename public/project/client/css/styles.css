@@ -274,7 +274,7 @@ figure {
 .spinner {
     width: 40px;
     height: 40px;
-    background-color: #333;
+    background-color: #e6cf8b;
 
     margin: 20px auto;
     -webkit-animation: sk-rotateplane 1.2s infinite ease-in-out;
@@ -363,3 +363,50 @@ figure {
     margin-top: 9px;
     padding: 6px 15px;
 }
+
+.small-screen-search {
+    margin-top: 8px;
+}
+
+.navbar {
+    background-color: #22264b;
+}
+
+.navbar-inverse .navbar-nav>.active > a{
+    background-color: #22264b;
+}
+
+.navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover{
+    background-color: #22264b;
+}
+
+.navbar-inverse .navbar-nav>li>a {
+    color: #e8edf3
+}
+
+.navbar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand {
+    color: #e8edf3
+}
+
+.glyphicon-search {
+    color: #22264b
+}
+
+.more-button {
+    background-color: #b56969;
+    color: #e8edf3;
+    border: none;
+}
+
+.more-button:hover {
+    background-color: #b56969;
+    color: white;
+}
+
+.fa-heart {
+    color: white;
+}
+
+
+
+
