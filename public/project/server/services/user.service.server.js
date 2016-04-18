@@ -79,9 +79,9 @@ module.exports = function(app, userModel, placeModel, photoModel) {
                             facebook: {
                                 id:    profile.id,
                                 token: token
-                            },
-                            username: names[0]
+                            }
                         };
+                        newFacebookUser.username = names[0];
                         return userModel.createUser(newFacebookUser);
                     }
                 },
@@ -116,9 +116,9 @@ module.exports = function(app, userModel, placeModel, photoModel) {
                             google: {
                                 id:          profile.id,
                                 token:       token
-                            },
-                            username: profile.name.givenName
+                            }
                         };
+                        newGoogleUser.username = profile.name.givenName;
                         return userModel.createUser(newGoogleUser);
                     }
                 },
