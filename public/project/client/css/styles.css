@@ -274,7 +274,7 @@ figure {
 .spinner {
     width: 40px;
     height: 40px;
-    background-color: #e6cf8b;
+    background-color: #000;
 
     margin: 20px auto;
     -webkit-animation: sk-rotateplane 1.2s infinite ease-in-out;
@@ -410,6 +410,3 @@ figure {
 .navbar-inverse .navbar-toggle:focus, .navbar-inverse .navbar-toggle:hover {
     background-color: #22264b;
 }
-
-
-

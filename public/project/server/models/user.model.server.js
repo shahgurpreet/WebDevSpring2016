@@ -197,7 +197,10 @@ module.exports = function(db, mongoose) {
                 doc.firstName = updatedUser.firstName;
                 doc.lastName = updatedUser.lastName;
                 doc.email = updatedUser.email;
-                doc.roles = updatedUser.roles;
+
+                if(updatedUser.roles) {
+                    doc.roles = updatedUser.roles;
+                }
                 doc.save(function(err, resp) {
                     if(err) {
                         deferred.reject(err);
