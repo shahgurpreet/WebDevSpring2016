@@ -1,5 +1,17 @@
 <div class="container">
-    <h4>{{username}}'s favorites</h4>
+    <div class="row">
+        <div class="col-md-12">
+        <span>
+            <h4>{{username}}'s favorites</h4>
+            <button ng-if = "currentUser.following.indexOf(username) === -1" class="more-button button" ng-click="follow()">
+                Follow
+            </button>
+            <button ng-if = "currentUser.following.indexOf(username) > -1" class="more-button button" ng-click="follow()">
+                Following
+            </button>
+        </span>
+        </div>
+    </div>
     <h5 ng-if="likedPlaces.length === 0 && reviewedPlaces.length === 0
     && likedPhotos.length === 0">{{username}} hasn't liked pr reviewed any places yet.</h5>
 

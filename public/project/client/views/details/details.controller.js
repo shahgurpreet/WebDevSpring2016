@@ -236,17 +236,6 @@
 
         getTwitterPosts();
 
-        function accentsTidy(name) {
-            var r = name.toLowerCase();
-            var non_asciis = {'a': '[àáâãäå]', 'ae': 'æ', 'c': 'ç', 'e': '[èéêë]', 'i': '[ìíîï]', 'n': 'ñ', 'o': '[òóôõö]', 'oe': 'œ', 'u': '[ùúûűü]', 'y': '[ýÿ]'};
-
-            for(var i = 0; i < non_asciis.length; i++) {
-                var non_ascii_val = non_asciis[i];
-                r = r.replace(new RegExp(non_ascii_val[i], 'g'), non_ascii_val
-                );
-            }
-            return r;
-        }
 
         if(currentUser && currentUser.roles && currentUser.roles.indexOf('Admin') > -1) {
             $scope.dc = true;
@@ -274,9 +263,10 @@
         }
 
         function addComment(comment) {
+            var box = angular.element.find("textarea");
+            box[0].value = '';
             if(currentUser) {
                 if(comment) {
-                    $scope.comment = '';
                     $scope.placeDetails.reviews.push(comment);
                     var place = {};
                     place.name = $routeParams.name;
@@ -286,7 +276,7 @@
                     place.lat = lat;
                     place.long = long;
                     place.reviews = $scope.placeDetails.reviews;
-
+                    $scope.comm = '';
                     PlaceService.userCommentsOnPlace(currentUser._id, place);
                 }
             } else {
@@ -307,6 +297,7 @@
                 photo.userLikes = [];
                 photo.userLikes.push(currentUser._id);
                 PhotoService.userLikesPhoto(currentUser._id, photo);
+                $scope.comment = '';
             } else {
                 $location.url("/login");
             }

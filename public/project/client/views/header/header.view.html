@@ -10,15 +10,6 @@
             </button>
             <a class="navbar-brand" ng-class="{'active': $location.url() == '#/home'}" href="#/home">
                 <i class="fa fa-map-signs"></i>&nbsp; WanderMust</a>
-
-            <div class="visible-xs  ">
-                <div class="input-group small-screen-search add-on">
-                    <input g-places-autocomplete options="autocompleteOptions" placeholder="Enter City" type="text" class="form-control" ng-model="searchQuery">
-                    <div class="input-group-btn">
-                        <button ng-click="processQuery(searchQuery)" class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <div class="navbar-collapse collapse" id="navbar-collapsible">
@@ -45,7 +36,7 @@
                 <li ng-if = "currentUser"><a data-toggle="collapse" data-target=".navbar-collapse" href="#/home" ng-click="logout()"><i class="fa fa-sign-out"></i>&nbsp;Logout</a></li>
             </ul>
 
-            <form class="navbar-form hidden-xs" role="search">
+            <form class="navbar-form" role="search">
                 <div class="input-group add-on">
                     <input g-places-autocomplete options="autocompleteOptions" placeholder="Enter City" type="text" class="form-control" ng-model="searchQuery">
                     <div class="input-group-btn">

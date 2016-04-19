@@ -11,12 +11,27 @@
     function FollowController($location, $scope, UserService, PhotoService, $routeParams, $rootScope) {
         $scope.username = $routeParams.username;
         $scope.userId = $routeParams.userId;
-
+        var currentUser = $rootScope.currentUser;
         $scope.toLDetailsPage = toLDetailsPage;
         $scope.toRDetailsPage = toRDetailsPage;
         $scope.likePhoto = likePhoto;
+        $scope.follow = follow;
 
         $scope.activeUserLikedPhotos = [];
+
+        function follow() {
+            if(currentUser.following.indexOf($scope.username) === -1) {
+                var following = $rootScope.currentUser.following;
+                if(following) {
+                    following.push($scope.username);
+                } else {
+                    var following = [];
+                    following.push(username);
+                    $rootScope.currentUser.following = following;
+                }
+                UserService.followUser(currentUser._id, $scope.username);
+            }
+        }
 
         function toLDetailsPage(url) {
             for(var i in $scope.likedPlaces) {
@@ -108,6 +123,8 @@
                 PhotoService.userLikesPhoto($rootScope.currentUser._id, photo_1);
             }
         }
+
+
 
     }
 })();

@@ -1,5 +1,5 @@
 <div class="container">
-    <h4>My favorites</h4>
+    <h3>My favorites</h3>
 
     <h5 ng-if="likedPlaces.length === 0 && reviewedPlaces.length === 0
     && likedPhotos.length === 0">Your favorites appear here. Please like or review any place to see something here.</h5>
@@ -42,6 +42,12 @@
                 <ng-gallery images="likedPhotos" downloadSrc='true'>
                 </ng-gallery>
             </div>
+        </div>
+        <div class="col-md-12" ng-if="following.length > 0">
+            <h4>Users I Follow</h4>
+           <span class="users-like" ng-repeat = "user in following">
+                    <a ng-click="followUser(user)">{{user}}</a>
+                </span>
         </div>
     </div>
 </div>

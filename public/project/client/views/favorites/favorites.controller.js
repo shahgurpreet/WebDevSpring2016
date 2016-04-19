@@ -8,10 +8,13 @@
         .module("WanderMustApp")
         .controller("FavoritesController", FavoritesController);
 
-    function FavoritesController($location, $scope, UserService) {
+    function FavoritesController($rootScope, $location, $scope, UserService) {
 
         $scope.toLDetailsPage = toLDetailsPage;
         $scope.toRDetailsPage = toRDetailsPage;
+        var currentUser = $rootScope.currentUser;
+        $scope.following = currentUser.following;
+        $scope.followUser = followUser;
 
         function toLDetailsPage(url) {
             for(var i in $scope.likedPlaces) {
@@ -85,6 +88,12 @@
         };
 
         getLikedPhotos();
+
+        function followUser(user) {
+            UserService.findUserByUsername(user).then(function(user) {
+                $location.url("/follow/" + user.username + "/" + user._id);
+            });
+        }
     }
 })();
 

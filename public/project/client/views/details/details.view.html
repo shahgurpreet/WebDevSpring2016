@@ -32,7 +32,7 @@
                     </div>
                     <div class="table-responsive reviews">
                         <table class="table table-striped">
-                            <tr ng-repeat = "review in placeDetails.reviews" ng-class="{'success' : $index == commentIndex}">
+                            <tr ng-repeat = "review in placeDetails.reviews track by $index" ng-class="{'success' : $index == commentIndex}">
                                 <td>
                                     "{{review}}"
                                     <a ng-if="dc" ng-click="deleteComment($index)"><i class="fa fa-remove"></i></a>
@@ -44,8 +44,8 @@
                         <div class="widget-area no-padding blank">
                             <div class="status-upload">
                                 <form>
-                                    <textarea placeholder="Add a review?" ng-model="comment"></textarea>
-                                    <button type="submit" class="btn btn-primary more-button" ng-click="addComment(comment)">Post</button>
+                                    <textarea placeholder="Add a review?" ng-model="comm"></textarea>
+                                    <button type="submit" class="btn btn-primary more-button" ng-click="addComment(comm)">Post</button>
                                 </form>
                             </div>
                         </div>

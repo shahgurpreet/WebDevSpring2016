@@ -23,11 +23,21 @@
             getReviewedPlaces: getReviewedPlaces,
             getUsernamesByIds: getUsernamesByIds,
             getLikedPlacesForUsername: getLikedPlacesForUsername,
-            getLikedPhotos: getLikedPhotos
+            getLikedPhotos: getLikedPhotos,
+            followUser: followUser
         };
         return api;
 
+        // follow user by username
+        function followUser(userId, followUserName) {
+            var endpoint = "/api/project/user/follow/" + userId +"/" + followUserName;
+            var req = {
+                method: 'POST',
+                url: endpoint
+            };
 
+            return $http(req);
+        }
 
         // get all users
         function findAllUsers() {

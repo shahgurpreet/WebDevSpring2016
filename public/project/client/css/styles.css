@@ -407,6 +407,9 @@ figure {
     color: white;
 }
 
+.navbar-inverse .navbar-toggle:focus, .navbar-inverse .navbar-toggle:hover {
+    background-color: #22264b;
+}
 
 
 

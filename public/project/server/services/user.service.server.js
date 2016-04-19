@@ -23,7 +23,7 @@ module.exports = function(app, userModel, placeModel, photoModel) {
     app.get("/api/project/reviewed/:userId", getReviewedPlaces);
     app.post("/api/project/userid/username", getUsernamesByIds);
     app.get("/api/project/liked/photos/:userId", getLikedPhotos);
-
+    app.post("/api/project/user/follow/:userId/:followUserName", followUser);
 
     // passport functionalities - start
     passport.use(new LocalStrategy(localStrategy));
@@ -511,5 +511,11 @@ module.exports = function(app, userModel, placeModel, photoModel) {
         } else {
             return false;
         }
+    }
+
+    function followUser(req, res) {
+        var userId = req.params.userId;
+        var followUserName = req.params.followUserName;
+        res.json(userModel.followUser(userId, followUserName));
     }
 };

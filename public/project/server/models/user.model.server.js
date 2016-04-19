@@ -30,7 +30,8 @@ module.exports = function(db, mongoose) {
         findUsersByUserIds: findUsersByUserIds,
         userLikesPlace: userLikesPlace,
         userCommentsOnPlace: userCommentsOnPlace,
-        userLikesPhoto: userLikesPhoto
+        userLikesPhoto: userLikesPhoto,
+        followUser: followUser
     };
 
     return api;
@@ -188,8 +189,11 @@ module.exports = function(db, mongoose) {
                     return doc;
                 }
             }).then(function(doc) {
+                if(doc.password != updatedUser.password) {
+                    doc.password = bcrypt.hashSync(updatedUser.password);
+                }
+
                 doc.username = updatedUser.username;
-                doc.password = bcrypt.hashSync(updatedUser.password);
                 doc.firstName = updatedUser.firstName;
                 doc.lastName = updatedUser.lastName;
                 doc.email = updatedUser.email;
@@ -321,5 +325,35 @@ module.exports = function(db, mongoose) {
         });
 
         return deferred;
+    }
+
+    // follow user by username
+    function followUser(userId, followUserName) {
+        var deferred = q.defer();
+        // find the user
+        UserModel.findById(userId, function (err, doc) {
+
+            // reject promise if error
+            if (err) {
+                deferred.reject(err);
+            } else {
+                // add photo url to user likes
+                doc.following.push (followUserName);
+
+                // save user
+                doc.save (function (err, doc) {
+
+                    if (err) {
+                        deferred.reject(err);
+                    } else {
+                        // resolve promise with user
+                        deferred.resolve (doc);
+                    }
+                });
+            }
+        });
+
+        return deferred;
+
     }
 };

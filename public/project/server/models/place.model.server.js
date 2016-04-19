@@ -233,7 +233,6 @@ module.exports = function(db, mongoose) {
     }
 
     function findPlaceById(place_id) {
-
         var deferred = q.defer();
 
         Place.findOne({place_id: place_id}, function (err, doc) {
