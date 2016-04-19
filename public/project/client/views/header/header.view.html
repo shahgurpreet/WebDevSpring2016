@@ -36,11 +36,21 @@
                 <li ng-if = "currentUser"><a data-toggle="collapse" data-target=".navbar-collapse" href="#/home" ng-click="logout()"><i class="fa fa-sign-out"></i>&nbsp;Logout</a></li>
             </ul>
 
-            <form class="navbar-form" role="search">
+            <form class="navbar-form hidden-xs" role="search">
                 <div class="input-group add-on">
                     <input g-places-autocomplete options="autocompleteOptions" placeholder="Enter City" type="text" class="form-control" ng-model="searchQuery">
                     <div class="input-group-btn">
                         <button ng-click="processQuery(searchQuery)" class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                    </div>
+                </div>
+            </form>
+
+            <form class="navbar-form visible-xs" role="search">
+                <div class="input-group add-on">
+                    <input g-places-autocomplete options="autocompleteOptions" placeholder="Enter City" type="text" class="form-control" ng-model="searchQuery">
+                    <div class="input-group-btn">
+                        <button data-toggle="collapse" data-target=".navbar-collapse"
+                                ng-click="processQuery(searchQuery)" class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                     </div>
                 </div>
             </form>
