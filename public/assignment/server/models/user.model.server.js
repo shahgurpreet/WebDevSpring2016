@@ -8,6 +8,9 @@ module.exports = function(db, mongoose) {
     // load q promise library
     var q = require("q");
 
+    // load the bcrypt module
+    var bcrypt = require('bcrypt-nodejs');
+
     // load user schema
     var UserSchema = require("./user.schema.server.js")(mongoose);
 
@@ -29,6 +32,11 @@ module.exports = function(db, mongoose) {
     function createUser(user) {
         // use q to defer the response
         var deferred = q.defer();
+
+        var decrytedPassword = user.password;
+        var encrytedPassword = bcrypt.hashSync(decrytedPassword);
+        user.password = encrytedPassword;
+
 
         // insert new user with mongoose user model's create()
         UserModel.create(user, function (err, doc) {
@@ -79,6 +87,7 @@ module.exports = function(db, mongoose) {
         }
     }
 
+    // update the user in the database based on the user id
     function updateUser(userId, updatedUser) {
         if(userId) {
             var deferred = q.defer();
@@ -89,15 +98,20 @@ module.exports = function(db, mongoose) {
                     return doc;
                 }
             }).then(function(doc) {
+                if(doc.password != updatedUser.password) {
+                    doc.password = bcrypt.hashSync(updatedUser.password);
+                }
+
                 doc.username = updatedUser.username;
-                doc.password = updatedUser.password;
                 doc.firstName = updatedUser.firstName;
                 doc.lastName = updatedUser.lastName;
                 doc.emails = updatedUser.emails;
-                doc.phones = updatedUser.phones;
+
+                if(updatedUser.roles) {
+                    doc.roles = updatedUser.roles;
+                }
                 doc.save(function(err, resp) {
                     if(err) {
-                        console.log(err);
                         deferred.reject(err);
                     } else {
                         deferred.resolve(resp);
@@ -158,8 +172,7 @@ module.exports = function(db, mongoose) {
         UserModel.findOne(
 
             // first argument is predicate
-            { username: credentials.username,
-                password: credentials.password },
+            { username: credentials.username},
 
             // doc is unique instance matches predicate
             function(err, doc) {
@@ -169,11 +182,90 @@ module.exports = function(db, mongoose) {
                     deferred.reject(err);
                 } else {
                     // resolve promise
-                    deferred.resolve(doc);
+                    if(doc && doc.password) {
+                        if(bcrypt.compareSync(credentials.password, doc.password)) {
+                            deferred.resolve(doc);
+                        } else{
+                            deferred.resolve('');
+                        }
+                    } else {
+                        deferred.resolve('');
+                    }
+
                 }
 
             });
 
         return deferred.promise;
+    }
+
+    function findUserByGoogleId(googleId) {
+        return UserModel.findOne({'google.id': googleId});
+    }
+
+    function findUserByFacebookId(facebookId) {
+        return UserModel.findOne({'facebook.id': facebookId});
+    }
+
+    // add photo to user likes
+    function userLikesPhoto (userId, photo) {
+
+        var deferred = q.defer();
+
+        // find the user
+        UserModel.findById(userId, function (err, doc) {
+
+            // reject promise if error
+            if (err) {
+                deferred.reject(err);
+            } else {
+                // add photo url to user likes
+                doc.likesPhotos.push (photo.photo);
+
+                // save user
+                doc.save (function (err, doc) {
+
+                    if (err) {
+                        deferred.reject(err);
+                    } else {
+
+                        // resolve promise with user
+                        deferred.resolve (doc);
+                    }
+                });
+            }
+        });
+
+        return deferred;
+    }
+
+    // follow user by username
+    function followUser(userId, followUserName) {
+        var deferred = q.defer();
+        // find the user
+        UserModel.findById(userId, function (err, doc) {
+
+            // reject promise if error
+            if (err) {
+                deferred.reject(err);
+            } else {
+                // add photo url to user likes
+                doc.following.push (followUserName);
+
+                // save user
+                doc.save (function (err, doc) {
+
+                    if (err) {
+                        deferred.reject(err);
+                    } else {
+                        // resolve promise with user
+                        deferred.resolve (doc);
+                    }
+                });
+            }
+        });
+
+        return deferred;
+
     }
 };

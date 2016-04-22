@@ -2,15 +2,15 @@
  * Created by Gurpreet on 3/15/2016.
  */
 
-var passport         = require('passport');
+/*var passport         = require('passport');
 var LocalStrategy    = require('passport-local').Strategy;
 var GoogleStrategy   = require('passport-google-oauth').OAuth2Strategy;
-var FacebookStrategy = require('passport-facebook').Strategy;
+var FacebookStrategy = require('passport-facebook').Strategy;*/
 
 
 module.exports = function(app, userModel, placeModel, photoModel) {
 
-    var auth = authorized;
+    /*var auth = authorized;
     app.get("/api/project/user", findAllUsers);
     app.post("/api/project/user", createUser);
     app.get("/api/project/user/:id", findUserById);
@@ -181,10 +181,10 @@ module.exports = function(app, userModel, placeModel, photoModel) {
         res.json(user);
     }
 
-    /**
+    /!**
      * register a new user, first check if the username already exists in the database,
      if not. then create a new user*
-     */
+     *!/
     function createUser(req, res) {
         var newUser = req.body.user;
 
@@ -517,5 +517,5 @@ module.exports = function(app, userModel, placeModel, photoModel) {
         var userId = req.params.userId;
         var followUserName = req.params.followUserName;
         res.json(userModel.followUser(userId, followUserName));
-    }
+    }*/
 };

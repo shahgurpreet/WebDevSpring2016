@@ -3,5 +3,5 @@
  */
 (function () {
     angular
-        .module("FormBuilderApp", ["ngRoute", "ui.sortable", "ui.bootstrap"]);
+        .module("FormBuilderApp", ["ngRoute", "ui.sortable", "ui.bootstrap", "jgaDirectives"]);
 })();

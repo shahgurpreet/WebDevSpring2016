@@ -17,10 +17,12 @@
             deleteUserById: deleteUserById,
             updateUser: updateUser,
             findUserByUsername: findUserByUsername,
-            findAllUsers: findAllUsers
+            findAllUsers: findAllUsers,
+            logout: logout
         };
         return api;
 
+        // get all users
         function findAllUsers() {
             var deferred = $q.defer();
             $http.get("/api/assignment/user")
@@ -31,6 +33,7 @@
             return deferred.promise;
         }
 
+        // find user by username
         function findUserByUsername(username) {
             var deferred = $q.defer();
             $http.get("/api/assignment/user?username=" + username)
@@ -41,19 +44,16 @@
             return deferred.promise;
         }
 
+        // find user by credentials
         function findUserByCredentials(username, password) {
-            var deferred = $q.defer();
-            $http.get("/api/assignment/user?username=" + username + "&password=" + password)
-                .success(function (response) {
-                    deferred.resolve(response);
-                })
-                .error(function (error) {
-                    console.log(error);
-                });
-
-            return deferred.promise;
+            var user = {
+                username: username,
+                password: password
+            };
+            return $http.post("/api/assignment/login", user);
         }
 
+        // register user
         function createUser(user) {
             var endpoint = "/api/assignment/user";
             var req = {
@@ -66,6 +66,7 @@
             return($http(req));
         }
 
+        // delete user by user id
         function deleteUserById(userId) {
             var deferred = $q.defer();
             $http.delete("/api/assignment/user/" + userId)
@@ -79,6 +80,7 @@
             return deferred.promise;
         }
 
+        // update user by user obj and user id
         function updateUser(userId, user) {
             var endpoint = "/api/assignment/user/" + userId;
             var req = {
@@ -86,6 +88,25 @@
                 url: endpoint,
                 data: {
                     user: user
+                }
+            };
+
+            return $http(req);
+        }
+
+        // logout user
+        function logout() {
+            return $http.post("/api/assignment/logout");
+        }
+
+        // fetch usernames by userIds
+        function getUsernamesByIds(userIds) {
+            var endpoint = "/api/project/userid/username";
+            var req = {
+                method: 'POST',
+                url: endpoint,
+                data: {
+                    userIds: userIds
                 }
             };
 

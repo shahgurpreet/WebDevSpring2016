@@ -7,12 +7,23 @@
         .module("FormBuilderApp")
         .controller("HeaderController", HeaderController);
 
-    function HeaderController($location, $scope, $rootScope) {
+    function HeaderController($location, $scope, $rootScope, UserService) {
         $scope.$location = $location;
         $scope.logout = logout;
 
-        function logout() {
-            $rootScope.currentUser = null;
+        function logout()
+        {
+            UserService
+                .logout()
+                .then(
+                    function(response){
+                        $rootScope.currentUser = null;
+                        $location.url("/login");
+                    },
+                    function(err) {
+                        $scope.error = err;
+                    }
+                );
         }
     }
 })();

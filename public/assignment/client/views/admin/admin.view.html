@@ -1,67 +1,54 @@
-<h2>Admin</h2>
-<h3>Users</h3>
+<h3>Admin</h3>
 
+<h3>User List</h3>
 <div class="table-responsive">
     <table class="table table-striped">
-        <thead>
         <tr>
-            <th><a class="glyphicon glyphicon-triangle-bottom admin-sort-links"></a>Username</th>
-            <th><a class="glyphicon glyphicon-triangle-bottom admin-sort-links "></a>Password</th>
-            <th><a class="glyphicon glyphicon-triangle-bottom admin-sort-links"></a>Role</th>
-            <th><a class="glyphicon glyphicon-triangle-bottom admin-sort-links"></a>Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
+            <td>&nbsp;</td>
             <td>
-                <div class="form-group">
-                    <input type="text" class="form-control" id="inputUsername" placeholder="username">
-                </div>
+                <span ng-click="order('username')">username</span>
+                <span class="sortorder" ng-show="predicate === 'username'" ng-class="{reverse:reverse}"></span>
+                <input ng-model="user.username" class="form-control" placeholder="username"/>
             </td>
             <td>
-                <div class="form-group">
-                    <input type="password" class="form-control" id="inputPassword" placeholder="password">
-                </div>
+                <span>password</span>
+                <input ng-model="user.password" class="form-control" type="password" placeholder="password"/>
             </td>
             <td>
-                <div class="form-group">
-                    <input type="text" class="form-control" id="role" placeholder="role1, role2">
-                </div>
+                <span ng-click="order('firstName')">firstName</span>
+                <span class="sortorder" ng-show="predicate === 'firstName'" ng-class="{reverse:reverse}"></span>
+                <input ng-model="user.firstName" class="form-control" placeholder="first"/>
             </td>
-            <td class="admin-actions-links wrap-white-spacing">
-                <div>
-                    <a class="glyphicon glyphicon-plus"></a>
-                    <a class="glyphicon glyphicon glyphicon-ok"></a>
-                </div>
+            <td>
+                <span ng-click="order('lastName')">lastName</span>
+                <span class="sortorder" ng-show="predicate === 'lastName'" ng-class="{reverse:reverse}"></span>
+                <input ng-model="user.lastName" class="form-control" placeholder="last"/>
             </td>
+            <td>
+                <span>roles</span>
+                <input ng-model="user.roles" class="form-control" placeholder="roles"/>
+            </td>
+            <td>
+                <button style="margin-top: 19px;"  ng-click="add(user)" class="btn btn-primary">&plus;</button>
+            </td>
+            <td><button style="margin-top: 19px;" ng-click="update(user)" class="btn btn-success">&check;</button>
         </tr>
-        <tr>
-            <td>alice</td>
-            <td></td>
-            <td>student</td>
-            <td class="admin-actions-links wrap-white-spacing">
-                <a class="glyphicon glyphicon-remove"></a>
-                <a class="glyphicon glyphicon glyphicon-pencil"></a>
-            </td>
+
         </tr>
-        <tr>
-            <td>bob</td>
-            <td></td>
-            <td>admin | faculty</td>
-            <td class="admin-actions-links wrap-white-spacing">
-                <a class="glyphicon glyphicon-remove"></a>
-                <a class="glyphicon glyphicon glyphicon-pencil"></a>
+        <tr ng-repeat="user in users | orderBy:predicate:reverse">
+            <td>{{user._id}}</td>
+            <td>{{user.username}}</td>
+            <td>&nbsp;</td>
+            <td>{{user.firstName}}</td>
+            <td>{{user.lastName}}</td>
+            <td>{{user.roles}}</td>
+            <td>
+                <button ng-click="remove(user)" class="btn btn-danger">X</button>
             </td>
+            <td><button ng-click="select(user)" class="btn btn-success">...</button></td>
         </tr>
-        <tr>
-            <td>charlie</td>
-            <td></td>
-            <td></td>
-            <td class="admin-actions-links wrap-white-spacing">
-                <a class="glyphicon glyphicon-remove"></a>
-                <a class="glyphicon glyphicon glyphicon-pencil"></a>
-            </td>
-        </tr>
-        </tbody>
     </table>
+</div>
+<div ng-if="error" class="alert alert-danger text-center">
+    <p>{{error}}</p>
 </div>

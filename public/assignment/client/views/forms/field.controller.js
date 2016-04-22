@@ -12,6 +12,7 @@
             handle: '.myHandle'
         };
 
+
         $scope.allFields = [];
         var formId = $routeParams.formId;
         $scope.formName = $routeParams.formName;
@@ -31,8 +32,19 @@
         $scope.createReplicaForm = createReplicaForm;
         $scope.openModal = openModal;
         $scope.fromModal = fromModal;
-
+        $scope.sort = sort;
         // event handler implementations
+
+        function sort(start, end) {
+            FieldService.sort(formId, start, end).then(
+                function (response) {
+                    
+                },
+                function(err) {
+                    $scope.error = err;
+                }
+            )
+        }
 
         function addField(selection) {
             var field= {};

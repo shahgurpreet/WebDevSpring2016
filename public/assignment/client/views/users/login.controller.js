@@ -22,9 +22,12 @@
                 UserService.findUserByCredentials(username, password). then(
                     function (response) {
                         if(response) {
-                            $rootScope.currentUser = response;
+                            $rootScope.currentUser = response.data;
                             $location.url("/profile/");
                         }
+                    },
+                    function (err) {
+                        $scope.err = err;
                     }
                 )
             }

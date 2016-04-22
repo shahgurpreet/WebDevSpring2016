@@ -14,15 +14,20 @@
 
         // event handler implementation
         function register(newUser) {
-            if(newUser) {
+            if(newUser && newUser.username && newUser.emails) {
                 newUser.emails = newUser.emails.split(",");
                 UserService.createUser(newUser).then(
                     function (response) {
-                        var currentUser = response.data;
-                        if(currentUser){
-                            $rootScope.currentUser = currentUser;
+                        var user = response.data;
+                        if(user != null) {
+                            $rootScope.currentUser = newUser;
                             $location.url("/profile/");
+                        } else {
+                            $scope.err = 'Username already exists!'
                         }
+                    },
+                    function(err) {
+                        $scope.err = err;
                     }
                 )
             }

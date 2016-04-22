@@ -7,7 +7,7 @@
         .module("FormBuilderApp")
         .controller("ProfileController", ProfileController);
 
-    function ProfileController($rootScope, $location, $scope, UserService) {
+    function ProfileController($rootScope, $scope, UserService) {
 
         // event handler declarations
         $scope.update = update;
@@ -18,7 +18,11 @@
                 var userId = $rootScope.currentUser._id;
                 UserService.updateUser(userId, currentUser).then(
                     function (response) {
-                        $rootScope.currentUser = response.data;
+                        $rootScope.currentUser = currentUser;
+                        $scope.msg = 'Profile successfully updated!'
+                    },
+                    function(error) {
+                        $scope.msg = 'There was some error while updating, please re-try.'
                     }
                 )
             }

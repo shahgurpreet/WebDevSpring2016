@@ -20,10 +20,23 @@ module.exports = function (db, mongoose, formModel) {
         deleteFieldFromForm: deleteFieldFromForm,
         createFieldForForm: createFieldForForm,
         updateField: updateField,
-        createReplicaForm: createReplicaForm
+        createReplicaForm: createReplicaForm,
+        sort: sort
     };
 
     return api;
+
+    function sort(formId, start, end) {
+        return FormModel
+            .findById(formId)
+            .then(
+                function(form) {
+                    form.fields.splice(end, 0, form.fields.splice(start, 1)[0]);
+                    form.markModified("fields");
+                    form.save();
+                }
+            )
+    }
 
     function getFieldsForForm(formId) {
         var deferred = q.defer();

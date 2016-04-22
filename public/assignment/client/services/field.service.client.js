@@ -16,9 +16,14 @@
             getFieldForForm: getFieldForForm,
             deleteFieldFromForm: deleteFieldFromForm,
             updateField: updateField,
-            createReplicaForm: createReplicaForm
+            createReplicaForm: createReplicaForm,
+            sort: sort
         };
         return api;
+
+        function sort(formId, start, end){
+            return $http.put("/api/assignment/form/" + formId + "/" + start + "/" + end);
+        }
 
         function createFieldForForm(formId, field) {
             if(field) {
