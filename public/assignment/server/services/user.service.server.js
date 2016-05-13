@@ -2,8 +2,8 @@
  * Created by Gurpreet on 3/15/2016.
  */
 
-var passport         = require('passport');
-var LocalStrategy    = require('passport-local').Strategy;
+var passport         = '';
+var LocalStrategy    = '';
 
 
 module.exports = function(app, userModel) {
@@ -14,14 +14,14 @@ module.exports = function(app, userModel) {
     app.get("/api/assignment/user/:id", findUserById);
     app.put("/api/assignment/user/:id", auth, updateUser);
     app.delete("/api/assignment/user/:id", deleteUser);
-    app.post("/api/assignment/login", passport.authenticate('local'), login);
+    //app.post("/api/assignment/login", passport.authenticate('local'), login);
     app.post  ('/api/assignment/logout', logout);
     app.get   ('/api/assignment/loggedin', loggedin);
 
     // passport functionalities - start
-    passport.use(new LocalStrategy(localStrategy));
-    passport.serializeUser(serializeUser);
-    passport.deserializeUser(deserializeUser);
+    //passport.use(new LocalStrategy(localStrategy));
+    //passport.serializeUser(serializeUser);
+    //passport.deserializeUser(deserializeUser);
 
 
     // local strategy - first authenticate the user locally, then let passport js do the rest
