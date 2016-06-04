@@ -110,6 +110,7 @@
                     }
                     var data = response.data;
                     if(data) {
+                        console.log(data);
                         var instaPosts = [];
                         for(var i=0; i < data.length; ++i) {
                             var images = data[i].images;

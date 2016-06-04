@@ -179,6 +179,7 @@
             InstagramService.getInstaPhotos($scope.name, true, renderInsta);
 
             function renderInsta(response) {
+
                 if(response.length === 0) {
                     $scope.loading = false;
                 }
