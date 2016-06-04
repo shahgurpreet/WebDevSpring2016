@@ -54,26 +54,36 @@
                 <uib-tab ng-if="placeSummary" heading="Place Summary">
                     <div data-ng-bind-html="placeSummary" class="summary text-justify"></div>
                 </uib-tab>
-                <uib-tab heading="Instagram Posts" justified="true">
+                <uib-tab heading="Flickr Photos">
                     <div>
-                        <p style="padding-top: 10px">
-                            Effective from June 1 2006, Instagram has effectively shut down many third-party apps after it
-                            restricted access to its API. Getting public photos based on hashtag is no longer possible.
-                            See this <a href="http://www.macrumors.com/2016/06/02/instagram-third-party-apps-websites-dead/" target="_blank">Link.</a>
-                            <br>
-                            But no worries, I am working on something else and will be back soon. Happy wandering!
-                        </p>
+                        <div class="no-content" ng-if ="instagramImagesAndTags.length == 0">
+                            Sorry, no content found.
+                        </div>
+                        <div ng-repeat="post in instagramImagesAndTags" class="col-md-4 col-lg-4 col-sm-6 col-xs-12 insta-img">
+                            <div>
+                                <figure class="cap-bot">
+                                    <img ng-src="{{post.photo}}" class="search-page-img"/>
+                                    <figcaption>
+                                        {{post.tags}}
+                                        <button class="btn btn-primary" ng-click="likePhoto(post)">
+                                            <span ng-show="likedPhotos.indexOf(post.photo) > -1" class="fa fa-heart"></span>
+                                            <span ng-show = "likedPhotos.indexOf(post.photo) === -1" class="fa fa-heart-o"></span>
+                                        </button>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                        </div>
                     </div>
-                    <!--<div class="clearfix"></div>-->
-                    <!--<div class="center-block text-center">-->
-                        <!--<a ng-if="moreInsta" ng-click="paging()" class="button more-button">More</a>-->
-                    <!--</div>-->
-                    <!--<div ng-if="!moreInsta && loading">-->
-                        <!--<div class="spinner"></div>-->
-                    <!--</div>-->
+                    <div class="clearfix"></div>
+                    <div class="center-block text-center">
+                        <a ng-if="moreInsta" ng-click="paging()" class="button more-button">More</a>
+                    </div>
+                    <div ng-if="!moreInsta && loading">
+                        <div class="spinner"></div>
+                    </div>
 
                 </uib-tab>
-                <uib-tab heading="Twitter Posts">
+                <uib-tab heading="Twitter Photos">
                     <div class="no-content" ng-if ="twitterPosts.length == 0">
                         Sorry, no content found.
                     </div>

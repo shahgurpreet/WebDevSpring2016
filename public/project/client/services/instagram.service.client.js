@@ -100,35 +100,42 @@
                 token = nextPageToken;
             }
             $http.get('/api/instagram/' + tag + "/" + token).success(function(response) {
-                if(response) {
-                    if(response.pagination != undefined) {
-                        if(response.pagination.next_url != undefined) {
-                            nextPageToken = response.pagination.next_max_tag_id;
+                if (response) {
+
+                    if (response.photos) {
+                        var photosF = response.photos;
+                        var pages = photosF.pages;
+                        var page = photosF.page;
+                        var photos = photosF.photo;
+
+                        if (parseInt(page) < parseInt(pages)) {
+                            nextPageToken = parseInt(page) + 1;
                         } else {
                             nextPageToken = '0';
                         }
-                    }
-                    var data = response.data;
-                    if(data) {
-                        console.log(data);
-                        var instaPosts = [];
-                        for(var i=0; i < data.length; ++i) {
-                            var images = data[i].images;
-                            var tags = data[i].tags;
-                            instaPosts.push({
-                                tags: tags,
-                                photo: images.standard_resolution.url
-                            });
+
+                        var photosResult = [];
+                        console.log(nextPageToken);
+                        for (var i = 0; i < photos.length; i++) {
+                            var p = photos[i];
+                            var url = 'https://farm' + p.farm +
+                                '.staticflickr.com/' + p.server +
+                                '/' + p.id + '_' + p.secret + '.jpg';
+                            photosResult.push({
+                                url: url,
+                                title: p.title
+                            })
                         }
-                        callback(instaPosts);
+                        callback(photosResult);
                     }
                 }
             }).error(function(error) {
-               console.log(error);
+                console.log(error);
             });
         }
 
         function instaNext(tag, callback) {
+            console.log('next' + nextPageToken);
             if(nextPageToken != '0') {
                 getInstaPhotos(tag, false, nextResults);
                 function nextResults(response) {

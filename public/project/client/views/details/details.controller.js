@@ -42,20 +42,19 @@
                         } else {
                             var instaPosts = response;
                             for(var i = 0; i < instaPosts.length; i++) {
-                                var tag = '';
-                                var tags = instaPosts[i].tags;
-                                for(var j = 0; j < 5; j++) {
-                                    tag += '#' + tags[j] + ' ';
-                                }
+                                var post = instaPosts[i];
                                 $scope.instagramImagesAndTags.push({
-                                    tags: tag,
-                                    photo: instaPosts[i].photo
+                                    tags: post.title,
+                                    photo: post.url
                                 });
-                                setTimeout(function () {
-                                    $scope.$apply(function(){
-                                        $scope.moreInsta = true;
-                                    });
-                                }, 1000);
+
+                                if(response.length > 0) {
+                                    setTimeout(function () {
+                                        $scope.$apply(function(){
+                                            $scope.moreInsta = true;
+                                        });
+                                    }, 2000);
+                                }
                             }
                         }
                     });
@@ -186,19 +185,10 @@
                 $timeout(function(){
                     var instaPosts = response;
                     for(var i = 0; i < instaPosts.length; i++) {
-                        var tag = '';
-                        var noOfTags = 5;
-                        var tags = instaPosts[i].tags;
-                        if(tags.length < 5) {
-                            noOfTags = tags.length;
-                        }
-                        for(var j = 0; j < noOfTags; j++) {
-                            tag += '#' + tags[j] + ' ';
-                        }
-
+                        var post = instaPosts[i];
                         $scope.instagramImagesAndTags.push({
-                            tags: tag,
-                            photo: instaPosts[i].photo
+                            tags: post.title,
+                            photo: post.url
                         });
 
                         if(response.length > 0) {

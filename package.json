@@ -31,6 +31,7 @@
     "cookie-parser": "^1.4.1",
     "express": "^3.4.8",
     "express-session": "^1.13.0",
+    "flickrapi": "^0.4.2",
     "htmlparser2": "3.9.0",
     "limax": "^1.2.0",
     "mongoose": "^4.4.10",
